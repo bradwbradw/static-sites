@@ -1,0 +1,135 @@
+body {
+    font-family: "Helvetica Neue", "Arial";
+}
+
+h1 {
+    font-weight: 400;
+    color: white;
+    font-size: 19.5vw;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    margin: -0.53em 0 0 -0.15em;
+    width: 120vw;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 0.007em;
+    -webkit-text-stroke-color: black;
+
+}
+
+#waves {
+    position: relative;
+    z-index: -1;
+    bottom: -2em;
+    left: -6em;
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+    transform: rotate(-45deg);
+}
+
+#waves img {
+    width: 56vw;
+
+}
+
+a {
+    display: inline-block;
+    color: black;
+    line-height: 14px;
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #000000;
+}
+
+a:visited {
+    color: black;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    position: absolute;
+}
+
+#link0 {
+    left: 7vw;
+    top: 40vh;
+}
+
+#link1 {
+    left: 66vw;
+    top: 74vh;
+}
+
+#link2 {
+    left: 67vw;
+    top: 30vh;
+}
+
+#link3 {
+    left: 40vw;
+    top: 56vh;
+}
+
+#link4 {
+    left: 16vw;
+    top: 67vh;
+}
+
+#link5 {
+    left: 10vw;
+    top: 30vh;
+}
+
+#link6 {
+    left: 62vw;
+    top: 55vh;
+}
+
+#link7 {
+    left: 70vw;
+    top: 70vh;
+}
+
+#dolphin {
+    left: 27vw;
+    top: 28vh;
+}
+
+#goggle {
+    left: 40vw;
+    top: 80vh;
+}
+
+#palm {
+    left: 80vw;
+    top: 40vh;
+}
+
+section#page {
+    top: 7em;
+}
+
+#main-click-listener{
+    position:fixed;
+    top: 0;
+    height:100vh;
+    width:100vw;
+}
+#navigation {
+    position: absolute;
+
+    top: 7em;
+}
+
+#pane {
+    background-color: pink;
+    position: absolute;
+    width: 55vw;
+    right: 0;
+    top: 0;
+    height: 100vh;
+}
+

@@ -2,91 +2,87 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-    <style type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        body {
-        }
-
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        section *{
-            z-index:2;
-            position: fixed;
-        }
-
-        section *{
-            z-index:2;
-            position: relative;
-        }
-
-        li {
-            list-style-type: none;
-        }
-
-        a, a:visited, a:active {
-            padding: 0.5em;
-            text-decoration: none;
-        }
-
-        p {
-            padding: 0 1em 0.01em
-        }
-
-        h2 {
-            padding: 0.5em 0.5em 0.2em;
-        }
-    </style>
+  <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="style.css" rel="stylesheet" type="text/css"/>
 
 </head>
-<body>
+<body ng-app="brad" ng-controller="main">
+<section id="brads-name">
+  <h1 ui-sref="home">Brad Winter</h1>
+
+</section>
+
+<div id="waves">
+  <img src="images/waves.gif">
+</div>
+
+<section id="page" >
+
+  <div id="main-click-listener" ng-click="mainClick()">
 
 
-<section >
-    <h2>Brad Winter</h2>
-    <p>Vancouverite ~ Seapunk enthusiast ~ full-stack JS web developer ~ DJ Bee</p>
+  </div>
+  <ul >
+    <li ng-repeat="project in projects" ng-attr-id="{{'link'+$index}}">
+      <a ui-sref="{{'project-'+project.slug}}">{{project.name}}</a>
+    </li>
+    <li id="dolphin"><img src="images/dolphin.png" width="80"></li>
+    <li id="goggle"><img src="images/goggle.png" width="80"></li>
+    <li id="palm"><img src="images/palm-tree.jpg" width="80"></li>
 
-    <p>Currently, I work at <a href="https://newdistrict.ca">New District</a></p>
-    <p>Previously, I worked at <a href="https://citr.ca">CiTR Radio</a></p>
+    <!--<li id="link1"><a href="https://github.com/bradwbradw">github</a></li>
+    <li id="link2"><a ui-sref="project-xyz" ng-click="$event.stopPropagation();"> xyz</a></li>
+    <li id="link3"><a href="https://soundcloud.com/braddjwinter">soundcloud</a></li>
+    <li id="link4"><a ui-sref="project-seapunk">seapunk.net</a></li>
+    <li id="link5"><a href="http://cyberspa.biz">cyberspa</a></li>
+    <li id="link6"><a href="https://tropicalloveconnection.tumblr.com">tlc</a></li>
+    <li id="link7"><a href="http://noisefloor.ca">noise floor</a></li>
+    <li id="link11"><a href="https://twitter.com/beewinter">twitter</a></li>
+   --> <!--
+            <li id="link2"><a href="https://www.linkedin.com/in/brad-winter-05534123">linked in</a></li>
+    -->
 
-    <ul><p>Profiles:</p>
-        <li>🦀 <a href="https://github.com/bradwbradw">Git Hub</a></li>
-        <li>🐠 <a href="https://www.linkedin.com/in/brad-winter-05534123">Linked In</a></li>
-        <li>🐝 <a href="https://soundcloud.com/braddjwinter">Sound Cloud</a></li>
-        <!--<li><a href="https://facebook.com/braddjwinter">Face Book</a></li>-->
-        <li>🐋 <a href="https://twitter.com/beewinter">Twitter</a></li>
-    </ul>
+  </ul>
 
-    <ul><p>Dj / Music Links:</p>
-        <li>🐳 <a href="http://cyberspa.biz">Cyberspa</a></li>
-        <li>🐬 <a href="https://tropicalloveconnection.tumblr.com">TLC</a></li>
-        <li>🐙 <a href="http://noisefloor.ca">Noise Floor</a></li>
-    </ul>
+  <div id="pane" ng-if="inProjectState()">
+    <h3 ui-view="paneTitle"></h3>
+    <div ui-view="paneDescription"></div>
+    <div ui-view="panelLinks"></div>
+  </div>
 
-    <ul><p>On the Radio:</p>
-        <li>
-            <a href="http://www.citr.ca/radio/copypaste/episode/20160211/">
-                Feb 11, 2016 - CiTR - Copy Paste
-            </a>
-        </li>
-        <li>
-            <a href="http://www.citr.ca/radio/crimes-and-treasons/episode/20150825/">
-                Aug 25, 2015 - CiTR - Crimes and Treasons
-            </a>
-        </li>
-    </ul>
-    <br/>
-    <p>
-    <script id='fb5q3k8'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//button.flattr.com/view/?fid=x79le6&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb5q3k8');</script></p>
+
+  <!--
+      <ul><p>On the Radio:</p>
+          <li>
+              <a href="http://www.citr.ca/radio/copypaste/episode/20160211/">
+                  Feb 11, 2016 - CiTR - Copy Paste
+              </a>
+          </li>
+          <li>
+              <a href="http://www.citr.ca/radio/crimes-and-treasons/episode/20150825/">
+                  Aug 25, 2015 - CiTR - Crimes and Treasons
+              </a>
+          </li>
+      </ul>-->
+  <br/>
+  <p>
+    <!--
+        <script id='fb5q3k8'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//button.flattr.com/view/?fid=x79le6&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb5q3k8');</script></p>
     <p>Respect the Planet and our Oceans ~ Reduce Global Warming
+
+    -->
 
 </section>
 
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
 
