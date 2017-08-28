@@ -25,7 +25,7 @@
 
 
   </div>
-  <ul >
+  <ul id="project-links">
     <li ng-repeat="project in projects" ng-attr-id="{{'link'+$index}}">
       <a ui-sref="{{'project-'+project.slug}}">{{project.name}}</a>
     </li>
@@ -48,9 +48,7 @@
   </ul>
 
   <div id="pane" ng-if="inProjectState()">
-    <h3 ui-view="paneTitle"></h3>
-    <div ui-view="paneDescription"></div>
-    <div ui-view="panelLinks"></div>
+    <div ui-view="panel"></div>
   </div>
 
 
@@ -77,12 +75,18 @@
 
 </section>
 
-
+<!--
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+-->
+
+<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="node_modules/lodash/dist/lodash.min.js"></script>
+
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="components/project-info-component.js"></script>
 </body>
 </html>
 

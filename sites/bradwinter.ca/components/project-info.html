@@ -1,0 +1,17 @@
+<h3 ng-bind="project.name"></h3>
+<div >
+  <p ng-repeat="paragraph in project.description" ng-bind="paragraph"></p>
+</div>
+
+<!--
+<pre>{{project | json}}</pre>
+-->
+
+<ul ng-if="project.links">
+  <li ng-repeat=" link in project.links">
+    <a ng-if="link.external" ng-href="{{link.external}}" ng-bind="link.label"></a>
+    <a ng-if="link.state" ui-sref="project-{{link.state}}" ng-bind="link.label"></a>
+  </li>
+</ul>
+
+<a class="big-link" ng-if="project.link" ng-href="{{project.link}}"> -- &gt;</a>
