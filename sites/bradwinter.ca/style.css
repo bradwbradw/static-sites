@@ -16,7 +16,7 @@ ul {
     z-index:1;
 }
 #brads-name h1 {
-    font-family: "Helvetica Neue", "Arial";
+    font-family: "Helvetica Neue";
     font-weight: 400;
     color: white;
     font-size: 19.5vw;
@@ -55,6 +55,11 @@ a {
     border-bottom: 2px solid #000000;
 }
 
+a.project-link:not(.active-link){
+    color:initial !important;
+    border-color:initial !important;
+}
+
 a:visited {
     color: black;
 }
@@ -63,30 +68,8 @@ ul {
     list-style-type: none;
 }
 
-#link0 {
-    left: 7%;
-    top: 40vh;
-}
 
-#link1 {
-    left: 66%;
-    top: 74vh;
-}
 
-#link2 {
-    left: 67%;
-    top: 30vh;
-}
-
-#link3 {
-    left: 40%;
-    top: 56vh;
-}
-
-#link4 {
-    left: 16%;
-    top: 67vh;
-}
 
 #link5 {
     left: 10%;
