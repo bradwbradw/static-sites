@@ -128,7 +128,7 @@ Brad.controller('main', function ($scope, $state, projects) {
 
     return {
       left: project.x + '%',
-      top: project.y + 'vh'
+      top: project.y + '%'
     }
 
   };
