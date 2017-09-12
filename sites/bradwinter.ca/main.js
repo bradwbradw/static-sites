@@ -20,7 +20,7 @@ var projects = [
       'I plan to integrate the providers at a deeper level, so users can connect their accounts and interact with the site using readily available playlists, likes, followings, and other similar objects.',
       'The motivation is to re-think the idea of a cloud-hosted so-called "music collection" by consolidating media that is locked to specific providers.'],
 
-    name: 'xyz spaces',
+    name: 'xyz.gs',
     color: '#083EC6',
     links: [{
       external: 'https://xyz.gs',
@@ -50,8 +50,8 @@ var projects = [
   },
   {
     slug: 'seapunkdotnet',
-    description: ['2011 saw the emergence of a global underground movement that evolved around a hashtag, one of many examples that underscore multiple complex issues about how media is consumed and trivialized.',
-      'seapunk.net is an ongoing project that aims to affirm the legitimacy of creative works that came out of the subculture, and of the artists of the movement who deserve more exposure.',
+    description: ['Late 2011 saw the creation of an ideology inspired by 90\'s aesthetics, followed by a ',
+      'seapunk.net is an ongoing project that aims to promote music by the artists of the movement who deserve more exposure.',
       'I also believe that the aquatic themes highlight the fragility of our planet\'s ecosystems, and more popular exposure might have a positive impact on climate change by recognizing our oceans as perhaps the most important thing we have.  It might follow that seapunk is the most important genre of music that we have.',
     ],
     name: 'seapunk.net',
@@ -59,9 +59,7 @@ var projects = [
       external: 'https://seapunk.net',
       label: 'seapunk.net'
     }],
-    color: '#029d7c',
-    x: 16,
-    y: 67
+    color: '#029d7c'
   },
   {
     slug: 'resume',
