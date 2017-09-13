@@ -31,8 +31,8 @@ var projects = [
   },
   {
     slug: 'music-projects',
-    description: ['My deejay practise is a little less prominent these days, but I continue to play on occasion.',
-      'I have a repertoire of experimental house / club music on my soundcloud page. I also work on a witch-house style project with my partner, called Hexen.'],
+    description: [
+      'As "Dj Bee", I have some experimental house / club music on my soundcloud page. I also work on a witch-house style project with my partner, called Hexen.'],
     name: 'music projects',
     links: [
       {
