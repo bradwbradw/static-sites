@@ -16,7 +16,7 @@ var projects = [
   },
   {
     slug: 'xyz',
-    description: ['A graphical interface to a media database that combines music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
+    description: ['App that features user-contributed playlists that combine music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
       'I plan to integrate the providers at a deeper level, so users can connect their accounts and interact with the site using readily available playlists, likes, followings, and other similar objects.',
       'The motivation is to re-think the idea of a cloud-hosted so-called "music collection" by consolidating media that is locked to specific providers.'],
 
