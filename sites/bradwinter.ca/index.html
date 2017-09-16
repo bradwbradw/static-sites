@@ -20,7 +20,7 @@
   <img src="images/waves.gif">
 </div>
 
-<ul id="project-links" ng-class="{'pane-is-open':inProjectState()}" >
+<ul id="project-links" ng-class="{'pane-is-open':inProjectState()}" ng-cloak>
   <li ng-repeat="project in projects" ng-attr-id="{{'link'+$index}}" ng-style="linkPosition(project)">
     <a ui-sref="{{'project-'+project.slug}}" class="project-link" ui-sref-active="active-link"
        ng-style="projectLinkStyle(project)">{{project.name}}</a>
