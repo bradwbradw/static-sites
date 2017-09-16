@@ -2,7 +2,7 @@
   <div id="close-button" ui-sref="home"> X </div>
   <h3 ng-bind="project.name"></h3>
   <div id="project-paragraphs">
-    <p ng-repeat="paragraph in project.description" ng-bind="paragraph"></p>
+    <p ng-repeat="paragraph in project.description" ng-bind-html="sanitize(paragraph)"></p>
   </div>
 
   <ul >
