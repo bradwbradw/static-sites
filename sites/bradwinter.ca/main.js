@@ -6,7 +6,7 @@ var projects = [
     slug: 'about',
     description: [
       'I\'m a professional web developer who excels in all aspects of creating high-performance and user-friendly applications.',
-      'I also work on experimental projects that investigate various concerns about our contemporary media landscape',
+      'I also work on experimental projects that investigate various concerns about our contemporary media landscape.',
       'Feel free to explore my site to learn more. Thanks for stopping by!'
     ],
     name: 'about me',
@@ -16,7 +16,7 @@ var projects = [
   },
   {
     slug: 'xyz',
-    description: ['App that features user-contributed playlists that combine music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
+    description: ['My largest passion project is an app that features user-contributed playlists that combine music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
       'I plan to integrate the providers at a deeper level, so users can connect their accounts and interact with the site using readily available playlists, likes, followings, and other similar objects.',
       'The motivation is to re-think the idea of a cloud-hosted so-called "music collection" by consolidating media that is locked to specific providers.'],
 
@@ -32,7 +32,7 @@ var projects = [
   {
     slug: 'music-projects',
     description: [
-      'As "Dj Bee", I have some experimental house / club music on my soundcloud page. I also work on a witch-house style project with my partner, called Hexen.'],
+      'As "Dj Bee", I have some experimental house / club music on my soundcloud page. I also make music as "Hexen", a loosely witch-house project with my partner,'],
     name: 'music projects',
     links: [
       {
@@ -63,7 +63,7 @@ var projects = [
   },
   {
     slug: 'resume',
-    description: ['Download my resume PDF by clicking the link below'],
+    description: ['Download my resume PDF by clicking the link below:'],
     name: 'resume',
     links: [
       {
