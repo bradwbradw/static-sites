@@ -51,9 +51,8 @@ var projects = [
   },
   {
     slug: 'seapunkdotnet',
-    description: ['Late 2011 saw the creation of an ideology inspired by 90\'s aesthetics, followed by a ',
-      'seapunk.net is an ongoing project that aims to promote music by the artists of the movement who deserve more exposure.',
-      'I also believe that the aquatic themes highlight the fragility of our planet\'s ecosystems, and more popular exposure might have a positive impact on climate change by recognizing our oceans as perhaps the most important thing we have.  It might follow that seapunk is the most important genre of music that we have.',
+    description: ['seapunk.net is an ongoing project that aims to promote music by artists of the movement who deserve more exposure.',
+      'I also believe that the aquatic themes highlight the fragility of our planet\'s ecosystems, and more popular exposure might have a positive impact on climate change by recognizing our oceans as perhaps the most important thing we have.  It might follow that seapunk is the most important genre of music that we have.'
     ],
     name: 'seapunk.net',
     links: [{
@@ -63,13 +62,17 @@ var projects = [
     color: '#029d7c'
   },
   {
-    slug: 'resume',
-    description: ['Download my resume PDF by clicking the link below:'],
-    name: 'resume',
+    slug: 'contact',
+    description: ['Feel free to get in touch!  You can email me or download my resume by clicking the link below'],
+    name: 'contact',
     links: [
       {
+        external: 'mailto:hello@bradwinter.ca',
+        label: 'email'
+      },
+      {
         external: 'https://drive.google.com/file/d/0B9u2nAPISw7qTjRLMlNlcThPd0E/view?usp=sharing',
-        label: 'resume PDF'
+        label: 'download resume'
       }
     ],
     color: '#F08BD3',
@@ -89,7 +92,7 @@ var projects = [
         external: 'https://soundcloud.com/braddjwinter',
         label: 'Soundcloud'
       }],
-    color: '#F08BD3',
+    color: '#F08BD3'
   },
   {
     slug: 'music',
@@ -121,7 +124,7 @@ Brad.controller('main', function ($scope, $state, projects) {
   $scope.projectLinkStyle = function (project) {
     return {
       color: project.color,
-      'border-color': project.color,
+      'border-color': project.color
     }
   };
 
