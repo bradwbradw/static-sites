@@ -63,12 +63,12 @@ var projects = [
   },
   {
     slug: 'contact',
-    description: ['Feel free to get in touch!  You can email me or download my resume by clicking the link below'],
+    description: [''],
     name: 'contact',
     links: [
       {
         external: 'mailto:hello@bradwinter.ca',
-        label: 'email'
+        label: 'email me'
       },
       {
         external: 'https://drive.google.com/file/d/0B9u2nAPISw7qTjRLMlNlcThPd0E/view?usp=sharing',
