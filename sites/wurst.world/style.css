@@ -1,100 +1,141 @@
-
 body, html {
-    height: 100%;
-    margin: 0;
-}
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  cursor: url(./images/cursor-black.png) 132 6, auto; }
+
+a {
+  cursor: url(./images/cursor-black.png) 132 6, auto; }
 
 body {
-    height: 100%;
-    margin: 0 0 0 0;
-    background-color: #F1F1F1;
-}
+  background-color: #f0f0f0;
+  height: 100%;
+  margin: 0 0 0 0;
+  top: 0;
+  background-repeat: no-repeat;
+  /*
+  DESKTOP MOCKUP
+   */
+  /*
+  background-image: url("./images/mockup-wurst.jpg");
+  background-size: 100%;
+  background-position: 50% 50%;
+  */
+  /*
+  MOBILE MOCKUP
+  */
+  background-size: contain;
+  background-position: 50% 50%; }
 
 body * {
-
-    background-repeat: no-repeat;
-}
-
-body, a {
-/ / cursor: url(./images/cursor-black.png) 12 12, auto;
-}
+  background-repeat: no-repeat; }
 
 body * {
-    /*   border: 1px red solid;*/
-    /*
-    box-sizing: content-box;*/
-    box-sizing: border-box;
-}
+  /*   border: 1px red solid;*/
+  /*
+  box-sizing: content-box;*/
+  box-sizing: border-box; }
 
-#chainlink {
-    background-image: url("./images/fence.png");
-    background-size: 620px;
-    background-position: 50% 50%;
-    height: 100vh;
-    width: 100vw;
-    max-width: 80vw;
-    position: relative;
-    margin: 0 auto 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
+#main, #chainlink {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  margin: 0 auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
 
 #logo {
-    width: 100%;
-    height: 7em;
-//    background-color: black;
-    position: relative;
-}
+  font-family: 'UnifrakturMaguntia', cursive;
+  height: 1em;
+  font-size: 30vw;
+  font-weight: initial; }
 
-.link {
-/ / background-color: pink;
+.chainlink-mask {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 2.5em;
+  background: #f0f0f0; }
+  .chainlink-mask.right {
+    right: 0; }
+  .chainlink-mask.left {
+    left: 0; }
+
+.img-width {
+  width: 65%;
+  height: 55%;
+  min-width: 640px;
+  max-width: 720px; }
+
+#chainlink #chainlink-image {
+  background-image: url("./images/fence.png");
+  background-size: cover;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+.links {
+  position: relative;
+  height: 5em;
+  z-index: 2; }
+  .links a {
     position: absolute;
-    background-size: contain;
-    z-index: 4;
-}
+    background-size: 80%;
+    width: 6em;
+    height: 3em; }
+    .links a#contact {
+      background-image: url("images/link-contact.png");
+      width: 13em;
+      height: 6em;
+      left: calc((640px - 100vw) / 2 + 2em);
+      top: 2em; }
+    .links a#about {
+      background-image: url("images/link-about.png");
+      width: 8em;
+      height: 10em;
+      right: calc((640px - 100vw) / 2 + 2em);
+      top: -1em; }
+    .links a#shop {
+      background-image: url("images/link-shop.png");
+      width: 13em;
+      height: 7em;
+      right: calc((640px - 100vw) / 2 + 1em);
+      top: -1em; }
 
-.link#about {
-    background-image: url('images/link-about.png');
-    right: 5vw;
-    top: 2vh;
-    height: 10em;
-    width: 8em;
-
-}
-
-.link#contact {
-    background-image: url('images/link-contact.png');
-    top: 15vh;
-    left: 4vw;
-    width: 13em;
-    height: 6em;
-}
-
-.link#shop {
-    background-image: url('images/link-shop.png');
-    width: 13em;
-    height: 7em;
-    bottom: 12vh;
-    right: 8vw;
-}
+@media (min-width: 475px) {
+  #logo {
+    font-size: 24vw; } }
 
 @media (min-width: 600px) {
+  body {
+    margin-top: 0; }
+  #logo {
+    font-size: 17vw; } }
 
-    .link#about {
-        right: 10vw;
-        top: 10vh;
+@media (min-width: 800px) {
+  .links a#contact {
+    left: 2.6em;
+    bottom: 1em; }
+  .links a#about {
+    right: -4.8em;
+    bottom: -7em; }
+  .links a#shop {
+    right: 6em;
+    top: -1.3em; } }
 
-    }
+@media (min-width: 1000px) {
+  #logo {
+    font-size: 10em; } }
 
-    .link#contact {
-        top: 8vh;
-        left: 19vw;
-    }
-
-    .link#shop {
-        bottom: 12vh;
-        right: 18vw;
-    }
-}
+@media screen and (max-height: 420px) {
+  .links a#contact {
+    left: 2.6em;
+    bottom: 1em; }
+  .links a#about {
+    right: 0;
+    top: 0.6em; }
+  .links a#shop {
+    right: 1em;
+    top: -1.3em; } }
