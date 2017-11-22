@@ -53,7 +53,7 @@ body * {
   font-weight: initial; }
 
 .chainlink-mask {
-  position: absolute;
+  position: relative;
   z-index: 1;
   height: 100%;
   width: 2.5em;
@@ -139,3 +139,9 @@ body * {
   .links a#shop {
     right: 1em;
     top: -1.3em; } }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+body#contact {
+  background-color: pink; }

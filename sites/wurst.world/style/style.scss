@@ -55,6 +55,7 @@ body * {
   box-sizing: border-box;
 }
 
+
 #main, #chainlink {
   height: 100vh;
   width: 100vw;
@@ -74,7 +75,7 @@ body * {
 }
 
 .chainlink-mask {
-  position: absolute;
+  position: relative;
   z-index: 1;
   height: 100%;
   width: 2.5em;
@@ -212,3 +213,6 @@ $chain-max-width: 720px;
     }
   }
 }
+
+@import "base.scss";
+@import "contact.scss";

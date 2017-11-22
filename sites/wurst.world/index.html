@@ -1,43 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ww">
 <head>
   <meta charset="UTF-8">
   <title>U ´ᴥ` U</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia" rel="stylesheet">
+
+  <base href="/" >
 </head>
-<body>
+<body ng-cloak >
 
-
-<div id="chainlink">
-
-  <div class="img-width links">
-    <a href="#" id="contact"></a>
-    <a href="#" id="about"></a>
-  </div>
-  <div class="img-width" id="chainlink-image">
-    <div class="chainlink-mask left"></div>
-    <h1 id="logo">
-      wurst
-    </h1>
-    <div class="chainlink-mask right"></div>
-  </div>
-  <div class="img-width links">
-    <a href="#" id="shop"></a>
-  </div>
+<div ng-if="showNav()">
+  nav
+</div>
+<div ui-view>
+inside ui view
 
 </div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
 
-<!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" src="main.js"></script>
 
-  angular.module('ww', [])
-      .controller('main', function () {
-      })
-</script>
--->
 </body>
 </html>
