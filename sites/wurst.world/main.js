@@ -1,11 +1,17 @@
 var WW = angular.module('ww', ['ui.router']);
 
-WW.controller('main', function ($scope, $state) {
+WW.controller('mainController', function ($scope, $state) {
   console.log('state', $state.current);
-  $scope.showNav = function () {
 
+  var bodyClass = function(){
+    return [$state.current.name];
+  };
+  var showNav = function () {
     return !$state.is('home') || !$state.abstract;
-  }
+  };
+
+  $scope.bodyClass = bodyClass;
+  $scope.showNav = showNav;
 });
 
 WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -26,7 +32,12 @@ WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
     contact: {
       name: 'contact',
       url: '/contact',
-      templateUrl: 'views/contact.html',
+      templateUrl: 'views/contact.html'
+    },
+    shop: {
+      name: 'shop',
+      url: '/shop',
+      templateUrl: 'views/shop.html'
     }
   };
 

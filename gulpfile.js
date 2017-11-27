@@ -10,12 +10,12 @@ const sass = require('gulp-sass');
 gulp.task('serve:wurst.world', ['sass:wurst.world'], function () {
 
   browserSync.init({
-    server: "./sites/wurst.world",
+    server: "./sites/wurst.world"
     //proxy:'localhost',
     //port: 3000
   });
 
-  gulp.watch("sites/wurst.world/style/*.scss", ['sass:wurst.world']);
+  gulp.watch("sites/wurst.world/**/*.scss", ['sass:wurst.world']);
   gulp.watch("sites/wurst.world/**/*.html").on('change', browserSync.reload);
   gulp.watch("sites/wurst.world/**/*.js").on('change', browserSync.reload);
 });

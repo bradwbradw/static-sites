@@ -9,11 +9,9 @@
 
   <base href="/" >
 </head>
-<body ng-cloak >
+<body ng-cloak ng-controller="mainController" ng-class="bodyClass()">
 
-<div ng-if="showNav()">
-  nav
-</div>
+
 <div ui-view>
 inside ui view
 
@@ -28,6 +26,7 @@ inside ui view
 
 
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="components/navigation-component.js"></script>
 
 </body>
 </html>

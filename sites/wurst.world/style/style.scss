@@ -3,13 +3,14 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-
-  cursor: url(./images/cursor-black.png) 132 6, auto;
 }
 
-a {
-
-  cursor: url(./images/cursor-black.png) 132 6, auto;
+body * {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+a, body {
+//  cursor: url(./images/cursor-black.png) 132 6, auto;
 }
 
 body {
@@ -24,3 +25,4 @@ body {
 @import "home.scss";
 @import "base.scss";
 @import "contact.scss";
+@import "../components/navigation-component.scss";
