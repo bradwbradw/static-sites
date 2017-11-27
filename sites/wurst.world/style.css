@@ -111,11 +111,13 @@ h1 {
   .links a#contact {
     left: 4.6em;
     top: -1em; }
-  .links a#about {
-    right: -4.8em; }
   .links a#shop {
     right: 6em;
     top: -1.3em; } }
+
+@media (min-width: 800px) {
+  a#about {
+    right: -4.8em; } }
 
 @media (min-width: 1000px) {
   h1 {
@@ -175,7 +177,7 @@ body.shop #shop-container {
   body.shop #shop-container a {
     margin: 1em;
     font-size: 1.2em;
-    font-family: helvetica neue;
+    font-family: Helvetica Neue, Arial, sans-serif;
     font-weight: 100; }
   body.shop #shop-container #middle {
     width: 100%;
@@ -205,14 +207,16 @@ body.shop #shop-container {
 
 @media screen and (min-width: 800px) {
   body.shop {
-    font-size: 2em; } }
+    font-size: 1.2em; } }
 
 #navigation {
+  font-size: initial;
   position: fixed;
   top: 0;
   right: 0;
-  height: 5em;
-  width: 5em;
-  padding: 1.5em;
+  height: 1.5em;
+  width: 1.5em;
+  margin: 1.5em;
   background-image: url("images/home-icon.png");
+  background-size: contain;
   background-position: 50% 50%; }

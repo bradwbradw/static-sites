@@ -1,10 +1,12 @@
 #navigation {
+  font-size:initial;
   position:fixed;
   top:0;
   right:0;
-  height:5em;
-  width:5em;
-  padding:1.5em;
+  height:1.5em;
+  width:1.5em;
+  margin:1.5em;
   background-image:url('images/home-icon.png');
+  background-size:contain;
   background-position: 50% 50%;
 }

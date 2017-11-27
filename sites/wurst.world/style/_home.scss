@@ -150,9 +150,6 @@ h1 {
       top: -1em;
     }
 
-    a#about {
-      right: -4.8em;
-    }
 
     a#shop {
       right: 6em;
@@ -163,6 +160,9 @@ h1 {
 
 @media (min-width: 800px) {
 
+  a#about {
+    right: -4.8em;
+  }
 }
 
 @media (min-width: 1000px) {

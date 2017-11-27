@@ -12,7 +12,7 @@ body.shop {
     a {
       margin: 1em;
       font-size: 1.2em;
-      font-family: helvetica neue;
+      font-family: Helvetica Neue, Arial, sans-serif;
       font-weight: 100;
     }
     #middle {
@@ -54,6 +54,6 @@ body.shop {
   }
 
   @media screen and (min-width: 800px) {
-    font-size: 2em;
+    font-size: 1.2em;
   }
 }
