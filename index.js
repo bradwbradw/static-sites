@@ -35,6 +35,7 @@ _.each(domains, function (domain) {
 
   if (process.env.FOCUS === domain) {
 
+    console.log('focussing', domain);
     app.use('/', sites[domain]);
   } else {
     app.use('/' + domain, sites[domain]);

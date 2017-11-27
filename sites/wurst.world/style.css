@@ -12,7 +12,9 @@ body {
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; }
+
+body {
   /*
   DESKTOP MOCKUP
    */
@@ -24,6 +26,7 @@ body {
   /*
   MOBILE MOCKUP
   */
+  background-color: green;
   background-size: contain;
   background-position: 50% 50%; }
 
@@ -64,16 +67,16 @@ body * {
     left: 0; }
 
 .img-width {
+  background-color: gold;
   width: 65%;
   height: 55%;
-  min-width: 640px;
-  max-width: 720px; }
+  min-width: 100vw; }
 
 #chainlink #chainlink-image {
   background-image: url("./images/fence.png");
   background-size: cover;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center; }
 
 .links {
@@ -112,7 +115,9 @@ body * {
   body {
     margin-top: 0; }
   #logo {
-    font-size: 17vw; } }
+    font-size: 17vw; }
+  .img-width {
+    min-width: 640px; } }
 
 @media (min-width: 800px) {
   .links a#contact {
