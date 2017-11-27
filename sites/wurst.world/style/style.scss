@@ -1,0 +1,26 @@
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  cursor: url(./images/cursor-black.png) 132 6, auto;
+}
+
+a {
+
+  cursor: url(./images/cursor-black.png) 132 6, auto;
+}
+
+body {
+  background-color: #f0f0f0;
+  height: 100%;
+  margin: 0 0 0 0;
+  top: 0;
+  background-repeat: no-repeat;
+
+}
+
+@import "home.scss";
+@import "base.scss";
+@import "contact.scss";

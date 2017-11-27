@@ -1,39 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ww">
 <head>
   <meta charset="UTF-8">
   <title>U ´ᴥ` U</title>
-  <link rel="stylesheet" href="style.css?cachebust=987">
-  <link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia" rel="stylesheet">
 
+  <base href="/" >
 </head>
-<body ng-app="ww">
+<body ng-cloak >
 
-<div id="main-container" ng-controller="main" ng-class="{activated:active}">
-  <div id="main">
-    <div id="vertical-logo" ng-click="active = !active">
-
-    </div>
-    <div id="content">
-      <div id="about">
-        <p><i>Wurst</i> is a series of design projects led by interdisciplinary artist <a href="https://marchienveen.com">Marchien Veen</a>. <i>Wurst</i> will debut as a collaborative publication focusing on computer generated art and digital ephemera.
-
-        <p>&nbsp;</p>
-        <p>For inquiries please contact
-        wurstworld@gmail.com
-      </div>
-    </div>
-  </div>
+<div ng-if="showNav()">
+  nav
 </div>
+<div ui-view>
+inside ui view
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+</div>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+<!--suppress JSUnresolvedLibraryURL -->
 
-<script type="text/javascript">
 
-  angular.module('ww', [])
-      .controller('main', function () {
-      })
-</script>
+<script type="text/javascript" src="main.js"></script>
+
 </body>
 </html>
