@@ -16,7 +16,7 @@ WW.controller('mainController', function ($scope, $state) {
 
 WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
 
-  $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(false);
 
   var states = {
     home: {
