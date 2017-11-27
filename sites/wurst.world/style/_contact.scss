@@ -1,3 +1,49 @@
 body.contact {
-  background-color:#EDEEFF;
+  background-color: #EDEEFF;
+
+  a, img {
+    position: absolute;
+    background-size: contain;
+  }
+
+  #email {
+    background-image: url('images/email.png');
+    top: 15vh;
+    left: 20vw;
+
+    width: 70vw;
+    height: 35vh;
+  }
+
+  #yarrow {
+    background-image: url('images/yarrow.png');
+
+    left: 10vw;
+    top: 25vh;
+
+    width: 15vw;
+    height: 30vh;
+
+  }
+
+  #instagram {
+    background-image: url('images/instagram.png');
+
+    top: 50vh;
+    left: 15vw;
+
+    width: 50vw;
+    height: 30vh;
+
+  }
+
+  #checker {
+    background-image: url('images/checker.png');
+    top: 75vh;
+    left: 40vw;
+
+    width: 45vw;
+    height: 25vh;
+  }
+
 }

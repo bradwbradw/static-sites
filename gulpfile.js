@@ -10,7 +10,10 @@ const sass = require('gulp-sass');
 gulp.task('serve:wurst.world', ['sass:wurst.world'], function () {
 
   browserSync.init({
-    server: "./sites/wurst.world"
+    server: "./sites/wurst.world",
+      middleware:[
+          require('connect-history-api-fallback')()
+      ]
     //proxy:'localhost',
     //port: 3000
   });

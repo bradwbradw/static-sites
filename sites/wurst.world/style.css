@@ -137,6 +137,33 @@ h1 {
 
 body.contact {
   background-color: #EDEEFF; }
+  body.contact a, body.contact img {
+    position: absolute;
+    background-size: contain; }
+  body.contact #email {
+    background-image: url("images/email.png");
+    top: 15vh;
+    left: 20vw;
+    width: 70vw;
+    height: 35vh; }
+  body.contact #yarrow {
+    background-image: url("images/yarrow.png");
+    left: 10vw;
+    top: 25vh;
+    width: 15vw;
+    height: 30vh; }
+  body.contact #instagram {
+    background-image: url("images/instagram.png");
+    top: 50vh;
+    left: 15vw;
+    width: 50vw;
+    height: 30vh; }
+  body.contact #checker {
+    background-image: url("images/checker.png");
+    top: 75vh;
+    left: 40vw;
+    width: 45vw;
+    height: 25vh; }
 
 #navigation {
   position: fixed;
