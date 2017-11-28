@@ -152,7 +152,7 @@ body.contact #email {
   background-image: url("images/email.png");
   top: 15%;
   left: 20%;
-  width: 70%;
+  width: 60%;
   height: 35%; }
 
 body.contact #yarrow {
@@ -166,7 +166,7 @@ body.contact #instagram {
   background-image: url("images/instagram.png");
   top: 50%;
   left: 15%;
-  width: 50%;
+  width: 37%;
   height: 30%; }
 
 body.contact #checker {
@@ -206,6 +206,7 @@ body.contact #checker {
       height: 25%; } }
 
 body.shop #shop-container {
+  position: relative;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -213,10 +214,13 @@ body.shop #shop-container {
   justify-content: space-between;
   align-items: center; }
   body.shop #shop-container a {
+    position: relative;
     margin: 1em;
     font-size: 1.2em;
     font-family: Helvetica Neue, Arial, sans-serif;
-    font-weight: 100; }
+    font-weight: 100;
+    text-decoration: none;
+    color: black; }
   body.shop #shop-container #middle {
     width: 100%;
     display: flex;
@@ -234,14 +238,22 @@ body.shop #shop-container {
         position: relative;
         left: 1em; }
   body.shop #shop-container #bricks {
-    background-image: url("images/bricks-portrait.png");
-    background-size: contain;
-    background-position: 50% 50%;
-    height: 60vh;
-    width: 60vw; }
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: pink;
+    height: 100vh;
+    width: 100vw; }
     @media (orientation: landscape) {
       body.shop #shop-container #bricks {
         background-image: url("images/bricks-landscape.png"); } }
+  body.shop #shop-container #product {
+    background-size: contain;
+    background-position: 50% 50%;
+    height: 60vh;
+    width: 60vw;
+    z-index: 2;
+    overflow: scroll; }
 
 @media screen and (min-width: 800px) {
   body.shop {
