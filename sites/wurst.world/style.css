@@ -138,7 +138,7 @@ h1 {
   display: none !important; }
 
 body.contact {
-  background-color: #EDEEFF; }
+  }
   body.contact a, body.contact img {
     position: absolute;
     background-size: contain; }
