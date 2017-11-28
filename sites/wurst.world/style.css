@@ -231,7 +231,6 @@ body.shop #shop-container {
       height: 1em; }
       body.shop #shop-container #middle a#left {
         transform: rotate(-90deg);
-        position: relative;
         right: 1em; }
       body.shop #shop-container #middle a#right {
         transform: rotate(90deg);
@@ -241,7 +240,6 @@ body.shop #shop-container {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: pink;
     height: 100vh;
     width: 100vw; }
     @media (orientation: landscape) {

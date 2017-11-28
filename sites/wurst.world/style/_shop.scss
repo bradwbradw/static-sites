@@ -2,7 +2,7 @@ body.shop {
 
   #shop-container {
 
-    position:relative;
+    position: relative;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -11,13 +11,13 @@ body.shop {
     align-items: center;
 
     a {
-      position:relative;
+      position: relative;
       margin: 1em;
       font-size: 1.2em;
       font-family: Helvetica Neue, Arial, sans-serif;
       font-weight: 100;
       text-decoration: none;
-      color:black;
+      color: black;
     }
     #middle {
       width: 100%;
@@ -31,7 +31,6 @@ body.shop {
 
         &#left {
           transform: rotate(-90deg);
-          position: relative;
           right: 1em;
         }
         &#right {
@@ -44,12 +43,11 @@ body.shop {
     }
 
     #bricks {
-      position:absolute;
-      top:0;
-      left:0;
-      background-color:pink;
-      height:100vh;
-      width:100vw;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
 
       @media (orientation: landscape) {
         background-image: url('images/bricks-landscape.png');
@@ -57,14 +55,14 @@ body.shop {
     }
 
     #product {
-//      background-color:pink;
-//      background-image: url('images/bricks-portrait.png');
+      //      background-color:pink;
+      //      background-image: url('images/bricks-portrait.png');
       background-size: contain;
       background-position: 50% 50%;
       height: 60vh;
       width: 60vw;
       z-index: 2;
-      overflow:scroll;
+      overflow: scroll;
     }
 
   }

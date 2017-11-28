@@ -43,8 +43,8 @@ WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
 
   var shopStates = 'enamel-pins prints shirts tote-bags'.split(' ');
 
-  _.each(states, function (state, name) {
-    $stateProvider.state(name, state);
+  _.each(states, function (state) {
+    $stateProvider.state(state);
   });
 
   _.each(shopStates, function (name) {
