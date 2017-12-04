@@ -1,35 +1,48 @@
 <div id="shop-container">
 
-  <a ui-sref="shop.tote-bags">
+  <a ui-sref="shop.tote-bags"
+     ng-click="animationStarted = true">
     tote bags
   </a>
   <div id="middle">
-    <a id="left" ui-sref="shop.prints">prints</a>
+    <a id="left"
+       ui-sref="shop.prints"
+       ng-click="animationStarted = true">
+      prints
+    </a>
 
     <div id="product" ui-view="product">
 
     </div>
     <!--    <a id="right" ui-sref="shop.shirts">shirts</a>-->
-    <a id="right" ui-sref="shop.shirts" ng-click="animationStarted = !animationStarted">shirts</a>
+    <a id="right"
+       ui-sref="shop.shirts"
+       ng-click="animationStarted = true">
+      shirts
+    </a>
 
   </div>
-  <a ui-sref="shop.enamel-pins">enamel pins</a>
+  <a ui-sref="shop.enamel-pins"
+     ng-click="animationStarted = true">
+    enamel pins
+  </a>
+
 
   <div id="bricks-container">
 
     <simple-sprite
-        class="bricks-background"
+        class="bricks"
         ng-if="animationStarted"
         src="images/bricks-sprites.png"
         frame-width="719"
         frame-height="749"
         frames="18"
         frames-per-row="3"
-        repeat="true"
+        repeat="false"
         speed="125">
     </simple-sprite>
 
-    <div id="bricks"
+    <div id="bricks" class="bricks"
          ng-if="!animationStarted">
 
     </div>

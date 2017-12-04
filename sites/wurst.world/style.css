@@ -240,31 +240,28 @@ body.shop #shop-container {
         transform: rotate(90deg);
         position: relative;
         left: 1em; }
+    body.shop #shop-container #middle #product {
+      background-size: contain;
+      background-position: 50% 50%;
+      height: 60vh;
+      width: 60vw;
+      z-index: 1;
+      overflow: scroll; }
   body.shop #shop-container #bricks {
-    height: 100%;
-    width: 100%;
     background-image: url("images/bricks-portrait.png");
     background-size: cover;
     background-position: 50% 50%; }
     @media (orientation: landscape) {
       body.shop #shop-container #bricks {
         background-image: url("images/bricks-landscape.png"); } }
-  body.shop #shop-container .gif {
-    background-image: url("https://davidwalsh.name/demo/herrera-wtf-once.gif?");
-    height: 70vh;
-    width: 50vw;
-    background-size: 100% 100%; }
-  body.shop #shop-container #product {
-    background-size: contain;
-    background-position: 50% 50%;
-    height: 60vh;
-    width: 60vw;
-    z-index: 1;
-    overflow: scroll; }
 
 @media screen and (min-width: 800px) {
   body.shop {
     font-size: 1.2em; } }
+
+.bricks {
+  height: 120vh;
+  width: 120vw; }
 
 #bricks-container {
   position: absolute;

@@ -7,7 +7,7 @@ body.shop {
 
   #shop-container {
 
-//    background-image: url('images/bricks-portrait-tinted.png');
+    //    background-image: url('images/bricks-portrait-tinted.png');
     background-size: cover;
     background-position: 50% 50%;
     position: relative;
@@ -26,14 +26,14 @@ body.shop {
       font-weight: 100;
       text-decoration: none;
       color: black;
-      z-index:2;
+      z-index: 2;
     }
     #middle {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index:2;
+      z-index: 2;
       a {
         vertical-align: middle;
         height: 1em;
@@ -49,11 +49,19 @@ body.shop {
         }
       }
 
+      #product {
+        //      background-color:lightpink;
+        background-size: contain;
+        background-position: 50% 50%;
+        height: 60vh;
+        width: 60vw;
+        z-index: 1;
+        overflow: scroll;
+      }
+
     }
 
     #bricks {
-      height:100%;
-      width:100%;
       //      background-color:rgba(200,200,250,0.8);
       background-image: url('images/bricks-portrait.png');
       background-size: cover;
@@ -63,22 +71,6 @@ body.shop {
       }
     }
 
-    .gif {
-      background-image: url('https://davidwalsh.name/demo/herrera-wtf-once.gif?');
-      height: 70vh;
-      width: 50vw;
-      background-size: 100% 100%;
-    }
-    #product {
-//      background-color:lightpink;
-      background-size: contain;
-      background-position: 50% 50%;
-      height: 60vh;
-      width: 60vw;
-      z-index: 1;
-      overflow: scroll;
-    }
-
   }
 
   @media screen and (min-width: 800px) {
@@ -86,23 +78,27 @@ body.shop {
   }
 }
 
+.bricks {
+  height: 120vh;
+  width: 120vw;
+}
 
 #bricks-container {
-//  top:10vh;
-  position:absolute;
-  top:0;
-  left:0;
+  //  top:10vh;
+  position: absolute;
+  top: 0;
+  left: 0;
 
-//  background-color:lime;
+  //  background-color:lime;
   overflow: hidden;
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index:1;
+  z-index: 1;
 
-  .trans{
+  .trans {
 
   }
   .anim {

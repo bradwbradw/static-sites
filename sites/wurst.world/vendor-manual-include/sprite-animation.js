@@ -78,9 +78,9 @@ THE SOFTWARE.
                     var heightDiff = parentHeight - frameHeight;
 
                     if(widthDiff > heightDiff){
-                        scale = parentWidth / frameWidth;
+                        scale = 1.2*parentWidth / frameWidth;
                     } else {
-                        scale = parentHeight / frameHeight;
+                        scale = 1.2*parentHeight / frameHeight;
                     }
                     console.log('parent width', parentWidth, 'frameWidthXscale', frameWidth*scale);
                     console.log("scale",scale, "offset", offset);
