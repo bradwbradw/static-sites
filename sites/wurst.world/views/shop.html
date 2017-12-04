@@ -1,38 +1,37 @@
+
 <div id="shop-container">
 
-  <div id="bricks"></div>
+
+
+  <simple-sprite
+      class="bricks-background"
+      ng-if=" animationStarted"
+      src="images/bricks-sprites.png"
+      frame-width="719"
+      frame-height="749"
+      frames="18"
+      frames-per-row="3"
+      repeat="false"
+      speed="125">
+  </simple-sprite>
+  <div id="bricks" class="bricks-background" ng-hide="animationStarted"></div>
   <a ui-sref="shop.tote-bags">tote bags</a>
   <div id="middle">
     <a id="left" ui-sref="shop.prints">prints</a>
+
+
     <div id="product" ui-view="product">
       product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
-      product scroll view<br/>
     </div>
-    <a id="right" ui-sref="shop.shirts">shirts</a>
+<!--    <a id="right" ui-sref="shop.shirts">shirts</a>-->
+        <a id="right" ng-click="animationStarted = true">shirts</a>
+
   </div>
   <a ui-sref="shop.enamel-pins">enamel pins</a>
 </div>
 
+<div id="img-preload" style="display:none;">
+  <img src="images/bricks-sprites.png"/>
+</div>
 
 <ww-navigation></ww-navigation>

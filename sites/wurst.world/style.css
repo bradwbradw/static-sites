@@ -237,14 +237,20 @@ body.shop #shop-container {
         position: relative;
         left: 1em; }
   body.shop #shop-container #bricks {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw; }
+    background-image: url("images/bricks-portrait.png"); }
     @media (orientation: landscape) {
       body.shop #shop-container #bricks {
         background-image: url("images/bricks-landscape.png"); } }
+  body.shop #shop-container .bricks-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*
+      height: 100vh;
+      width: 100vw;*/
+    height: 300px;
+    width: 400px;
+    background-color: yellow; }
   body.shop #shop-container #product {
     background-size: contain;
     background-position: 50% 50%;

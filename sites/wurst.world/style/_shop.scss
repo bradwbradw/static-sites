@@ -43,20 +43,24 @@ body.shop {
     }
 
     #bricks {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-
+      background-image: url('images/bricks-portrait.png');
       @media (orientation: landscape) {
         background-image: url('images/bricks-landscape.png');
       }
     }
+    .bricks-background {
+      position: absolute;
+      top: 0;
+      left: 0;/*
+      height: 100vh;
+      width: 100vw;*/
+      height:300px;
+      width:400px;
+      background-color:yellow;
+
+    }
 
     #product {
-      //      background-color:pink;
-      //      background-image: url('images/bricks-portrait.png');
       background-size: contain;
       background-position: 50% 50%;
       height: 60vh;
