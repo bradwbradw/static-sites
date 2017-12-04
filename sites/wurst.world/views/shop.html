@@ -1,13 +1,12 @@
 <div id="shop-container">
 
-  <a ui-sref="shop.tote-bags"
-     ng-click="animationStarted = true">
+  <a
+     ng-click="go('shop.tote-bags')">
     tote bags
   </a>
   <div id="middle">
     <a id="left"
-       ui-sref="shop.prints"
-       ng-click="animationStarted = true">
+    ng-click="go('shop.prints')">
       prints
     </a>
 
@@ -15,20 +14,17 @@
 
     </div>
     <!--    <a id="right" ui-sref="shop.shirts">shirts</a>-->
-    <a id="right"
-       ui-sref="shop.shirts"
-       ng-click="animationStarted = true">
+    <a id="right" ng-click="go('shop.shirts')">
       shirts
     </a>
 
   </div>
-  <a ui-sref="shop.enamel-pins"
-     ng-click="animationStarted = true">
+  <a ng-click="go('shop.enamel-pins')">
     enamel pins
   </a>
 
 
-  <div id="bricks-container">
+  <div id="bricks-container" ng-if="wallStillStanding">
 
     <simple-sprite
         class="bricks"
@@ -39,7 +35,7 @@
         frames="18"
         frames-per-row="3"
         repeat="false"
-        speed="125">
+        speed="60">
     </simple-sprite>
 
     <div id="bricks" class="bricks"
@@ -51,6 +47,9 @@
 </div>
 
 <div id="img-preload" style="display:none;">
+
+  <img src="images/tote1.png" width="200"/>
+  <img src="images/tote2.png" width="200"/>
   <img src="images/bricks-sprites.png"/>
 </div>
 

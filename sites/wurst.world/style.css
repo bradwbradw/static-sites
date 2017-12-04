@@ -228,9 +228,9 @@ body.shop #shop-container {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    z-index: 2; }
+    justify-content: space-between; }
     body.shop #shop-container #middle a {
+      position: relative;
       vertical-align: middle;
       height: 1em; }
       body.shop #shop-container #middle a#left {

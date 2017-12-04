@@ -152,7 +152,7 @@ THE SOFTWARE.
                         if (isAnimationComplete()) {
                             //$window.clearInterval(animationInterval);
                             $interval.cancel(animationInterval);
-
+$scope.$emit('wall destroyed')
                         } else {
                             // Increment the X position
                             spritePosition.x += frameWidth;
