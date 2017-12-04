@@ -50,7 +50,6 @@ THE SOFTWARE.
                 var src,
                     frameWidth,
                     frameHeight,
-                    windowWidth,
                     frames,
                     framesPerRow = 0,
                     repeat = true,
@@ -78,7 +77,7 @@ THE SOFTWARE.
                     var widthDiff = parentWidth - frameWidth;
                     var heightDiff = parentHeight - frameHeight;
 
-                    if(widthDiff < heightDiff){
+                    if(widthDiff > heightDiff){
                         scale = parentWidth / frameWidth;
                     } else {
                         scale = parentHeight / frameHeight;
