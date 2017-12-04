@@ -206,7 +206,6 @@ body.contact #checker {
       height: 25%; } }
 
 body.shop #shop-container {
-  background-image: url("images/bricks-portrait-tinted.png");
   background-size: cover;
   background-position: 50% 50%;
   position: relative;
@@ -223,12 +222,14 @@ body.shop #shop-container {
     font-family: Helvetica Neue, Arial, sans-serif;
     font-weight: 100;
     text-decoration: none;
-    color: black; }
+    color: black;
+    z-index: 2; }
   body.shop #shop-container #middle {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between; }
+    justify-content: space-between;
+    z-index: 2; }
     body.shop #shop-container #middle a {
       vertical-align: middle;
       height: 1em; }
@@ -240,7 +241,11 @@ body.shop #shop-container {
         position: relative;
         left: 1em; }
   body.shop #shop-container #bricks {
-    background-image: url("images/bricks-portrait.png"); }
+    height: 100%;
+    width: 100%;
+    background-image: url("images/bricks-portrait.png");
+    background-size: contain;
+    background-position: 50% 50%; }
     @media (orientation: landscape) {
       body.shop #shop-container #bricks {
         background-image: url("images/bricks-landscape.png"); } }
@@ -250,12 +255,11 @@ body.shop #shop-container {
     width: 50vw;
     background-size: 100% 100%; }
   body.shop #shop-container #product {
-    background-color: lightpink;
     background-size: contain;
     background-position: 50% 50%;
     height: 60vh;
     width: 60vw;
-    z-index: 2;
+    z-index: 1;
     overflow: scroll; }
 
 @media screen and (min-width: 800px) {
@@ -263,17 +267,16 @@ body.shop #shop-container {
     font-size: 1.2em; } }
 
 #bricks-container {
-  background-color: lime;
   position: absolute;
   top: 0;
   left: 0;
   overflow: hidden;
-  height: 80vh;
-  width: 80vw;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: -1; }
+  z-index: 1; }
   #bricks-container .anim {
     height: 749px;
     width: 719px;
