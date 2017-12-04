@@ -1,4 +1,3 @@
-
 /*
 
 https://github.com/tusharghate/angular-simple-sprite
@@ -25,17 +24,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-(function() {
+(function () {
     angular
         .module('simple-sprite', [])
         .directive('simpleSprite', simpleSprite);
 
-    simpleSprite.$inject = ['$interval'];
+    simpleSprite.$inject = ['$interval', '$window'];
 
-    function simpleSprite($interval) {
+    function simpleSprite($interval, $window) {
         return {
             restrict: 'AE',
-            replace: false,
+            replace: true,
             scope: {
                 src: "@",
                 frameWidth: "@",
@@ -43,25 +42,53 @@ THE SOFTWARE.
                 frames: "@",
                 framesPerRow: "@",
                 repeat: "@",
-                speed: "@"
+                speed: "@",
             },
 
-            link: function($scope, element) {
+            link: function ($scope, element) {
 
                 var src,
                     frameWidth,
                     frameHeight,
+                    windowWidth,
                     frames,
                     framesPerRow = 0,
                     repeat = true,
                     speed = 100,
-                framesSeen = 0;
+                    framesSeen = 0,
+                    scale = 1,
+                    offset = 0;
 
                 // Keeps track of the current x and y positions of the sprite.
                 var spritePosition = {
                     'x': 0,
                     'y': 0
                 };
+
+                function updateTransforms() {
+
+                    var parentWidth = element.parent()[0].clientWidth;
+                    var parentHeight = element.parent()[0].clientHeight;
+                    if (parentWidth < frameWidth) {
+                        offset = (parentWidth - frameWidth)/2;
+                    } else{
+                        offset = 0;
+                    }
+
+                    var widthDiff = parentWidth - frameWidth;
+                    var heightDiff = parentHeight - frameHeight;
+
+                    if(widthDiff < heightDiff){
+                        scale = parentWidth / frameWidth;
+                    } else {
+                        scale = parentHeight / frameHeight;
+                    }
+                    console.log('parent width', parentWidth, 'frameWidthXscale', frameWidth*scale);
+                    console.log("scale",scale, "offset", offset);
+                    apply();
+                }
+
+                angular.element($window).bind('resize', updateTransforms);
 
                 /**
                  * Initializes the sprite with default CSS styles and options passed in by
@@ -76,19 +103,32 @@ THE SOFTWARE.
                     speed = $scope.speed;
                     framesPerRow = $scope.framesPerRow;
 
+
                     element.css({
                         "display": "block",
                         "width": frameWidth + "px",
                         "height": frameHeight + "px",
                         "background": "url(" + src + ") repeat",
+//                        "backgroundColor":"lightgreen",
                         "backgroundPosition": "0px 0px"
+//                        "background-size":"200%"
                     });
 
+                    updateTransforms();
                     animate();
                 }
 
                 var animationInterval = null;
 
+
+                function apply(){
+
+                    element.css({
+                        "background-position": -spritePosition.x + offset + "px" + " " + spritePosition.y + "px",
+                        "transform": "scale(" + scale + ")"
+                    });
+
+                }
                 /**
                  * Animates the sprite.
                  */
@@ -97,27 +137,29 @@ THE SOFTWARE.
                      * Returns whether the sprite animation has completed or not.
                      */
                     function isAnimationComplete() {
-                        return framesSeen >= frames;
+                        if (repeat === 'false' || !repeat) {
+                            return framesSeen >= frames;
+                        } else {
+                            return false;
+                        }
                     }
 
-                    animationInterval = $interval(function() {
+                    animationInterval = $interval(function () {
 
-                    console.log('animation increment '+framesSeen);
                         // Update the sprite frame
-                        element.css("background-position", -spritePosition.x + "px" + " " + spritePosition.y + "px");
-
-                    framesSeen++;
+    apply();
+                        framesSeen++;
                         // Determine if we should loop the animation, or stop, if the animation is complete
                         if (isAnimationComplete()) {
-                                //$window.clearInterval(animationInterval);
-                                $interval.cancel(animationInterval);
+                            //$window.clearInterval(animationInterval);
+                            $interval.cancel(animationInterval);
 
                         } else {
                             // Increment the X position
                             spritePosition.x += frameWidth;
 
                             // Check if we should move to the next row
-                            if ( (framesPerRow === 0 || framesPerRow) && spritePosition.x + frameWidth > frameWidth * framesPerRow) {
+                            if ((framesPerRow === 0 || framesPerRow) && spritePosition.x + frameWidth > frameWidth * framesPerRow) {
                                 spritePosition.x = 0;
                                 spritePosition.y -= frameHeight;
                             }
@@ -125,11 +167,10 @@ THE SOFTWARE.
                     }, speed);
                 }
 
-                $scope.$on("$destroy", function() {
+                $scope.$on("$destroy", function () {
                     //$window.clearInterval(animationInterval);
                     $interval.cancel(animationInterval);
                 });
-
 
 
                 init();

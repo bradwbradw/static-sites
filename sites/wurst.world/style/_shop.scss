@@ -1,7 +1,15 @@
+$bricks-height: 749px;
+$bricks-width: 719px;
+$bricks-height0: 250px;
+$bricks-width0: 200px;
+
 body.shop {
 
   #shop-container {
 
+    background-image: url('images/bricks-portrait-tinted.png');
+    background-size: cover;
+    background-position: 50% 50%;
     position: relative;
     height: 100vh;
     width: 100vw;
@@ -43,24 +51,21 @@ body.shop {
     }
 
     #bricks {
+      //      background-color:rgba(200,200,250,0.8);
       background-image: url('images/bricks-portrait.png');
       @media (orientation: landscape) {
         background-image: url('images/bricks-landscape.png');
       }
     }
-    .bricks-background {
-      position: absolute;
-      top: 0;
-      left: 0;/*
-      height: 100vh;
-      width: 100vw;*/
-      height:300px;
-      width:400px;
-      background-color:yellow;
 
+    .gif {
+      background-image: url('https://davidwalsh.name/demo/herrera-wtf-once.gif?');
+      height: 70vh;
+      width: 50vw;
+      background-size: 100% 100%;
     }
-
     #product {
+      background-color:lightpink;
       background-size: contain;
       background-position: 50% 50%;
       height: 60vh;
@@ -73,5 +78,32 @@ body.shop {
 
   @media screen and (min-width: 800px) {
     font-size: 1.2em;
+  }
+}
+
+
+#bricks-container {
+//  top:10vh;
+  background-color:lime;
+  position:absolute;
+  top:0;
+  left:0;
+
+  overflow: hidden;
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:-1;
+
+  .trans{
+
+  }
+  .anim {
+    height: $bricks-height;
+    width: $bricks-width;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Elliptical_coordinates_grid.svg/1420px-Elliptical_coordinates_grid.svg.png');
+    background-position: 50% 50%;
   }
 }

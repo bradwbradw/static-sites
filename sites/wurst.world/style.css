@@ -206,6 +206,9 @@ body.contact #checker {
       height: 25%; } }
 
 body.shop #shop-container {
+  background-image: url("images/bricks-portrait-tinted.png");
+  background-size: cover;
+  background-position: 50% 50%;
   position: relative;
   height: 100vh;
   width: 100vw;
@@ -241,17 +244,13 @@ body.shop #shop-container {
     @media (orientation: landscape) {
       body.shop #shop-container #bricks {
         background-image: url("images/bricks-landscape.png"); } }
-  body.shop #shop-container .bricks-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /*
-      height: 100vh;
-      width: 100vw;*/
-    height: 300px;
-    width: 400px;
-    background-color: yellow; }
+  body.shop #shop-container .gif {
+    background-image: url("https://davidwalsh.name/demo/herrera-wtf-once.gif?");
+    height: 70vh;
+    width: 50vw;
+    background-size: 100% 100%; }
   body.shop #shop-container #product {
+    background-color: lightpink;
     background-size: contain;
     background-position: 50% 50%;
     height: 60vh;
@@ -262,6 +261,24 @@ body.shop #shop-container {
 @media screen and (min-width: 800px) {
   body.shop {
     font-size: 1.2em; } }
+
+#bricks-container {
+  background-color: lime;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1; }
+  #bricks-container .anim {
+    height: 749px;
+    width: 719px;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Elliptical_coordinates_grid.svg/1420px-Elliptical_coordinates_grid.svg.png");
+    background-position: 50% 50%; }
 
 #navigation {
   font-size: initial;
