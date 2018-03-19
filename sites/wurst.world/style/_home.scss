@@ -9,13 +9,10 @@ body {
 }
 
 #logo {
+  background-image: url('images/title.png');
+  background-size: 100% 100%;
 
-  font-size: 10vw;
-  -webkit-transform: scale(1, #{$stretch-scale}); /* Safari and Chrome */
-  -moz-transform: scale(1, #{$stretch-scale}); /* Firefox */
-  -ms-transform: scale(1, #{$stretch-scale}); /* IE 9 */
-  -o-transform: scale(1, #{$stretch-scale}); /* Opera */
-  transform: scale(1, #{$stretch-scale}); /* W3C */
+  width: 30vw;
 }
 
 .chainlink-mask {
@@ -27,6 +24,7 @@ body {
   &.right {
     right: -1px;
   }
+
   &.left {
     left: 0;
   }

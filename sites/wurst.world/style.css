@@ -32,17 +32,9 @@ body {
   background-position: 50% 50%; }
 
 #logo {
-  font-size: 10vw;
-  -webkit-transform: scale(1, 6);
-  /* Safari and Chrome */
-  -moz-transform: scale(1, 6);
-  /* Firefox */
-  -ms-transform: scale(1, 6);
-  /* IE 9 */
-  -o-transform: scale(1, 6);
-  /* Opera */
-  transform: scale(1, 6);
-  /* W3C */ }
+  background-image: url("images/title.png");
+  background-size: 100% 100%;
+  width: 30vw; }
 
 .chainlink-mask {
   position: relative;
