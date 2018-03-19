@@ -8,33 +8,47 @@ body * {
   box-sizing: border-box; }
 
 body {
-  background-color: #f0f0f0;
+  background-color: #dfdfdf;
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  color: #303030; }
+
+body, h1, a, a:visited, a:active {
+  font-family: 'UnifrakturCook', cursive;
+  color: #5a5a5a;
+  text-decoration: none;
+  letter-spacing: 0.1em; }
+
+a {
+  font-size: 1.4em; }
+
+h1 {
+  height: 1em; }
 
 body {
-  /*
-  DESKTOP MOCKUP
-   */
-  /*
-  background-image: url("./images/mockup-wurst.jpg");
-  background-size: 100%;
-  background-position: 50% 50%;
-  */
-  /*
-  MOBILE MOCKUP
-  */
   background-size: contain;
   background-position: 50% 50%; }
+
+#logo {
+  font-size: 10vw;
+  -webkit-transform: scale(1, 6);
+  /* Safari and Chrome */
+  -moz-transform: scale(1, 6);
+  /* Firefox */
+  -ms-transform: scale(1, 6);
+  /* IE 9 */
+  -o-transform: scale(1, 6);
+  /* Opera */
+  transform: scale(1, 6);
+  /* W3C */ }
 
 .chainlink-mask {
   position: relative;
   z-index: 1;
   height: 100%;
-  width: 2.5em;
-  background: #f0f0f0; }
+  width: 2.5em; }
   .chainlink-mask.right {
     right: -1px; }
   .chainlink-mask.left {
@@ -45,23 +59,15 @@ body {
   height: 55%;
   min-width: 100vw; }
 
-h1 {
-  font-family: 'UnifrakturMaguntia', cursive;
-  height: 1em;
-  font-size: 30vw;
-  font-weight: initial; }
-
 #home {
   height: 100vh;
   width: 100vw;
   position: relative;
-  margin: 0 auto 0 auto;
+  margin: 2em auto 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center; }
   #home #chainlink-image {
-    background-image: url("./images/fence.png");
     background-size: cover;
     display: flex;
     justify-content: space-between;
@@ -70,32 +76,11 @@ h1 {
 .links {
   position: relative;
   height: 5em;
-  z-index: 2; }
-  .links a {
-    position: absolute;
-    background-size: 80%;
-    width: 6em;
-    height: 3em; }
-    .links a#contact {
-      background-image: url("images/link-contact.png");
-      width: 13em;
-      height: 6em;
-      left: 2em;
-      top: 2em; }
-    .links a#about {
-      background-image: url("images/link-about.png");
-      width: 8em;
-      height: 10em;
-      /*
-      right: calc((640px - 100vw) / 2 + 2em);*/
-      right: 2em;
-      top: -1em; }
-    .links a#shop {
-      background-image: url("images/link-shop.png");
-      width: 13em;
-      height: 7em;
-      right: 1em;
-      top: -1em; }
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 6em 0 6em; }
 
 @media (min-width: 475px) {
   h1 {
@@ -107,32 +92,11 @@ h1 {
   h1 {
     font-size: 17vw; }
   .img-width {
-    min-width: 640px; }
-  .links a#contact {
-    left: 4.6em;
-    top: -1em; }
-  .links a#shop {
-    right: 6em;
-    top: -1.3em; } }
-
-@media (min-width: 800px) {
-  a#about {
-    right: -4.8em; } }
+    min-width: 640px; } }
 
 @media (min-width: 1000px) {
   h1 {
     font-size: 10em; } }
-
-@media screen and (max-height: 420px) {
-  .links a#contact {
-    left: 2.6em;
-    top: 1em; }
-  .links a#about {
-    right: 0;
-    top: 0.6em; }
-  .links a#shop {
-    right: 1em;
-    top: -1.3em; } }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }

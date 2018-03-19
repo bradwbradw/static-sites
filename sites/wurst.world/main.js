@@ -24,11 +24,6 @@ WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
       url: '/',
       templateUrl: 'views/home.html'
     },
-    about: {
-      name: 'about',
-      url: '/about',
-      templateUrl: 'views/about.html'
-    },
     contact: {
       name: 'contact',
       url: '/contact',

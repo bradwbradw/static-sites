@@ -14,12 +14,28 @@ a, body {
 }
 
 body {
-  background-color: #f0f0f0;
+  background-color: #dfdfdf;
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
   background-repeat: no-repeat;
 
+  color: #303030;
+}
+
+body, h1, a, a:visited, a:active{
+  font-family: 'UnifrakturCook', cursive;
+  color: #5a5a5a;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+
+a{
+  font-size:1.4em;
+}
+
+h1 {
+  height: 1em;
 }
 
 @import "home.scss";
