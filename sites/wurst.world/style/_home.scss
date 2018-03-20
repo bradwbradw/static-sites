@@ -8,11 +8,39 @@ body {
 
 }
 
-#logo {
-  background-image: url('images/title.png');
-  background-size: 100% 100%;
+#home-navigation {
+  position: fixed;
+  height: 5em;
+  z-index: 2;
+  //  background-color: rgba(250, 200, 200, 0.5);
 
-  width: 30vw;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  :first-child {
+    flex-grow: 2;
+  }
+
+}
+
+#logo-container {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #logo {
+
+    background-image: url('images/title.png');
+    background-size: 100% 100%;
+    width: 8em;
+    height: 5.5em;
+    margin-bottom: 2em;
+  }
 }
 
 .chainlink-mask {
@@ -42,38 +70,45 @@ body {
   height: 100vh;
   width: 100vw;
   position: relative;
-  margin: 2em auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 2em auto 2em auto;
 
-  #chainlink-image {
-
-    background-size: cover;
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-  }
 }
 
-.links {
-  position: relative;
-  height: 5em;
-  z-index: 2;
-  //  background-color: rgba(250, 200, 200, 0.5);
-
+#mobile-contact-link {
   display: flex;
-  justify-content: space-between;
+  position: fixed;
+  justify-content: center;
+  bottom: 2em;
   width: 100%;
-  padding: 0 6em 0 6em;
 
+}
+
+#desktop-contact-link {
+  display: none;
 }
 
 @media (min-width: 475px) {
 
-  h1 {
-    font-size: 24vw;
+  #home-navigation {
+
+    a, :first-child {
+      flex-grow: 1;
+    }
+  }
+
+  #mobile-contact-link {
+    display: none;
+  }
+
+  #desktop-contact-link {
+    display: block;
+  }
+
+  #logo-container {
+    #logo {
+
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -83,18 +118,16 @@ body {
     margin-top: 0; //to fix top bar in chrome
   }
   h1 {
-    font-size: 17vw
-  }
-
-  .img-width {
-    min-width: $chain-min-width;
+    /*
+        font-size: 17vw*/
   }
 
 }
 
 @media (min-width: 1000px) {
   h1 {
-    font-size: 10em;
+    /*
+        font-size: 10em;*/
   }
 }
 
