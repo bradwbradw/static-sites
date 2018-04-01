@@ -22,6 +22,10 @@ body {
     flex-grow: 2;
   }
 
+  a {
+    max-width: 6em;
+  }
+
 }
 
 #logo-container {
@@ -74,20 +78,28 @@ body {
 
 }
 
-#mobile-contact-link {
+.mobile-contact-link {
   display: flex;
   position: fixed;
   justify-content: center;
-  bottom: 2em;
   width: 100%;
 
+  &.bottom{
+    bottom: 2em;
+  }
+
+  &.top {
+
+  }
 }
 
-#desktop-contact-link {
+
+
+.desktop-contact-link {
   display: none;
 }
 
-@media (min-width: 475px) {
+@media (orientation: landscape) {
 
   #home-navigation {
 
@@ -96,11 +108,11 @@ body {
     }
   }
 
-  #mobile-contact-link {
+  .mobile-contact-link {
     display: none;
   }
 
-  #desktop-contact-link {
+  .desktop-contact-link {
     display: block;
   }
 
@@ -112,25 +124,21 @@ body {
   }
 }
 
+@media screen and (min-width: 1000px) {
+
+  #home-navigation {
+
+    a {
+      max-width:50%;
+    }
+  }
+}
+
+
 @media (min-width: 600px) {
 
   body {
     margin-top: 0; //to fix top bar in chrome
   }
-  h1 {
-    /*
-        font-size: 17vw*/
-  }
-
-}
-
-@media (min-width: 1000px) {
-  h1 {
-    /*
-        font-size: 10em;*/
-  }
-}
-
-@media screen and (max-height: 420px) {
 
 }

@@ -31,20 +31,25 @@ body.contact {
     align-items: center;
 
     p, p a {
-      font-size: 1rem;
+      font-size: 0.8rem;
     }
     p {
-      margin: 1em 0 2em 0;
+      padding: 3em 0 3em 0;
       text-align: center;
       line-height: 1.5em;
       width: 24em;
 
-      @media screen and (min-height: 400px) {
-      width: 12em;
-      }
-
     }
 
+    @media screen and (min-height: 400px) {
+      p {
+        width: 12em;
+      }
+
+      p, p a{
+        font-size: 1rem;
+      }
+    }
 
   }
 
@@ -55,6 +60,5 @@ body.contact {
     height: 9.44em;
     width: 4em;
   }
-
 
 }
