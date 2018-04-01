@@ -38,6 +38,10 @@ h1 {
   height: 1em;
 }
 
+p a:hover{
+  text-decoration: line-through;
+}
+
 @import "home.scss";
 @import "base.scss";
 @import "contact.scss";
