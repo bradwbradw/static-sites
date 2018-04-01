@@ -140,16 +140,20 @@ body.contact #contact {
   justify-content: space-around;
   align-items: center; }
   body.contact #contact p, body.contact #contact p a {
-    font-size: 1rem; }
+    font-size: 0.8rem; }
+    @media screen and (min-height: 400px) {
+      body.contact #contact p, body.contact #contact p a {
+        font-size: 1rem; } }
   body.contact #contact p {
-    margin: 0;
+    margin: 1em 0 2em 0;
     text-align: center;
     line-height: 1.5em;
     width: 12em; }
 
 body.contact #contact-image {
   background-image: url("images/contact.png");
-  background-size: 100% 100%;
+  background-size: contain;
+  background-position: 50% 50%;
   height: 9.44em;
   width: 4em; }
 

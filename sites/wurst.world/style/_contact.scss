@@ -15,7 +15,7 @@ body.contact {
     justify-content: space-between;
     width: 100%;
     padding: 1.5em 2em 0 2em;
-    font-size:0.7em;
+    font-size: 0.7em;
 
   }
 
@@ -31,21 +31,32 @@ body.contact {
     align-items: center;
 
     p, p a {
-      font-size: 1rem;
+
+      font-size: 0.8rem;
+      @media screen and (min-height: 400px) {
+        font-size: 1rem;
+      }
+
+
     }
     p {
-      margin: 0;
+      margin: 1em 0 2em 0;
       text-align: center;
       line-height: 1.5em;
       width: 12em;
+
     }
+
+
   }
 
   #contact-image {
     background-image: url('images/contact.png');
-    background-size: 100% 100%;
+    background-size: contain;
+    background-position: 50% 50%;
     height: 9.44em;
     width: 4em;
   }
+
 
 }
