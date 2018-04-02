@@ -1,110 +1,42 @@
-$bricks-height: 749px;
-$bricks-width: 719px;
-$bricks-height0: 250px;
-$bricks-width0: 200px;
 
-body.shop {
-
-  #shop-container {
-
-    //    background-image: url('images/bricks-portrait-tinted.png');
-    background-size: cover;
-    background-position: 50% 50%;
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    a {
-      position: relative;
-      margin: 1em;
-      font-size: 1.2em;
-      font-family: Helvetica Neue, Arial, sans-serif;
-      font-weight: 100;
-      text-decoration: none;
-      color: black;
-      z-index: 2;
-    }
-    #middle {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      a {
-        position:relative;
-        vertical-align: middle;
-        height: 1em;
-
-        &#left {
-          transform: rotate(-90deg);
-          right: 1em;
-        }
-        &#right {
-          transform: rotate(90deg);
-          position: relative;
-          left: 1em;
-        }
-      }
-
-      #product {
-        //      background-color:lightpink;
-        background-size: contain;
-        background-position: 50% 50%;
-        height: 60vh;
-        width: 60vw;
-        z-index: 1;
-        overflow: scroll;
-      }
-
-    }
-
-    #bricks {
-      //      background-color:rgba(200,200,250,0.8);
-      background-image: url('images/bricks-portrait.png');
-      background-size: cover;
-      background-position: 50% 50%;
-      @media (orientation: landscape) {
-        background-image: url('images/bricks-landscape.png');
-      }
-    }
-
-  }
-
-  @media screen and (min-width: 800px) {
-    font-size: 1.2em;
-  }
-}
-
-.bricks {
-  height: 120vh;
-  width: 120vw;
-}
-
-#bricks-container {
-  //  top:10vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  //  background-color:lime;
-  overflow: hidden;
-  height: 100vh;
+#shop {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 80vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  z-index: 1;
 
-  .trans {
+  p, p a {
+    font-size: 0.8rem;
+  }
+  p {
+    padding: 3em 0 3em 0;
+    text-align: center;
+    line-height: 1.5em;
+    width: 24em;
 
   }
-  .anim {
-    height: $bricks-height;
-    width: $bricks-width;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Elliptical_coordinates_grid.svg/1420px-Elliptical_coordinates_grid.svg.png');
-    background-position: 50% 50%;
+
+  @media screen and (min-height: 400px) {
+    p {
+      width: 12em;
+    }
+
+    p, p a{
+      font-size: 1rem;
+    }
   }
+
+}
+
+#contact-image {
+  background-image: url('images/contact.png');
+  background-size: contain;
+  background-position: 50% 50%;
+  height: 9.44em;
+  width: 4em;
 }

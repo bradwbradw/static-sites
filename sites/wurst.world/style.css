@@ -30,11 +30,21 @@ h1 {
 p a:hover {
   text-decoration: line-through; }
 
+#navigation {
+  position: relative;
+  height: 5em;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5em 2em 0 2em;
+  font-size: 0.7em; }
+
 body {
   background-size: contain;
   background-position: 50% 50%; }
 
-#home-navigation {
+#desktop-navigation {
   position: fixed;
   height: 5em;
   z-index: 2;
@@ -42,9 +52,9 @@ body {
   justify-content: space-between;
   width: 100%;
   text-align: center; }
-  #home-navigation :first-child {
+  #desktop-navigation :first-child {
     flex-grow: 2; }
-  #home-navigation a {
+  #desktop-navigation a {
     max-width: 6em; }
 
 #logo-container {
@@ -91,11 +101,11 @@ body {
   .mobile-contact-link.bottom {
     bottom: 2em; }
 
-.desktop-contact-link {
+#desktop-navigation {
   display: none; }
 
 @media (orientation: landscape) {
-  #home-navigation a, #home-navigation :first-child {
+  #desktop-navigation a, #desktop-navigation :first-child {
     flex-grow: 1; }
   .mobile-contact-link {
     display: none; }
@@ -105,7 +115,7 @@ body {
     margin-bottom: 0; } }
 
 @media screen and (min-width: 1000px) {
-  #home-navigation a {
+  #desktop-navigation a {
     max-width: 50%; } }
 
 @media (min-width: 600px) {
@@ -117,16 +127,6 @@ body {
 
 body.contact a, body.contact img {
   background-size: contain; }
-
-body.contact #contact-navigation {
-  position: relative;
-  height: 5em;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1.5em 2em 0 2em;
-  font-size: 0.7em; }
 
 body.contact #contact {
   position: relative;
@@ -158,77 +158,32 @@ body.contact #contact-image {
   height: 9.44em;
   width: 4em; }
 
-body.shop #shop-container {
-  background-size: cover;
-  background-position: 50% 50%;
+#shop {
   position: relative;
-  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  height: 80vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center; }
-  body.shop #shop-container a {
-    position: relative;
-    margin: 1em;
-    font-size: 1.2em;
-    font-family: Helvetica Neue, Arial, sans-serif;
-    font-weight: 100;
-    text-decoration: none;
-    color: black;
-    z-index: 2; }
-  body.shop #shop-container #middle {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; }
-    body.shop #shop-container #middle a {
-      position: relative;
-      vertical-align: middle;
-      height: 1em; }
-      body.shop #shop-container #middle a#left {
-        transform: rotate(-90deg);
-        right: 1em; }
-      body.shop #shop-container #middle a#right {
-        transform: rotate(90deg);
-        position: relative;
-        left: 1em; }
-    body.shop #shop-container #middle #product {
-      background-size: contain;
-      background-position: 50% 50%;
-      height: 60vh;
-      width: 60vw;
-      z-index: 1;
-      overflow: scroll; }
-  body.shop #shop-container #bricks {
-    background-image: url("images/bricks-portrait.png");
-    background-size: cover;
-    background-position: 50% 50%; }
-    @media (orientation: landscape) {
-      body.shop #shop-container #bricks {
-        background-image: url("images/bricks-landscape.png"); } }
+  #shop p, #shop p a {
+    font-size: 0.8rem; }
+  #shop p {
+    padding: 3em 0 3em 0;
+    text-align: center;
+    line-height: 1.5em;
+    width: 24em; }
+  @media screen and (min-height: 400px) {
+    #shop p {
+      width: 12em; }
+    #shop p, #shop p a {
+      font-size: 1rem; } }
 
-@media screen and (min-width: 800px) {
-  body.shop {
-    font-size: 1.2em; } }
-
-.bricks {
-  height: 120vh;
-  width: 120vw; }
-
-#bricks-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1; }
-  #bricks-container .anim {
-    height: 749px;
-    width: 719px;
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Elliptical_coordinates_grid.svg/1420px-Elliptical_coordinates_grid.svg.png");
-    background-position: 50% 50%; }
+#contact-image {
+  background-image: url("images/contact.png");
+  background-size: contain;
+  background-position: 50% 50%;
+  height: 9.44em;
+  width: 4em; }

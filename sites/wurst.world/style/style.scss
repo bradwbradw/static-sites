@@ -42,6 +42,24 @@ p a:hover{
   text-decoration: line-through;
 }
 
+
+#navigation {
+
+  position: relative;
+  height: 5em;
+  z-index: 2;
+  //  background-color: rgba(250, 200, 200, 0.5);
+
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5em 2em 0 2em;
+  font-size: 0.7em;
+
+}
+
+
+
 @import "home.scss";
 @import "base.scss";
 @import "contact.scss";

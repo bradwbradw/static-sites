@@ -8,7 +8,7 @@ body {
 
 }
 
-#home-navigation {
+#desktop-navigation {
   position: fixed;
   height: 5em;
   z-index: 2;
@@ -95,13 +95,13 @@ body {
 
 
 
-.desktop-contact-link {
+#desktop-navigation {
   display: none;
 }
 
 @media (orientation: landscape) {
 
-  #home-navigation {
+  #desktop-navigation {
 
     a, :first-child {
       flex-grow: 1;
@@ -126,7 +126,7 @@ body {
 
 @media screen and (min-width: 1000px) {
 
-  #home-navigation {
+  #desktop-navigation {
 
     a {
       max-width:50%;
