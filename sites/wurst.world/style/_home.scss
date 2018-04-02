@@ -102,6 +102,7 @@ body {
 @media (orientation: landscape) {
 
   #desktop-navigation {
+    display:flex;
 
     a, :first-child {
       flex-grow: 1;

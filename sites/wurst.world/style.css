@@ -105,8 +105,10 @@ body {
   display: none; }
 
 @media (orientation: landscape) {
-  #desktop-navigation a, #desktop-navigation :first-child {
-    flex-grow: 1; }
+  #desktop-navigation {
+    display: flex; }
+    #desktop-navigation a, #desktop-navigation :first-child {
+      flex-grow: 1; }
   .mobile-contact-link {
     display: none; }
   .desktop-contact-link {
