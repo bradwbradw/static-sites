@@ -30,6 +30,9 @@ body.contact {
     @media screen and (min-height: 400px) {
       p {
         width: 12em;
+        padding-top:0;
+        margin-top:1.5em;
+        padding-bottom:5em;
       }
 
       p, p a{
