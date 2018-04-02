@@ -4,7 +4,6 @@ body.contact {
     background-size: contain;
   }
 
-
   #contact {
     position: relative;
     margin-left: auto;
@@ -27,19 +26,6 @@ body.contact {
 
     }
 
-    @media screen and (min-height: 400px) {
-      p {
-        width: 12em;
-        padding-top:0;
-        margin-top:1.5em;
-        padding-bottom:5em;
-      }
-
-      p, p a{
-        font-size: 1rem;
-      }
-    }
-
   }
 
   #contact-image {
@@ -48,6 +34,32 @@ body.contact {
     background-position: 50% 50%;
     height: 9.44em;
     width: 4em;
+  }
+
+  @media screen and (orientation: portrait) {
+    #contact p {
+      width: 12em;
+    }
+  }
+  @media screen and (min-height: 550px) {
+    #contact {
+
+      p {
+        padding-top: 0;
+        margin-top: 1.5em;
+        padding-bottom: 5em;
+        width: 12em;
+      }
+
+      p, p a {
+        font-size: 1rem;
+      }
+    }
+
+    #contact-image {
+      margin-top: 2em;
+    }
+
   }
 
 }
