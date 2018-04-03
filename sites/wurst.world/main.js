@@ -1,4 +1,4 @@
-var WW = angular.module('ww', ['ui.router', 'simple-sprite']);
+var WW = angular.module('ww', ['ui.router'/*, 'simple-sprite'*/]);
 
 WW.controller('mainController', function ($scope, $state) {
     console.log('state', $state.current);
