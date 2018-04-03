@@ -4,6 +4,7 @@ const connect = require('connect'),
   serveStatic = require('serve-static'),
   vhost = require('vhost'),
   _ = require('lodash'),
+  historyApiFallback = require('connect-history-api-fallback'),
   fs = require('fs');
 
 const domains = _.filter(fs.readdirSync(__dirname + '/sites'), domain => {
@@ -19,16 +20,28 @@ var app = connect();
 
 // noinspection JSUnusedLocalSymbols
 function track(req, res, next) {
-  console.log(req.url);
+  console.log(_.get(req, 'headers.host', '') + req.url);
   next();
 }
 
+app.use(track);
+
+const middleware = {
+  'wurst.world': [historyApiFallback()]
+};
 
 _.each(domains, function (domain) {
   console.log('serving ', domain);
   sites[domain] = connect();
+
+  let middlewareFunctions = _.get(middleware, domain);
+  _.each(_.filter(middlewareFunctions, _.isFunction), middlewareFunction => {
+    sites[domain].use(middlewareFunction);
+    console.log('using middleware for ' + domain);
+  });
+
   sites[domain].use(serveStatic('./sites/' + domain));
-  sites[domain].use(track);
+
   app.use(vhost(domain, sites[domain]));
   app.use(vhost('www.' + domain, sites[domain]));
 //  if (port === '8000') {
