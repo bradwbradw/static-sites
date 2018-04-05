@@ -14,9 +14,9 @@ const domains = _.filter(fs.readdirSync(__dirname + '/sites'), domain => {
 
 const rootDomainRobotsTxt = fs.readFileSync(__dirname + '/root-domain-robots.txt').toString();
 
-var sites = {};
+const sites = {};
 
-var app = connect();
+const app = connect();
 
 // noinspection JSUnusedLocalSymbols
 function track(req, res, next) {
@@ -44,38 +44,15 @@ _.each(domains, function (domain) {
 
   app.use(vhost(domain, sites[domain]));
   app.use(vhost('www.' + domain, sites[domain]));
-//  if (port === '8000') {
 
   if (process.env.FOCUS === domain) {
-
     console.log('focussing', domain);
     app.use('/', sites[domain]);
   } else {
     app.use('/' + domain, sites[domain]);
   }
 
-//  }
 });
-/*
-
-app.use('/', function (req, res, next) {
-
-  if(req.path){
-    next();
-  }
-
-  const templateData = {
-    rootDomain: _.get(req, 'headers.host'),
-    domains: domains
-  };
-  console.log('get /', req.headers);
-  const html = handlebars.compile(rootDomainTemplate)(templateData);
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-  res.end(html);
-});
-
-*/
-
 app.use('/robots.txt', function (req, res) {
   res.end(rootDomainRobotsTxt)
 });
