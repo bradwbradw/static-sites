@@ -13,7 +13,12 @@ gulp.task('serve:wurst.world', ['sass:wurst.world'], function () {
     server: "./sites/wurst.world",
     middleware: [
       require('connect-history-api-fallback')()
-    ]
+    ],
+    ghostMode:{
+      scroll:false,
+      clicks:false,
+      forms: false
+    }
     //proxy:'localhost',
     //port: 3000
   });
