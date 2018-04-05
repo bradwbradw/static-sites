@@ -29,6 +29,11 @@ WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
             url: '/contact',
             templateUrl: 'views/contact.html'
         },
+        projects: {
+            name: 'projects',
+            url: '/projects',
+            templateUrl: 'views/projects.html'
+        },
         shop: {
             name: 'shop',
             url: '/shop',
