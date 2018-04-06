@@ -40,10 +40,10 @@ WW.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
           {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522979694/vabf-portfolio/web2-new_juxbwu.jpg'},
           {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522964485/vabf-portfolio/web1_cuzaor.jpg'},
           {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522970570/vabf-portfolio/web9_xgdwmx.jpg'},
-          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522979695/vabf-portfolio/web1-new_qmihkb.jpg'},
-          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522965954/vabf-portfolio/web7_krm3bs.jpg'},
+          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522996811/vabf-portfolio/web10_l14vvz.jpg'},
           {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522970528/vabf-portfolio/web8_jszzji.jpg'},
-          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522996811/vabf-portfolio/web10_l14vvz.jpg'}
+          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522979695/vabf-portfolio/web1-new_qmihkb.jpg'},
+          {url: 'http://res.cloudinary.com/marchienveen/image/upload/v1522965954/vabf-portfolio/web7_krm3bs.jpg'}
         ];
 
         $scope.style = function (image) {
