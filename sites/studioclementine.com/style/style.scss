@@ -1,0 +1,43 @@
+
+$background:#dfdfdf;
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+a, body {
+//  cursor: url(./images/cursor-black.png) 132 6, auto;
+}
+
+body {
+  background-color: $background;
+  height: 100%;
+  margin: 0 0 0 0;
+  top: 0;
+  background-repeat: no-repeat;
+
+  color: #303030;
+}
+
+body, h1, a, a:visited, a:active{
+  font-family: 'UnifrakturCook', cursive;
+  color: #5a5a5a;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+
+a{
+  font-size:1.4em;
+}
+
+h1 {
+  height: 1em;
+}
+
+
+@import "base.scss";
