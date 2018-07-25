@@ -7,11 +7,9 @@ const connect = require('connect'),
   historyApiFallback = require('connect-history-api-fallback'),
   fs = require('fs');
 
-const domains = _.filter(fs.readdirSync(__dirname + '/sites'), domain => {
-  return domain !== '.DS_Store';
-});
+const domains = require('./domains');
 
-
+console.log(domains);
 const rootDomainRobotsTxt = fs.readFileSync(__dirname + '/root-domain-robots.txt').toString();
 
 const sites = {};
