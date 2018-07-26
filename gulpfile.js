@@ -26,7 +26,7 @@ function serve(site) {
       //port: 3000
     });
 
-    gulp.watch(`sites/${site}/**/.scss`, [`sass:${site}`]);
+    gulp.watch(`sites/${site}/**/*.scss`, [`sass:${site}`]);
     gulp.watch(`sites/${site}/**/*.html`).on('change', browserSync.reload);
     gulp.watch(`sites/${site}/**/*.js`).on('change', browserSync.reload);
   });
