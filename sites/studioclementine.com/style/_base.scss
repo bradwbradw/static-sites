@@ -14,18 +14,17 @@ body * {
 }
 
 body {
-  background-color: $background;
+  background-color: $backgroundHome;
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
   background-repeat: no-repeat;
 
-  color: #303030;
 }
 
 body, h1, a, a:visited, a:active{
-  font-family: 'UnifrakturCook', cursive;
-  color: #5a5a5a;
+  font-family: 'Questrial', sans-serif;
+  color: $colorHome;
   text-decoration: none;
   letter-spacing: 0.1em;
 }
