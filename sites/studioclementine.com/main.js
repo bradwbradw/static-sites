@@ -1,3 +1,4 @@
+
 var SC = angular.module('StudioClementine', ['ui.router']);
 
 SC.controller('mainController', function ($scope, $state) {
