@@ -1,8 +1,63 @@
-
 var SC = angular.module('StudioClementine', ['ui.router']);
+
+
+let styles = {
+  shop:{
+    "background-color":"green",
+    "color":"pink"
+  },
+  branding:{
+    "background-color":"purple",
+    "color":"magenta"
+  },
+  design:{
+    "background-color":"purple",
+    "color":"magenta"
+  },
+  tattoos:{
+    "background-color":"purple",
+    "color":"magenta"
+  },
+  about:{
+    "background-color":"purple",
+    "color":"magenta"
+  },
+  contact:{
+    "background-color":"#fbf7ea",
+    "color":"#d86628"
+  },
+  home:{
+    "background-color":"#00a35d",
+    "color":"#ffeae5"
+  },
+  "":{
+    "background-color":"#00a35d",
+    "color":"#ffeae5"
+  }
+};
 
 SC.controller('mainController', function ($scope, $state) {
 
+  var state = () => $state.current.name;
+
+  let bodyClass = function () {
+    return $state.current.name.split('.');
+  };
+
+  let colorStyle = function() {
+    return {
+      color:styles[state()]["color"]
+    };
+  };
+
+  let style = function(){
+    return styles[state()];
+  };
+  _.extend($scope, {
+    bodyClass,
+    colorStyle,
+    style
+  })
 });
 
 SC.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -13,45 +68,57 @@ SC.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
     about: {
       name: 'about',
       url: '/about',
-      templateUrl: 'views/about.html'
     },
     branding: {
       name: 'branding',
       url: '/branding',
-      templateUrl: 'views/branding.html'
     },
     contact: {
       name: 'contact',
       url: '/contact',
-      templateUrl: 'views/contact.html'
+
     },
     design: {
       name: 'design',
       url: '/design',
-      templateUrl: 'views/design.html'
-    },
-    home: {
-      name: 'home',
-      url: '/',
-      templateUrl: 'views/home.html'
     },
     shop: {
       name: 'shop',
       url: '/shop',
-      templateUrl: 'views/shop.html'
     },
     tattoos: {
       name: 'tattoos',
       url: '/tattoos',
-      templateUrl: 'views/tattoos.html'
     },
   };
 
 
-  _.each(states, function (state) {
-    $stateProvider.state(state);
+  _.each(states, function (config, name) {
+
+    _.extend(config, {
+      views: {
+        navigation: {
+          templateUrl: 'views/navigation.html'
+        },
+        content: {
+          templateUrl: `views/${name}.html`
+        }
+      }
+    });
+
+
+    $stateProvider.state(config);
   });
+
+  $stateProvider.state(
+    {
+      name: 'home',
+      url: '/',
+          templateUrl: `views/home.html`
+    }
+  );
 
   $urlRouterProvider.otherwise('/');
 
-});
+})
+;

@@ -10,9 +10,10 @@
 
   <base href="/">
 </head>
-<body ng-cloak ng-controller="mainController" ng-class="bodyClass()">
+<body ng-cloak ng-controller="mainController" ng-class="bodyClass()" ng-style="style()">
 
-
+<div ui-view="navigation" id="navigation" ></div>
+<div ui-view="content"></div>
 <div ui-view class="root-ui-view">
 
 </div>

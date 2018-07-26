@@ -11,7 +11,6 @@ body * {
   box-sizing: border-box; }
 
 body {
-  background-color: #00a35d;
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
@@ -19,18 +18,17 @@ body {
 
 body, h1, a, a:visited, a:active {
   font-family: 'Questrial', sans-serif;
-  color: #ffeae5;
   text-decoration: none;
   letter-spacing: 0.1em; }
 
 a {
   font-size: 1.2em; }
 
+a:visited, a:active {
+  color: unset; }
+
 h1 {
   height: 1em; }
-
-.root-ui-view {
-  height: 100%; }
 
 #home {
   height: 100%;
@@ -45,3 +43,11 @@ h1 {
     margin: 0 0 2.75em 0; }
   #home a {
     margin: 0.35em; }
+
+#navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0.5em 0 0 0; }
+  #navigation img {
+    width: 150px; }

@@ -14,7 +14,6 @@ body * {
 }
 
 body {
-  background-color: $backgroundHome;
   height: 100%;
   margin: 0 0 0 0;
   top: 0;
@@ -24,7 +23,6 @@ body {
 
 body, h1, a, a:visited, a:active{
   font-family: 'Questrial', sans-serif;
-  color: $colorHome;
   text-decoration: none;
   letter-spacing: 0.1em;
 }
@@ -33,11 +31,12 @@ a{
   font-size:1.2em;
 }
 
-h1 {
-  height: 1em;
+a:visited, a:active{
+  color:unset;
 }
 
-.root-ui-view{
-  height:100%;
 
+
+h1 {
+  height: 1em;
 }
