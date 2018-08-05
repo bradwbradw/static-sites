@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scramples</title>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+</head>
+<body>
+
+<h2>Scrambler + Samples == SCRAMPLES</h2>
+
+<p>fetch samples from a directory of audio</p>
+
+<p>audio worklet demo</p>
+
+<button onclick="run()">run</button>
+
+<input id="audio_file" type="file" accept="audio/*" multiple/>
+
+<div id="audios"></div>
+<div data-bind="template: { name: 'track-template', foreach: tracks }"></div>
+
+
+<script type="text/html" id="track-template">
+  <h3 data-bind="text: name"></h3>
+  <span data-bind="template: { name: 'sample-template', foreach: samples}"></span>
+</script>
+
+<script type="text/html" id="sample-template">
+  <button data-bind="click: $root.playSample">o</button>
+
+
+</script>
+
+<script type="text/javascript">
+
+  const audioContext = new AudioContext();
+
+  const sampleLengthSeconds = 3;
+
+  const samplesPerChunk = sampleLengthSeconds * audioContext.sampleRate;
+
+  function audioNodesViewModel() {
+
+    let Scramples = this;
+
+    let gainNodes = [];
+
+    let muteAll = () => {
+      _.each(gainNodes, (node, i) =>{
+        console.log("muting", node);
+        gainNodes[i].gain.setValueAtTime(0,audioContext.currentTime);
+      })
+    };
+
+    Scramples.playSample = buffer => {
+      muteAll();
+      var source = audioContext.createBufferSource();
+      let gainNode = audioContext.createGain();
+      source.buffer = buffer;
+      source.connect(gainNode);
+      source.connect(audioContext.destination);
+      source.start(0);
+      gainNodes.push(gainNode);
+    };
+
+    let tracks = ko.observableArray([]);
+
+
+    audio_file.onchange = function () {
+      audioContext.resume();
+      var files = this.files;
+      _.each(files, file => {
+
+        return convertToSlicedAudioBuffers(file)
+          .then(buffers => {
+
+            let track = {
+              name: file.name,
+              samples: buffers
+            };
+            console.log("new track", track);
+
+            tracks.push(track);
+          });
+
+      });
+
+    };
+
+    Scramples.tracks = tracks;
+
+    var convertToSlicedAudioBuffers = file => {
+
+      let url = URL.createObjectURL(file);
+      return fetch(url)
+        .then(res => res.arrayBuffer())
+        .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+        .then(audioBuffer => {
+          const leftChannel = audioBuffer.getChannelData(0);
+          const rightChannel = audioBuffer.getChannelData(1);
+
+          let leftChunks = _.chunk(leftChannel, samplesPerChunk);
+          let rightChunks = _.chunk(rightChannel, samplesPerChunk);
+
+          let audioBuffers = [];
+          _.each(leftChunks, (chunk, i) => {
+
+            let leftChanPCMData = leftChunks[i];
+            let rightChanPCMData = rightChunks[i];
+
+            var audioBuffer = audioContext.createBuffer(2, leftChanPCMData.length, audioContext.sampleRate);
+
+            _.each([0, 1], channel => {
+              // This gives us the actual array that contains the data
+              var channelPCM = audioBuffer.getChannelData(channel);
+              _.each(channelPCM, (sample, i) => {
+                channelPCM[i] = channel === 0 ? leftChanPCMData[i] : rightChanPCMData[i];
+              });
+            });
+
+            audioBuffers.push(audioBuffer)
+          });
+          return audioBuffers;
+
+
+        })
+    };
+
+  };
+
+  ko.applyBindings(new audioNodesViewModel());
+
+
+</script>
+
+</body>
+</html>

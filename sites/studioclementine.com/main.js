@@ -98,7 +98,12 @@ SC.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
     _.extend(config, {
       views: {
         navigation: {
-          templateUrl: 'views/navigation.html'
+          templateUrl: 'views/navigation.html',
+          controller: function($scope){
+            $scope = tint = () => {
+              return
+            }
+          }
         },
         content: {
           templateUrl: `views/${name}.html`

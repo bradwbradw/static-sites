@@ -27,8 +27,8 @@ function serve(site) {
     });
 
     gulp.watch(`sites/${site}/**/*.scss`, [`sass:${site}`]);
-    gulp.watch(`sites/${site}/**/*.html`).on('change', browserSync.reload);
-    gulp.watch(`sites/${site}/**/*.js`).on('change', browserSync.reload);
+    gulp.watch(`sites/${site}/**/*.html`).on('change', bla => { console.log(11111, bla); browserSync.reload()} ) ;
+    gulp.watch(`sites/${site}/**/*.js`).on('change', bla => { console.log(22222, bla); browserSync.reload()});
   });
 
 // Compile sass into CSS & auto-inject into browsers
