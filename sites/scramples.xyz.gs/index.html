@@ -27,11 +27,11 @@
 
 <script type="text/html" id="track-template">
   <h3 data-bind="text: name"></h3>
-  <span data-bind="template: { name: 'sample-template', foreach: samples}"></span>
+  <span data-bind="template: { name: 'sample-template', foreach: sampleIndeces}"></span>
 </script>
 
 <script type="text/html" id="sample-template">
-  <span data-bind="event {hover: $root.playSample }">play</span>
+  <span data-bind="event: {mouseover: function(data, event){ $root.playSample($parent, data, event) } , click: function(data, event){ $root.playSample($parent, data, event) } }">play</span>
 
 
 </script>

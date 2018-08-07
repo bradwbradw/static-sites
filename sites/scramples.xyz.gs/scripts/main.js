@@ -10,8 +10,8 @@ function audioNodesViewModel() {
 
   let lastGainNode;
 
-  Scramples.playSample = buffer => {
-
+  Scramples.playSample = (track, fromPosition) => {
+    console.log(track, fromPosition);
     if (lastGainNode) {
       lastGainNode.gain.setValueAtTime(0, audioContext.currentTime);
       console.log("muting", audioContext.currentTime, lastGainNode);
@@ -19,13 +19,13 @@ function audioNodesViewModel() {
 
     var source = audioContext.createBufferSource();
     let gainNode = audioContext.createGain();
-    source.buffer = buffer;
+    source.buffer = track.buffer;
 
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
     lastGainNode = gainNode;
 
-    source.start(0);
+    source.start(0, fromPosition/audioContext.sampleRate, sampleLengthSeconds);
 
   };
 
@@ -42,12 +42,17 @@ function audioNodesViewModel() {
 
       p = p.then(
         () => {
-          return convertToSlicedAudioBuffers(file)
-            .then(buffers => {
-
+          return convertToAudioBuffer(file)
+            .then(buffer => {
+              let sampleCount = _.ceil(buffer.length / samplesPerChunk);
+              let sampleIndeces = _.range(0, sampleCount);
+              _.each(sampleIndeces, (val, i) => {
+                sampleIndeces[i] = val*samplesPerChunk;
+              });
               let track = {
                 name: file.name,
-                samples: buffers
+                buffer: buffer,
+                sampleIndeces
               };
               console.log("new track", track);
 
@@ -58,13 +63,13 @@ function audioNodesViewModel() {
 
     });
 
-    return p.resolve()
+    return p
 
   };
 
   Scramples.tracks = tracks;
 
-  var convertToSlicedAudioBuffers = file => {
+  var convertToAudioBuffer = file => {
 //    return audioContext.audioWorklet.addModule('scripts/slice-audio.js').then(() => {
 
 
@@ -89,42 +94,10 @@ function audioNodesViewModel() {
 
     })*/
       .then(a => audioContext.decodeAudioData(a))
-      .then(audioBuffer => {
-
-        console.log("2 decoded audio", file.name);
-
-        const leftChannel = audioBuffer.getChannelData(0);
-        const rightChannel = audioBuffer.getChannelData(1);
-
-        let leftChunks = _.chunk(leftChannel, samplesPerChunk);
-        let rightChunks = _.chunk(rightChannel, samplesPerChunk);
-
-        let audioBuffers = [];
-        _.each(leftChunks, (chunk, i) => {
-
-          let leftChanPCMData = leftChunks[i];
-          let rightChanPCMData = rightChunks[i];
-
-          var audioBuffer = audioContext.createBuffer(2, leftChanPCMData.length, audioContext.sampleRate);
-
-          _.each([0, 1], channel => {
-            // This gives us the actual array that contains the data
-            var channelPCM = audioBuffer.getChannelData(channel);
-            _.each(channelPCM, (sample, i) => {
-              channelPCM[i] = channel === 0 ? leftChanPCMData[i] : rightChanPCMData[i];
-            });
-          });
-
-          audioBuffers.push(audioBuffer);
-        });
-        console.log("3 created audio buffers", file.name);
-        return audioBuffers;
-
-      })
 
 
   };
 
-};
+}
 
 ko.applyBindings(new audioNodesViewModel());
