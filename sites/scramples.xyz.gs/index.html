@@ -31,7 +31,9 @@
 </script>
 
 <script type="text/html" id="sample-template">
-  <span data-bind="event: {mouseover: function(data, event){ $root.playSample($parent, data, event) } , click: function(data, event){ $root.playSample($parent, data, event) } }">play</span>
+  <span data-bind="event: {mouseover: function(data, event){ $root.playSample($parent, data, event) } , click: function(data, event){ $root.playSample($parent, data, event) } }">
+    🔊 <span data-bind="text: readibleTime($data)"></span>
+  </span>
 
 
 </script>

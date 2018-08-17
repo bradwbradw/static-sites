@@ -10,6 +10,14 @@ function audioNodesViewModel() {
 
   let lastGainNode;
 
+  let readibleTime = numSamples => {
+    debugger;
+    let seconds = numSamples / audioContext.sampleRate;
+    let minutes = seconds / 60;
+    let remainder = seconds - minutes * 60;
+    return `${minutes > 0 ? minutes + ":" : ""}${seconds}`
+  };
+
   Scramples.playSample = (track, fromPosition) => {
     console.log(track, fromPosition);
     if (lastGainNode) {
@@ -25,7 +33,7 @@ function audioNodesViewModel() {
     gainNode.connect(audioContext.destination);
     lastGainNode = gainNode;
 
-    source.start(0, fromPosition/audioContext.sampleRate, sampleLengthSeconds);
+    source.start(0, fromPosition / audioContext.sampleRate, sampleLengthSeconds);
 
   };
 
@@ -47,7 +55,7 @@ function audioNodesViewModel() {
               let sampleCount = _.ceil(buffer.length / samplesPerChunk);
               let sampleIndeces = _.range(0, sampleCount);
               _.each(sampleIndeces, (val, i) => {
-                sampleIndeces[i] = val*samplesPerChunk;
+                sampleIndeces[i] = val * samplesPerChunk;
               });
               let track = {
                 name: file.name,
