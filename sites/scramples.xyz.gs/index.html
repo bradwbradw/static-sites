@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Scramples</title>
+    <meta charset="UTF-8">
+    <title>Scramples</title>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
 
+    <style type="text/css">
+        a.sample{
+            cursor:pointer;
+            text-decoration: none;
+        }
+        a.sample:hover {
+            text-decoration: underline;
+
+        }
+    </style>
 </head>
 <body>
-
 <h2>Scrambler + Samples == SCRAMPLES</h2>
 
-<p>fetch samples from a directory of audio</p>
-
-<p>audio worklet demo</p>
+<p>slice up a bunch of audio files into samples!</p>
 
 <button onclick="run()">run</button>
 
-<input id="audio_file" type="file" accept="audio/*" multiple/>
+<input id="audio_file" type="file" accept="audio/*" multiple> select audio files...</input>
 
 <div id="audios"></div>
-<div data-bind="template: { name: 'track-template', foreach: tracks }"></div>
+<div data-bind="foreach: tracks ">
+<!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+
+    <h3 data-bind="text: name"></h3>
+    <span data-bind="foreach: samples">
+      <a class="sample" data-bind="
+      event: {
+        click: function(data, event){ $root.playSample($parent, data, event) }
+      }">
+        <span data-bind="text: formattedTime"></span>
+
+      </a>
+    </span>
 
 
-<script type="text/html" id="track-template">
-  <h3 data-bind="text: name"></h3>
-  <span data-bind="template: { name: 'sample-template', foreach: sampleIndeces}"></span>
-</script>
-
-<script type="text/html" id="sample-template">
-  <span data-bind="event: {mouseover: function(data, event){ $root.playSample($parent, data, event) } , click: function(data, event){ $root.playSample($parent, data, event) } }">
-    🔊 <span data-bind="text: readibleTime($data)"></span>
-  </span>
-
-
-</script>
+</div>
 
 <script type="text/javascript" src="scripts/main.js">
 

@@ -10,16 +10,9 @@ function audioNodesViewModel() {
 
   let lastGainNode;
 
-  let readibleTime = numSamples => {
-    debugger;
-    let seconds = numSamples / audioContext.sampleRate;
-    let minutes = seconds / 60;
-    let remainder = seconds - minutes * 60;
-    return `${minutes > 0 ? minutes + ":" : ""}${seconds}`
-  };
 
-  Scramples.playSample = (track, fromPosition) => {
-    console.log(track, fromPosition);
+  Scramples.playSample = (track, sample) => {
+    console.log(track, sample);
     if (lastGainNode) {
       lastGainNode.gain.setValueAtTime(0, audioContext.currentTime);
       console.log("muting", audioContext.currentTime, lastGainNode);
@@ -27,44 +20,81 @@ function audioNodesViewModel() {
 
     var source = audioContext.createBufferSource();
     let gainNode = audioContext.createGain();
-    source.buffer = track.buffer;
+    source.buffer = track.buffer();
 
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
     lastGainNode = gainNode;
 
-    source.start(0, fromPosition / audioContext.sampleRate, sampleLengthSeconds);
+    source.start(0, sample.trackOffset() / audioContext.sampleRate, sampleLengthSeconds);
 
   };
 
   let tracks = ko.observableArray([]);
 
+  function Sample(options) {
+    _.defaults(options, {
+      trackOffset: null
+    });
+    var Sample = this;
+    Sample.trackOffset = ko.observable(options.trackOffset);
+
+    Sample.formattedTime = ko.computed(() => {
+      let offset = Sample.trackOffset();
+      if (_.isNumber(offset)){
+
+        let seconds = _.floor(offset / audioContext.sampleRate);
+        let minutes = _.floor(seconds / 60);
+        let remainder = seconds % 60;
+        let secondsFormatted = _.padStart(remainder+'', 2, '0') + "🔊";
+        if (minutes > 0){
+          return `${minutes}:${secondsFormatted}`;
+        } else {
+          return secondsFormatted;
+        }
+      } else {
+        return "...";
+      }
+    });
+  }
+
+  function Track(options) {
+    var Track = this;
+    _.defaults(options, {
+      name: null,
+      buffer: null,
+      samples: []
+    });
+    Track.name = ko.observable(options.name);
+    Track.buffer = ko.observable(options.buffer);
+    Track.samples = ko.observableArray(options.samples)
+  }
 
   audio_file.onchange = function () {
+    console.log("reading " + _.size(this.files) + " new files")
     audioContext.resume();
     var files = this.files;
     let p = new Promise((resolve, reject) => {
       resolve();
     });
-    _.each(files, file => {
-
+    _.each(files, (file, index) => {
+      console.log("converting to audio buffer...", file);
       p = p.then(
         () => {
+          let track = new Track({
+            name:file.name
+          });
+          tracks.push(track);
           return convertToAudioBuffer(file)
             .then(buffer => {
               let sampleCount = _.ceil(buffer.length / samplesPerChunk);
-              let sampleIndeces = _.range(0, sampleCount);
-              _.each(sampleIndeces, (val, i) => {
-                sampleIndeces[i] = val * samplesPerChunk;
+              let samples = _.range(0, sampleCount);
+              _.each(samples, (val, i) => {
+                let sample = new Sample({trackOffset: i * samplesPerChunk});
+                tracks()[index].samples.push(sample);
               });
-              let track = {
-                name: file.name,
-                buffer: buffer,
-                sampleIndeces
-              };
-              console.log("new track", track);
 
-              tracks.push(track);
+              tracks()[index].buffer(buffer);
             })
 
         });
