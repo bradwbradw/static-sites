@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Scramples</title>
+  <meta charset="UTF-8">
+  <title>Scramples</title>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
 
-    <style type="text/css">
-        a.sample{
-            cursor:pointer;
-            text-decoration: none;
-        }
-        a.sample:hover {
-            text-decoration: underline;
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js"></script>
 
-        }
-    </style>
+  <style type="text/css">
+    a.sample {
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    a.sample:hover {
+      text-decoration: underline;
+
+    }
+  </style>
 </head>
 <body>
-<h2>Scrambler + Samples == SCRAMPLES</h2>
+<h2>Scrambler + Samples == ! s c r a m p l e s !</h2>
 
 <p>slice up a bunch of audio files into samples!</p>
 
-<button onclick="run()">run</button>
+<ul class="preferences">
+  <li>
 
-<input id="audio_file" type="file" accept="audio/*" multiple> select audio files...</input>
+    <label for="repeat-toggle">
+      Repeat-mode <span data-bind="text: repeat()? '[On]':'[Off]' "></span>
+    </label>
+    <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat">
+  </li>
+  <li>
+
+    <label for="sample-length">
+      Sample Length (<span data-bind="text: roundedSampleLength"></span>)
+    </label>
+
+    <input id="sample-length" type="number" data-bind="value: sampleLengthString">
+  </li>
+</ul>
+
+<ul>
+  <!-- WIP
+  <li><<button data-bind="click: save">Save</button> </li>
+  -->
+</ul>
+
+<input id="audio_file" type="file" accept="audio/*" multiple value="select audio file..."/>
 
 <div id="audios"></div>
 <div data-bind="foreach: tracks ">
-<!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+  <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
-    <h3 data-bind="text: name"></h3>
-    <span data-bind="foreach: samples">
+  <h3 data-bind="text: name"></h3>
+  <p data-bind="ifnot: buffer">processing audio...</p>
+  <p data-bind="if: error"><span data-bind="text: error"></span></p>
+  <span data-bind="foreach: samples">
       <a class="sample" data-bind="
       event: {
         click: function(data, event){ $root.playSample($parent, data, event) }
@@ -46,10 +73,9 @@
 
 </div>
 
-<script type="text/javascript" src="scripts/main.js">
+<pre data-bind="text: ko.toJSON(tracks, null, 2)"></pre>
 
-
-</script>
+<script type="text/javascript" src="scripts/main.js"></script>
 
 </body>
 </html>
