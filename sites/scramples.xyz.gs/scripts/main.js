@@ -2,7 +2,7 @@ const audioContext = new AudioContext();
 
 const bindingRateLimit = 300;
 
-function audioNodesViewModel() {
+function ScramplesViewModel() {
 
   let Scramples = this;
 
@@ -14,7 +14,6 @@ function audioNodesViewModel() {
   });
 
   Scramples.roundedSampleLength = ko.computed(() => {
-    console.log(Scramples.sampleLengthSeconds());
     return _.round(Scramples.sampleLengthSeconds(), 3);
   });
 
@@ -42,11 +41,9 @@ function audioNodesViewModel() {
     lastGainNode = gainNode;
 
     let offsetSeconds = sample.trackOffset() / audioContext.sampleRate;
-    console.log(offsetSeconds);
     if (Scramples.repeat()) {
       source.loop = true;
       source.loopStart = offsetSeconds;
-      let length = Scramples.sampleLengthSeconds();
       source.loopEnd = offsetSeconds + Scramples.sampleLengthSeconds();
       source.start(0, offsetSeconds);
     } else {
@@ -83,64 +80,64 @@ function audioNodesViewModel() {
     });
   }
 
-
-  let idCounter = 1;
+  function newId() {
+    let alltracks = Scramples.tracks();
+    let maxTrack = _.maxBy(alltracks, "id");
+    let max = _.get(maxTrack, "id", 0);
+    return max + 1;
+  }
 
   function Track(options) {
+
     var Track = this;
     _.defaults(options, {
+      id: options.id ? options.id : newId(),
       name: null,
-      buffer: null,
-      samples: [],
+      buffer: null
     });
-    console.log(options);
-    Track.id = idCounter++;
+
+
+    if (!options.buffer && _.get(options, "pcmL")) {
+      // initializing from saved PCM data
+      // so convert to buffer
+      options.buffer = convertPCMToAudioBuffer(options.pcmL, options.pcmR);
+      console.log("loaded saved pcm data!", options.buffer);
+    }
+    let sampleCount = _.ceil(options.buffer.length / Scramples.pcmSamplesPerSample());
+    let samples = _.range(0, sampleCount);
+    _.each(samples, (val, i) => {
+      samples[i] = new Sample({trackOffset: i * Scramples.pcmSamplesPerSample()});
+    });
+
+    Track.id = options.id;
     Track.name = ko.observable(options.name);
     Track.buffer = ko.observable(options.buffer);
-    Track.samples = ko.observableArray(options.samples).extend({rateLimit: bindingRateLimit});
+    Track.samples = ko.observableArray(samples).extend({rateLimit: bindingRateLimit});
     Track.error = ko.observable(null);
-    Track.values = ko.pureComputed(() => {
-      return {
-        id: Track.id,
-        name: Track.name(),
-        buffer: Track.buffer(),
-        samples: Track.samples(),
-        error: Track.error()
-      }
-    });
+
+    console.log("new track", options);
   }
 
   audio_file.onchange = function () {
     console.log("reading " + _.size(this.files) + " new files");
     audioContext.resume();
     var files = this.files;
-    let p = new Promise((resolve, reject) => {
+    let p = new Promise((resolve) => {
       resolve();
     });
-    _.each(files, (file, index) => {
-      console.log("converting to audio buffer...", file);
+    _.each(files, (file) => {
       p = p.then(
         () => {
-          let track = new Track({
-            name: file.name
-          });
-          tracks.push(track);
-          let index = _.findIndex(tracks(), {id: track.id});
           return convertToAudioBuffer(file)
             .then(buffer => {
-              console.log('done converting audio data');
-              let sampleCount = _.ceil(buffer.length / Scramples.pcmSamplesPerSample());
-              let samples = _.range(0, sampleCount);
-              _.each(samples, (val, i) => {
-                let sample = new Sample({trackOffset: i * Scramples.pcmSamplesPerSample()});
-                tracks()[index].samples.push(sample);
+              let track = new Track({
+                name: file.name,
+                buffer: buffer
               });
-
-              tracks()[index].buffer(buffer);
+              tracks.push(track);
             })
             .catch(err => {
               console.log(err);
-              tracks()[index].error("error decoding audio");
             })
 
         });
@@ -154,16 +151,37 @@ function audioNodesViewModel() {
   Scramples.tracks = tracks;
 
   var convertToAudioBuffer = file => {
-
     let url = URL.createObjectURL(file);
     return fetch(url)
       .then(res => {
-        console.log("1 fetched", file.name);
         return res.arrayBuffer()
       })
       .then(a => audioContext.decodeAudioData(a))
 
+  };
 
+  var convertPCMToAudioBuffer = (leftPCM, rightPCM) => {
+    let buffer = new AudioBuffer({
+      length: _.size(leftPCM),
+      numberOfChannels: _.size(leftPCM) && _.size(rightPCM) ? 2 : 1,
+      sampleRate: audioContext.sampleRate
+    });
+
+    let leftBuffer = buffer.getChannelData(0);
+
+    _.each(leftBuffer, (sample, i) => {
+      leftBuffer[i] = leftPCM[i];
+    });
+
+    if (buffer.numberOfChannels === 2) {
+      let rightBuffer = buffer.getChannelData(1);
+
+      _.each(rightBuffer, (sample, i) => {
+        rightBuffer[i] = rightPCM[i];
+      });
+    }
+
+    return buffer;
   };
 
   let db = new Dexie("tracks");
@@ -174,38 +192,42 @@ function audioNodesViewModel() {
 
   // save WIP .. not sure i can save audioBuffers
 
+  let convertToSaveable = (track) => {
+
+    return {
+      id: track.id,
+      name: track.name(),
+      pcmL: track.buffer() ? track.buffer().getChannelData(0) : null,
+      pcmR: track.buffer() ? track.buffer().getChannelData(1) : null,
+      error: track.error()
+    }
+  };
   Scramples.save = function () {
 
+    var lastTrack;
     return Promise.all(_.map(Scramples.tracks(), track => {
-
-      return db.tracks.put(track.values(), track.id);
+      lastTrack = track;
+      let toSave = convertToSaveable(track);
+      console.log("about to save: ",toSave);
+      return db.tracks.put(toSave, track.id);
     }))
-      .then(() => {
-
-        return db.tracks.get(0);
-
-      })
-      .then(result => {
-
-        console.log("result", result);
-      })
       .catch(error => {
-
         console.error("tracks save error:", error);
-      });
+        if (_.includes(error.message, "QuotaExceededError")){
+          alert(`ran out of local storage.  couldn't save ${lastTrack.name()}`);
+        }
+      })
+  };
 
-
-  }
-
-  //load();
+  load();
 
   // auto-loading ... wip
   function load() {
     db.tracks.each(t => {
-
+      console.log("loaded.. about to construct track from ", t);
       Scramples.tracks.push(new Track(t));
-    })
+    });
   }
 }
 
-ko.applyBindings(new audioNodesViewModel());
+ko.applyBindings(new ScramplesViewModel());

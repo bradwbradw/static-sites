@@ -1,0 +1,9 @@
+body {
+  font-family: 'Roboto Mono', monospace; }
+
+a.sample {
+  cursor: pointer;
+  text-decoration: none; }
+
+a.sample:hover {
+  text-decoration: underline; }
