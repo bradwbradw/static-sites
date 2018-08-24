@@ -1,14 +1,112 @@
+@import "reset.scss";
 
-    body {
-      font-family: 'Roboto Mono', monospace;
-    }
+$palegrey: #f7f7f7;
+$top-bar-height: 2.5em;
+$sidebar-width: 40vh;
 
-    a.sample {
-      cursor: pointer;
-      text-decoration: none;
-    }
+body {
+  background: $palegrey;
+}
 
-    a.sample:hover {
-      text-decoration: underline;
+body * {
+  font-family: 'Roboto Mono', monospace;
 
-    }
+}
+
+input {
+  background: rgba(0, 0, 0, 0);
+}
+
+.marquee-gap {
+  width: 16em;
+  display: inline-block;
+}
+
+.top-bar {
+  height: $top-bar-height;
+  background: black;
+  color: $palegrey;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  span {
+    margin: 0;
+    padding: 0;
+  }
+
+}
+
+button {
+  width: 100%;
+  background-color: black;
+  color: $palegrey;
+}
+
+#file_picker {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+}
+
+#file_picker + label {
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: black;
+    display: inline-block;
+
+  }
+
+.preferences {
+  border: 1px solid black;
+  height: 100%;
+  width: $sidebar-width;
+  position: fixed;
+  top: $top-bar-height;
+  left: 0;
+
+  li {
+    margin: 1em;
+
+  }
+}
+
+section {
+  position: absolute;
+  padding: 1.5em;
+  top: $top-bar-height;
+  left: $sidebar-width;
+}
+
+.track {
+  margin-bottom: 2em;
+}
+
+.speaker-icon {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background-image: url('images/speaker-black.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+}
+
+a.sample {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.sample:hover {
+  text-decoration: underline;
+
+}

@@ -7,9 +7,10 @@
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<h2>Scrambler + Samples == ! s c r a m p l e s !</h2>
 
-<p>slice up a bunch of audio files into samples!</p>
+<div class="top-bar">
+  <marquee>SCRAMPLES <span class="marquee-gap"></span>SCRAMPLES <span class="marquee-gap"></span> SCRAMPLES</marquee>
+</div>
 
 <ul class="preferences">
   <li>
@@ -27,35 +28,38 @@
 
     <input id="sample-length" type="number" data-bind="value: sampleLengthString">
   </li>
+
+
+  <li>
+    <button data-bind="click: save">Save</button>
+  </li>
+
+  <li>
+    <input id="file_picker" type="file" accept="audio/*" multiple value="select audio file..."/>
+    <label for="file_picker">Add Audio</label>
+  </li>
 </ul>
 
-<ul>
-  <li><button data-bind="click: save">Save</button> </li>
-</ul>
+<section>
+  <div data-bind="foreach: tracks ">
+    <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
-<input id="audio_file" type="file" accept="audio/*" multiple value="select audio file..."/>
-
-<div id="audios"></div>
-<div data-bind="foreach: tracks ">
-  <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
-
-  <h3 data-bind="text: name"></h3>
-  <p data-bind="ifnot: buffer">processing audio...</p>
-  <p data-bind="if: error"><span data-bind="text: error"></span></p>
-  <span data-bind="foreach: samples">
-      <a class="sample" data-bind="
+    <div class="track">
+      <h3 data-bind="text: name"></h3>
+      <p data-bind="ifnot: buffer">processing audio...</p>
+      <p data-bind="if: error"><span data-bind="text: error"></span></p>
+      <div data-bind="foreach: samples">
+        <div class="speaker-icon" data-bind="
       event: {
         click: function(data, event){ $root.playSample($parent, data, event) }
-      }">
-        <span data-bind="text: formattedTime"></span>
+      }"></div>
+      </div>
+    </div>
 
-      </a>
-    </span>
+  </div>
+</section>
 
-
-</div>
-
-<pre data-bind="text: ko.toJSON(tracks, null, 2)"></pre>
+<!--<pre data-bind="text: ko.toJSON(tracks, null, 2)"></pre>-->
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>

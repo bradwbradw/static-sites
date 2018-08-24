@@ -118,7 +118,7 @@ function ScramplesViewModel() {
     console.log("new track", options);
   }
 
-  audio_file.onchange = function () {
+  file_picker.onchange = function () {
     console.log("reading " + _.size(this.files) + " new files");
     audioContext.resume();
     var files = this.files;
@@ -221,7 +221,6 @@ function ScramplesViewModel() {
 
   load();
 
-  // auto-loading ... wip
   function load() {
     db.tracks.each(t => {
       console.log("loaded.. about to construct track from ", t);
