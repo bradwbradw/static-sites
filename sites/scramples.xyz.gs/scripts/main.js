@@ -1,6 +1,33 @@
-const audioContext = new AudioContext();
 
+let AudioContext;
+
+if (_.isFunction(window.AudioContext)){
+  AudioContext = window.AudioContext;
+
+}  else if (_.isFunction(webkitAudioContext)){
+  AudioContext = window.webkitAudioContext;
+}
+const audioContext = new AudioContext;
 const bindingRateLimit = 300;
+
+// webkit's decodeAudioData doesn't return a promise
+// https://stackoverflow.com/questions/48597747/how-to-play-a-sound-file-safari-with-web-audio-api
+
+audioContext.decodeAudioDataPromise= (audioData) => {
+  return new Promise((resolve, reject) => {
+
+    audioContext.decodeAudioData(
+      audioData,
+      audioBuffer => {
+        resolve(audioBuffer);
+      },
+      error =>{
+        console.error(error);
+        reject(error);
+      }
+    )
+  })
+};
 
 function ScramplesViewModel() {
 
@@ -157,16 +184,18 @@ function ScramplesViewModel() {
       .then(res => {
         return res.arrayBuffer()
       })
-      .then(a => audioContext.decodeAudioData(a))
+      .then(a => {
+        return audioContext.decodeAudioDataPromise(a);
+      })
 
   };
 
   var convertPCMToAudioBuffer = (leftPCM, rightPCM) => {
-    let buffer = new AudioBuffer({
-      length: _.size(leftPCM),
-      numberOfChannels: _.size(leftPCM) && _.size(rightPCM) ? 2 : 1,
-      sampleRate: audioContext.sampleRate
-    });
+    let buffer = audioContext.createBuffer(
+      _.size(leftPCM) && _.size(rightPCM) ? 2 : 1, //number of channels
+      _.size(leftPCM), // length
+      audioContext.sampleRate // sample rate
+    );
 
     let leftBuffer = buffer.getChannelData(0);
 

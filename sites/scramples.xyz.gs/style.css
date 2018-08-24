@@ -18,8 +18,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
   vertical-align: baseline; }
 
 /* HTML5 display-role reset for older browsers */
@@ -36,11 +34,6 @@ ol, ul {
 blockquote, q {
   quotes: none; }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
-
 table {
   border-collapse: collapse;
   border-spacing: 0; }
@@ -52,6 +45,23 @@ input[type=file] {
   overflow: hidden;
   position: absolute;
   z-index: -1; }
+
+#sample-length-slider {
+  cursor: pointer;
+  border: 0.6em solid #f7f7f7;
+  border-left: 0;
+  border-right: 0;
+  top: 0.25em;
+  height: 3px; }
+  #sample-length-slider .ui-slider-handle {
+    top: -10px;
+    height: 25px;
+    width: 2px;
+    margin: 0;
+    border-width: 0; }
+  #sample-length-slider .ui-slider-handle:focus {
+    width: 4px;
+    outline: 0; }
 
 body {
   background: #f7f7f7; }
@@ -96,7 +106,7 @@ button::selection,
 
 span.selectedSetting {
   text-transform: uppercase;
-  border: 1px solid black;
+  border: solid black;
   border-width: 0 0 1.7px 0; }
 
 span.unSelectedSetting {
@@ -110,7 +120,7 @@ button, #file-picker-label {
   background-color: #f7f7f7;
   border: 1px solid black;
   color: black;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center; }
