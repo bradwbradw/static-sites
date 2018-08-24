@@ -1,6 +1,8 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
+const notify = require("gulp-notify");
+const plumber = require('gulp-plumber');
 const _ = require('lodash');
 
 // Static server
@@ -39,10 +41,24 @@ function serve(site) {
 
 // Compile sass into CSS & auto-inject into browsers
   gulp.task(`sass:${site}`, function () {
-    return gulp.src(`sites/${site}/style/*.scss`)
-      .pipe(sass())
-      .pipe(gulp.dest(`sites/${site}`))
-      .pipe(browserSync.stream());
+
+
+
+//    try {
+      return gulp.src(`sites/${site}/style/*.scss`)
+
+
+        .pipe(plumber({errorHandler: (e) => {
+            notify.onError("Error: <%= error.message %>")(e)
+          }
+        }))
+
+        .pipe(sass())
+        .pipe(gulp.dest(`sites/${site}`))
+        .pipe(browserSync.stream());
+ //   } catch (error){
+  //    notify(error)
+  //  }
   });
 
 }
