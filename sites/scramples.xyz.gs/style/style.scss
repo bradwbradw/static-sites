@@ -1,6 +1,8 @@
 @import "reset.scss";
 
 $palegrey: #f7f7f7;
+
+$shadow: 5px;
 $top-bar-height: 2.5em;
 $sidebar-width: 40vh;
 
@@ -13,7 +15,18 @@ body * {
 
 }
 
-input {
+input, label, span {
+
+  background: rgba(0, 0, 0, 0);
+}
+
+label::selection,
+input::selection,
+span::selection,
+button::selection,
+.track p::selection,
+.track div::selection,
+.track h3::selection {
   background: rgba(0, 0, 0, 0);
 }
 
@@ -41,30 +54,35 @@ input {
 
 }
 
-button {
+.settings-toggle {
+  cursor: pointer;
+}
+
+span.selectedSetting {
+  text-transform: uppercase;
+  border: 1px solid black;
+  border-width: 0 0 1.7px 0;
+}
+
+span.unSelectedSetting {
+  text-transform: none;
+}
+
+button, #file-picker-label {
+
+  cursor: pointer;
   width: 100%;
-  background-color: black;
-  color: $palegrey;
+  height: 2.5em;
+  font-size: 1em;
+  background-color: $palegrey;
+  border: 1px solid black;
+  color: black;
+  box-shadow: $shadow $shadow 0px 0px rgba(0, 0, 0, 0.75);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-#file_picker {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-
-}
-
-#file_picker + label {
-    width: 100%;
-    text-align: center;
-    color: white;
-    background-color: black;
-    display: inline-block;
-
-  }
 
 .preferences {
   border: 1px solid black;
@@ -73,8 +91,12 @@ button {
   position: fixed;
   top: $top-bar-height;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   li {
+    width: 80%;
     margin: 1em;
 
   }
@@ -89,6 +111,10 @@ section {
 
 .track {
   margin-bottom: 2em;
+
+  h3{
+    text-transform: uppercase;
+  }
 }
 
 .speaker-icon {
@@ -110,3 +136,12 @@ a.sample:hover {
   text-decoration: underline;
 
 }
+
+#sample-length-slider{
+
+    margin-top: 0.5em;
+  width:100%;
+    display: inline-block;
+
+}
+

@@ -8,7 +8,7 @@ function ScramplesViewModel() {
 
   let lastGainNode;
 
-  Scramples.sampleLengthString = ko.observable(3);
+  Scramples.sampleLengthString = ko.observable("3");
   Scramples.sampleLengthSeconds = ko.computed(() => {
     return Scramples.sampleLengthString() * 1
   });
@@ -17,6 +17,7 @@ function ScramplesViewModel() {
     return _.round(Scramples.sampleLengthSeconds(), 3);
   });
 
+  Scramples.quantity = ko.observable("0");
 
   Scramples.pcmSamplesPerSample = ko.computed(() => {
     return Scramples.sampleLengthSeconds() * audioContext.sampleRate;
