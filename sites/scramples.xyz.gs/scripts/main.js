@@ -1,19 +1,18 @@
-
 let AudioContext;
 
-if (_.isFunction(window.AudioContext)){
+if (_.isFunction(window.AudioContext)) {
   AudioContext = window.AudioContext;
 
-}  else if (_.isFunction(webkitAudioContext)){
+} else if (_.isFunction(webkitAudioContext)) {
   AudioContext = window.webkitAudioContext;
 }
 const audioContext = new AudioContext;
-const bindingRateLimit = 300;
+const bindingRateLimit = 50;
 
 // webkit's decodeAudioData doesn't return a promise
 // https://stackoverflow.com/questions/48597747/how-to-play-a-sound-file-safari-with-web-audio-api
 
-audioContext.decodeAudioDataPromise= (audioData) => {
+audioContext.decodeAudioDataPromise = (audioData) => {
   return new Promise((resolve, reject) => {
 
     audioContext.decodeAudioData(
@@ -21,7 +20,7 @@ audioContext.decodeAudioDataPromise= (audioData) => {
       audioBuffer => {
         resolve(audioBuffer);
       },
-      error =>{
+      error => {
         console.error(error);
         reject(error);
       }
@@ -223,38 +222,101 @@ function ScramplesViewModel() {
   // save WIP .. not sure i can save audioBuffers
 
   let convertToSaveable = (track) => {
-
+    let buffer = track.buffer();
     return {
       id: track.id,
       name: track.name(),
-      pcmL: track.buffer() ? track.buffer().getChannelData(0) : null,
-      pcmR: track.buffer() ? track.buffer().getChannelData(1) : null,
+      pcmL: buffer.getChannelData(0),
+      pcmR: buffer.numberOfChannels > 1 ? track.buffer().getChannelData(1) : null,
       error: track.error()
     }
   };
+
+  var lastTrackSaved;
+
+  let makeTrackSaveFn = track => {
+    return () => {
+
+      lastTrackSaved = track;
+      let toSave = convertToSaveable(track);
+      console.log("about to save: ", toSave);
+      return db.tracks.put(toSave, track.id)
+        .then((r) => {
+          console.log("should be saved now");
+          return r;
+        })
+        .catch(error => {
+          return Promise.reject(error);
+        })
+
+
+    }
+  };
+
+  let doSave = () => {
+    return chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
+  };
   Scramples.saving = ko.observable(false);
   Scramples.save = function () {
-    Scramples.saving = true;
-    var lastTrack;
-    return Promise.all(_.map(Scramples.tracks(), track => {
-      lastTrack = track;
-      let toSave = convertToSaveable(track);
-      console.log("about to save: ",toSave);
-      return db.tracks.put(toSave, track.id);
-    }))
-      .then((results)=>{
-        Scramples.saving = false;
+//    alert("now saving...");
+    Scramples.saving(true);
+    doSave()
+      .then(() => {
+        Scramples.saving(false);
       })
-      .catch(error => {
-        Scramples.saving = false;
-        console.error("tracks save error:", error);
-        if (_.includes(error.message, "QuotaExceededError")){
-          alert(`ran out of local storage.  couldn't save ${lastTrack.name()}`);
+      .catch((error) => {
+        console.warn("tracks save error:", error);
+        if (_.includes(error.message, "QuotaExceededError")) {
+          alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
+          enablePersistance();
+        } else {
+          alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
         }
+        Scramples.saving(false);
       })
+
   };
 
   load();
+
+  function enablePersistance() {
+    if (_.isFunction(_.get(navigator, 'storage.persist'))) {
+      navigator.storage.persist()
+        .then(isPersisted => {
+
+          if (isPersisted) {
+            console.log(":) Storage is successfully persisted.");
+            showEstimatedQuota()
+          } else {
+            console.log(":( Storage is not persisted.");
+//            console.log("Trying to persist..:");
+           /* if (await persist()
+          )
+            {
+              console.log(":) We successfully turned the storage to be persisted.");
+            }
+          else
+            {
+              console.log(":( Failed to make storage persisted");
+            }*/
+          }
+        })
+
+    } else {
+      console.log("no persist available...")
+    }
+  }
+
+  async function showEstimatedQuota() {
+  if (navigator.storage && navigator.storage.estimate) {
+    const estimation = await navigator.storage.estimate();
+    console.log(`Quota: ${estimation.quota}`);
+    console.log(`Usage: ${estimation.usage}`);
+  } else {
+    console.error("StorageManager not found");
+  }
+}
+
 
   function load() {
     db.tracks.each(t => {
@@ -262,6 +324,39 @@ function ScramplesViewModel() {
       Scramples.tracks.push(new Track(t));
     });
   }
+
+  function chainPromises(promises, rejectionOkay) {
+    let p = Promise.resolve();
+    _.each(promises, promise => {
+      if (rejectionOkay) {
+        p = p.then(promise)
+          .catch(err => {
+            console.error("tolerant error:", err);
+            return new Promise(resolve => resolve());
+          });
+      } else {
+        p = p.then(promise);
+      }
+    });
+    return p;
+  }
 }
 
 ko.applyBindings(new ScramplesViewModel());
+
+window.addEventListener('load', e => {
+//  new PWAConfApp();
+  registerSW(); // <-- Add this
+});
+
+async function registerSW() { // (1)
+  if ('serviceWorker' in navigator) { // (2)
+    try {
+      await navigator.serviceWorker.register('./scripts/service-worker.js'); // (3)
+    } catch (e) {
+      alert('ServiceWorker registration failed. Sorry about that.'); // (4)
+    }
+  } else {
+    console.log("done registering SW i think?");
+    }
+}

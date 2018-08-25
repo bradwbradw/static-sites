@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Scramples</title>
+  <link rel="manifest" href="/manifest.json">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
 
@@ -25,7 +26,7 @@
   <li>
 
     <label for="repeat-toggle" class="settings-toggle">
-      looping <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
+      looping: <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
         data-bind="css: {selectedSetting: !repeat(), unSelectedSetting: repeat()} ">off</span>
     </label>
     <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat" style="display:none">
@@ -34,7 +35,7 @@
 
     <label for="sample-length-slider">
 
-      sample length (<span data-bind="text: roundedSampleLength"></span>s)
+      duration: <span data-bind="text: roundedSampleLength"></span>s
     </label>
 
     <span id="sample-length-slider"
@@ -55,7 +56,7 @@
   </li>
 
   <li>
-    <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')>save</button>
+    <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
   </li>
 
 </ul>
