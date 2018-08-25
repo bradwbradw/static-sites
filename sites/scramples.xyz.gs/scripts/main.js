@@ -343,20 +343,3 @@ function ScramplesViewModel() {
 }
 
 ko.applyBindings(new ScramplesViewModel());
-
-window.addEventListener('load', e => {
-//  new PWAConfApp();
-  registerSW(); // <-- Add this
-});
-
-async function registerSW() { // (1)
-  if ('serviceWorker' in navigator) { // (2)
-    try {
-      await navigator.serviceWorker.register('./scripts/service-worker.js'); // (3)
-    } catch (e) {
-      alert('ServiceWorker registration failed. Sorry about that.'); // (4)
-    }
-  } else {
-    console.log("done registering SW i think?");
-    }
-}
