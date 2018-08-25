@@ -232,8 +232,9 @@ function ScramplesViewModel() {
       error: track.error()
     }
   };
+  Scramples.saving = ko.observable(false);
   Scramples.save = function () {
-
+    Scramples.saving = true;
     var lastTrack;
     return Promise.all(_.map(Scramples.tracks(), track => {
       lastTrack = track;
@@ -241,7 +242,11 @@ function ScramplesViewModel() {
       console.log("about to save: ",toSave);
       return db.tracks.put(toSave, track.id);
     }))
+      .then((results)=>{
+        Scramples.saving = false;
+      })
       .catch(error => {
+        Scramples.saving = false;
         console.error("tracks save error:", error);
         if (_.includes(error.message, "QuotaExceededError")){
           alert(`ran out of local storage.  couldn't save ${lastTrack.name()}`);

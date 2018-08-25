@@ -55,7 +55,7 @@
   </li>
 
   <li>
-    <button data-bind="click: save">save</button>
+    <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')>save</button>
   </li>
 
 </ul>
