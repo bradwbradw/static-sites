@@ -280,6 +280,7 @@ function ScramplesViewModel() {
   load();
 
   function enablePersistance() {
+    promptToInstall();
     if (_.isFunction(_.get(navigator, 'storage.persist'))) {
       navigator.storage.persist()
         .then(isPersisted => {
