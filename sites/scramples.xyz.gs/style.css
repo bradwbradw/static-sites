@@ -151,6 +151,10 @@ section {
     font-weight: 400;
     text-transform: uppercase; }
 
+.samples {
+  display: flex;
+  flex-wrap: wrap; }
+
 .speaker-icon {
   display: inline-block;
   width: 45px;
@@ -171,3 +175,23 @@ a.sample:hover {
   margin-top: 0.5em;
   width: 100%;
   display: inline-block; }
+
+.track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+
+.delete-icon {
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  background-image: url("images/trash.png");
+  width: 1.25em;
+  height: 1.25em;
+  margin: 0 0.75em 0 0.75em;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat; }
+
+.playing {
+  background-color: lightblue; }

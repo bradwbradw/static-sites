@@ -66,14 +66,19 @@
     <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
     <div class="track">
-      <h3 data-bind="text: name"></h3> <div class="delete-icon"></div>
+        <div class="track-header">
+            <h3 data-bind="text: name"></h3>
+            <div class="delete-icon" data-bind="click: deleteTrack"></div>
+        </div>
+
       <p data-bind="ifnot: buffer">processing audio...</p>
       <p data-bind="if: error"><span data-bind="text: error"></span></p>
-      <div data-bind="foreach: samples">
+      <div data-bind="foreach: samples" class="samples">
         <div class="speaker-icon" data-bind="
       event: {
-        click: function(data, event){ $root.playSample($parent, data, event) }
-      }"></div>
+        click: function(data, event){ data.play() }
+      },
+        css: {playing: playing}"></div>
       </div>
     </div>
 
@@ -115,8 +120,8 @@
   }
 
   
-  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt
-  let deferredPrompt;
+//  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt
+  var deferredPrompt;
 
   window.addEventListener('beforeinstallprompt', (e) => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
