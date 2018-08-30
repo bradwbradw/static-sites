@@ -2,7 +2,8 @@ var CACHE_NAME = 'scramples-cache-v1';
 var urlsToCache = [
   '/',
   '/style.css',
-  '/scripts/main.js'
+  '/scripts/main.js',
+  '/scripts/jqueryui-binding.js'
 ];
 console.log(urlsToCache);
 
@@ -24,12 +25,15 @@ serviceWorker.addEventListener('install', function(event) {
   );
 });
 
+
+
+
 serviceWorker.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
         // Cache hit - return response
-        console.log("sw cache hit", event.request, response);
+//        console.log("sw cache hit", event.request, response);
         if (response) {
           return response;
         }
@@ -55,7 +59,7 @@ serviceWorker.addEventListener('fetch', function(event) {
 
             caches.open(CACHE_NAME)
               .then(function(cache) {
-                console.log("sw cache put", event.request, responseToCache);
+//                console.log("sw cache put", event.request, responseToCache);
                 cache.put(event.request, responseToCache);
               });
 
@@ -65,3 +69,4 @@ serviceWorker.addEventListener('fetch', function(event) {
       })
     );
 });
+

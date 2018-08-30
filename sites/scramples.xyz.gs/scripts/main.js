@@ -164,7 +164,7 @@ function ScramplesViewModel() {
       // initializing from saved PCM data
       // so convert to buffer
       options.buffer = convertPCMToAudioBuffer(options.pcmL, options.pcmR);
-      console.log("loaded saved pcm data!", options.buffer);
+//      console.log("loaded saved pcm data!", options.buffer);
     }
 
     let sampleCount = _.ceil(options.buffer.length / Scramples.pcmSamplesPerSample());
@@ -293,10 +293,10 @@ function ScramplesViewModel() {
 
       lastTrackSaved = track;
       let toSave = convertToSaveable(track);
-      console.log("about to save: ", toSave);
+//      console.log("about to save: ", toSave);
       return db.tracks.put(toSave, track.id)
         .then((r) => {
-          console.log("should be saved now");
+//          console.log("should be saved now");
           return r;
         })
         .catch(error => {
@@ -309,8 +309,8 @@ function ScramplesViewModel() {
 
   Scramples.saving = ko.observable(false);
   Scramples.save = function () {
-//    alert("now saving...");
     Scramples.saving(true);
+    enablePersistance().then(()=>{
     chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
       .then(() => {
         Scramples.saving(false);
@@ -319,21 +319,23 @@ function ScramplesViewModel() {
         console.warn("tracks save error:", error);
         if (_.includes(error.message, "QuotaExceededError")) {
           alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
-          enablePersistance();
+
         } else {
           alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
         }
         Scramples.saving(false);
       })
+    });
+
 
   };
 
   load();
 
-  function enablePersistance() {
-    promptToInstall();
+  enablePersistance = ()=> {
+//    promptToInstall();
     if (_.isFunction(_.get(navigator, 'storage.persist'))) {
-      navigator.storage.persist()
+      return navigator.storage.persist()
         .then(isPersisted => {
 
           if (isPersisted) {
@@ -353,11 +355,15 @@ function ScramplesViewModel() {
              }*/
           }
         })
+        .catch(err => {
+          console.warn("could not persist storage: ", err);
+        })
 
     } else {
       console.log("no persist available...")
+      return Promise.resolve();
     }
-  }
+  };
 
   async function showEstimatedQuota() {
     if (navigator.storage && navigator.storage.estimate) {
@@ -372,7 +378,7 @@ function ScramplesViewModel() {
 
   function load() {
     db.tracks.each(t => {
-      console.log("loaded.. about to construct track from ", t);
+//      console.log("loaded.. about to construct track from ", t);
       Scramples.tracks.push(new Track(t));
     });
   }
@@ -383,7 +389,7 @@ function ScramplesViewModel() {
       if (rejectionOkay) {
         p = p.then(promise)
           .catch(err => {
-            console.error("tolerant error:", err);
+            console.error("error:", err);
             return new Promise(resolve => resolve());
           });
       } else {

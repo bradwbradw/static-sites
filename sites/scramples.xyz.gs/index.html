@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <title>Scramples</title>
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#999999" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -66,10 +69,10 @@
     <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
     <div class="track">
-        <div class="track-header">
-            <h3 data-bind="text: name"></h3>
-            <div class="delete-icon" data-bind="click: deleteTrack"></div>
-        </div>
+      <div class="track-header">
+        <h3 data-bind="text: name"></h3>
+        <div class="delete-icon" data-bind="click: deleteTrack"></div>
+      </div>
 
       <p data-bind="ifnot: buffer">processing audio...</p>
       <p data-bind="if: error"><span data-bind="text: error"></span></p>
@@ -87,8 +90,8 @@
 
 <!--<pre data-bind="text: ko.toJSON(tracks, null, 2)"></pre>-->
 
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js"></script>
@@ -109,20 +112,18 @@
 
   async function registerSW() { // (1)
     if ('serviceWorker' in navigator) {
-      console.log("Will the service worker register?");
-      navigator.serviceWorker.register('./scripts/service-worker.js')
-        .then(function (reg) {
-          console.log("Service worker registered.");
-        }).catch(function (err) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .catch(function (err) {
         console.log("Service worker not registered. This happened: ", err)
       });
     }
   }
 
-  
-//  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt
-  var deferredPrompt;
 
+  //  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt
+  //var deferredPrompt;
+
+  /*
   window.addEventListener('beforeinstallprompt', (e) => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
@@ -130,21 +131,25 @@
     console.log("before install prompt triggered!");
     deferredPrompt = e;
   });
+  */
 
+  /*
   function promptToInstall() {
 
-  // Show the prompt
-  deferredPrompt.prompt();
-  // Wait for the user to respond to the prompt
-  deferredPrompt.userChoice
-    .then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      deferredPrompt = null;
-    });
+    if (!deferredPrompt) return;
+    // Show the prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice
+      .then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        deferredPrompt = null;
+      });
   }
+  */
 </script>
 </html>

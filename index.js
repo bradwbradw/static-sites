@@ -24,8 +24,9 @@ function track(req, res, next) {
 
 app.use(track);
 
+
 const middleware = {
-  'wurst.world': [historyApiFallback()]
+  'wurst.world': [historyApiFallback()],
 };
 
 _.each(domains, function (domain) {
@@ -38,7 +39,9 @@ _.each(domains, function (domain) {
     console.log('using middleware for ' + domain);
   });
 
+
   sites[domain].use(serveStatic('./sites/' + domain));
+
 
   app.use(vhost(domain, sites[domain]));
   app.use(vhost('www.' + domain, sites[domain]));
