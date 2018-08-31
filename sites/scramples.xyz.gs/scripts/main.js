@@ -28,7 +28,11 @@ function ScramplesViewModel() {
       track: options.track,
       source: ko.observable(null),
       bookmark: () => {
-
+        if (_.find(Scramples.bookmarkedSamples,sample)) {
+        
+        } else {
+           Scramples.bookmarkedSamples.push(sample)
+        } 
       },
       stop: () => {
         if (sample.playing()) {
@@ -279,6 +283,8 @@ function ScramplesViewModel() {
     Scramples.scrambledSamples(_.shuffle(Scramples.scrambledSamples()));
   };
   Scramples.scrambledSamples = ko.observableArray([]);
+  Scramples.bookmarkedSamples = ko.observableArray([]);
+
   Scramples.saving = ko.observable(false);
   Scramples.save = function () {
     Scramples.saving(true);
