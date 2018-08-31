@@ -13,7 +13,7 @@
         }
     };
 
-    function _getWidgetBindings(element, valueAccessor, allBindingsAccessor, viewModel) {
+    function _getWidgetBindings(element, valueAccessor, allBindingsAccessor) {
         // Extract widgetName and widgetOptions from the data binding,
         // with some sanity checking and error reporting.
         // Returns dict: widgetName, widgetOptions.
@@ -52,3 +52,5 @@
     }
 
 })(jQuery);
+
+

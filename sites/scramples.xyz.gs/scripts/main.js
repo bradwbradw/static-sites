@@ -1,57 +1,22 @@
-let AudioContext;
-
-if (_.isFunction(window.AudioContext)) {
-  AudioContext = window.AudioContext;
-
-} else if (_.isFunction(webkitAudioContext)) {
-  AudioContext = window.webkitAudioContext;
-}
-const audioContext = new AudioContext;
 const bindingRateLimit = 50;
-
-// webkit's decodeAudioData doesn't return a promise
-// https://stackoverflow.com/questions/48597747/how-to-play-a-sound-file-safari-with-web-audio-api
-
-audioContext.decodeAudioDataPromise = (audioData) => {
-  return new Promise((resolve, reject) => {
-
-    audioContext.decodeAudioData(
-      audioData,
-      audioBuffer => {
-        resolve(audioBuffer);
-      },
-      error => {
-        console.error(error);
-        reject(error);
-      }
-    )
-  })
-};
 
 function ScramplesViewModel() {
 
   let Scramples = this;
-
   Scramples.sampleLengthString = ko.observable("3");
   Scramples.sampleLengthSeconds = ko.computed(() => {
     return Scramples.sampleLengthString() * 1
   });
-
   Scramples.roundedSampleLength = ko.computed(() => {
     return _.round(Scramples.sampleLengthSeconds(), 3);
   });
-
-  Scramples.quantity = ko.observable("0");
-
   Scramples.pcmSamplesPerSample = ko.computed(() => {
     return Scramples.sampleLengthSeconds() * audioContext.sampleRate;
   });
-
-
   Scramples.repeat = ko.observable(false);
   Scramples.playingSamples = ko.observableArray([]);
+  Scramples.tracks = ko.observableArray([]).extend({rateLimit: bindingRateLimit});
 
-  let tracks = ko.observableArray([]).extend({rateLimit: bindingRateLimit});
 
   function Sample(options) {
     _.defaults(options, {
@@ -59,7 +24,6 @@ function ScramplesViewModel() {
     });
 
     var sample = {
-      //playing: ko.observable(false),
       restarting: false,
       track: options.track,
       source: ko.observable(null),
@@ -75,7 +39,7 @@ function ScramplesViewModel() {
       play: () => {
 
         _.each(Scramples.playingSamples(), s => {
-          if (s !== sample){
+          if (s !== sample) {
             s.stop();
           }
         });
@@ -185,10 +149,8 @@ function ScramplesViewModel() {
         let track = this;
 
         db.tracks.delete(track.id);
-        tracks.remove(track);
+        Scramples.tracks.remove(track);
 
-        // TODO remove from db too
-//      Tracks.remove(self)
       }
     };
 
@@ -214,7 +176,7 @@ function ScramplesViewModel() {
                 name: file.name,
                 buffer: buffer
               });
-              tracks.push(track);
+              Scramples.tracks.push(track);
             })
             .catch(err => {
               console.log(err);
@@ -228,7 +190,6 @@ function ScramplesViewModel() {
 
   };
 
-  Scramples.tracks = tracks;
 
   var convertToAudioBuffer = file => {
     let url = URL.createObjectURL(file);
@@ -272,8 +233,6 @@ function ScramplesViewModel() {
     preferences: 'preferencesJson'
   });
 
-  // save WIP .. not sure i can save audioBuffers
-
   let convertToSaveable = (track) => {
     let buffer = track.buffer();
     return {
@@ -306,6 +265,20 @@ function ScramplesViewModel() {
     }
   };
 
+  Scramples.clearScrambled = () => {
+    Scramples.scrambledSamples.removeAll();
+  };
+  Scramples.showScrambled = ko.pureComputed(() => {
+    return _.size(Scramples.scrambledSamples()) > 0;
+  });
+  Scramples.scramble = () => {
+    Scramples.scrambledSamples.removeAll();
+    _.each(Scramples.tracks(), track => {
+      Scramples.scrambledSamples(_.concat(Scramples.scrambledSamples(), track.samples()));
+    });
+    Scramples.scrambledSamples(_.shuffle(Scramples.scrambledSamples()));
+  };
+  Scramples.scrambledSamples = ko.observableArray([]);
   Scramples.saving = ko.observable(false);
   Scramples.save = function () {
     Scramples.saving(true);
@@ -331,52 +304,6 @@ function ScramplesViewModel() {
 
   load();
 
-  enablePersistance = () => {
-//    promptToInstall();
-    if (_.isFunction(_.get(navigator, 'storage.persist'))) {
-      return navigator.storage.persist()
-        .then(isPersisted => {
-
-          if (isPersisted) {
-            console.log(":) Storage is successfully persisted.");
-            showEstimatedQuota()
-          } else {
-            console.log(":( Storage is not persisted.");
-//            console.log("Trying to persist..:");
-            /* if (await persist()
-           )
-             {
-               console.log(":) We successfully turned the storage to be persisted.");
-             }
-           else
-             {
-               console.log(":( Failed to make storage persisted");
-             }*/
-          }
-        })
-        .catch(err => {
-          console.warn("could not persist storage: ", err);
-        })
-
-    } else {
-      console.log("no persist available...");
-      return Promise.resolve();
-    }
-  };
-
-  async function showEstimatedQuota() {
-    if (navigator.storage && navigator.storage.estimate) {
-      const estimation = await navigator.storage.estimate();
-      let percent = _.round(100 * estimation.usage / estimation.quota, 2);
-
-      console.log(`Quota: ${estimation.quota}. Usage: ${estimation.usage}. (%${percent})`);
-
-    } else {
-      console.error("StorageManager not found");
-    }
-  }
-
-
   function load() {
     db.tracks.each(t => {
 //      console.log("loaded.. about to construct track from ", t);
@@ -384,21 +311,10 @@ function ScramplesViewModel() {
     });
   }
 
-  function chainPromises(promises, rejectionOkay) {
-    let p = Promise.resolve();
-    _.each(promises, promise => {
-      if (rejectionOkay) {
-        p = p.then(promise)
-          .catch(err => {
-            console.error("error:", err);
-            return new Promise(resolve => resolve());
-          });
-      } else {
-        p = p.then(promise);
-      }
-    });
-    return p;
-  }
+  _.extend(this, Scramples);
+
 }
 
 ko.applyBindings(new ScramplesViewModel());
+
+

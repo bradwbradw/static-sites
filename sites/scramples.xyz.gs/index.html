@@ -37,8 +37,10 @@
   </li>
   <li>
 
-    <label for="sample-length-slider">
+  </li>
+  <li>
 
+    <label for="sample-length-slider">
       duration: <span data-bind="text: roundedSampleLength"></span>s
     </label>
 
@@ -64,12 +66,26 @@
   </li>
 
   <li>
-
+    <button data-bind="click: scramble">scramble!</button>
   </li>
+
 
 </ul>
 
 <section>
+  <div data-bind="visible: showScrambled" class="track">
+
+    <div class="track-header">
+
+      <h3>scrambled samples!</h3>
+      <div class="delete-icon" data-bind="click: clearScrambled"></div>
+    </div>
+    <div class="samples"
+         data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
+    </div>
+
+  </div>
+
   <div data-bind="foreach: tracks ">
     <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
     <div class="track">
@@ -80,24 +96,31 @@
 
       <p data-bind="ifnot: buffer">processing audio...</p>
       <p data-bind="if: error"><span data-bind="text: error"></span></p>
-      <div data-bind="foreach: samples" class="samples">
-        <div class="sample">
-
-          <div class="speaker-icon" data-bind="
-      click:play,
-        css: {playing: playing}">
-
-          </div>
-          <button data-bind="click: stop">stop</button>
-          <button data-bind="click: bookmark">bookmark</button>
-        </div>
+      <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
       </div>
     </div>
 
   </div>
 </section>
 
-<!--<pre data-bind="text: ko.toJSON(tracks, null, 2)"></pre>-->
+<!-- templates -->
+
+
+<script type="text/html" id="sample-template">
+
+  <div class="sample">
+
+    <div class="speaker-icon" data-bind="
+      click:play,
+        css: {playing: playing}">
+
+    </div>
+    <button data-bind="click: stop">stop</button>
+    <button data-bind="click: bookmark">bookmark</button>
+  </div>
+
+</script>
+
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -107,10 +130,10 @@
 
 <script type="text/javascript" src="scripts/jqueryui-binding.js"></script>
 
+<script type="text/javascript" src="scripts/utilities.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
 
 </body>
-
 
 
 <script type="text/javascript">
