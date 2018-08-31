@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Scramples</title>
+
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#999999" />
+  <meta name="theme-color" content="#999999"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -62,12 +63,15 @@
     <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
   </li>
 
+  <li>
+
+  </li>
+
 </ul>
 
 <section>
   <div data-bind="foreach: tracks ">
     <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
-
     <div class="track">
       <div class="track-header">
         <h3 data-bind="text: name"></h3>
@@ -77,11 +81,16 @@
       <p data-bind="ifnot: buffer">processing audio...</p>
       <p data-bind="if: error"><span data-bind="text: error"></span></p>
       <div data-bind="foreach: samples" class="samples">
-        <div class="speaker-icon" data-bind="
-      event: {
-        click: function(data, event){ data.play() }
-      },
-        css: {playing: playing}"></div>
+        <div class="sample">
+
+          <div class="speaker-icon" data-bind="
+      click:play,
+        css: {playing: playing}">
+
+          </div>
+          <button data-bind="click: stop">stop</button>
+          <button data-bind="click: bookmark">bookmark</button>
+        </div>
       </div>
     </div>
 
@@ -103,19 +112,18 @@
 </body>
 
 
+
 <script type="text/javascript">
 
-  window.addEventListener('load', e => {
-//  new PWAConfApp();
-    registerSW(); // <-- Add this
-  });
+
+  window.addEventListener('load', registerSW);
 
   async function registerSW() { // (1)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js')
         .catch(function (err) {
-        console.log("Service worker not registered. This happened: ", err)
-      });
+          console.log("Service worker not registered. This happened: ", err)
+        });
     }
   }
 

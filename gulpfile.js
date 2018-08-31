@@ -34,7 +34,7 @@ function serve(site) {
       browserSync.reload()
     });
     gulp.watch(`sites/${site}/**/*.js`).on('change', bla => {
-      console.log("css changed", bla);
+      console.log("js changed", bla);
       browserSync.reload()
     });
   });
@@ -42,23 +42,15 @@ function serve(site) {
 // Compile sass into CSS & auto-inject into browsers
   gulp.task(`sass:${site}`, function () {
 
-
-
-//    try {
-      return gulp.src(`sites/${site}/style/*.scss`)
-
-
-        .pipe(plumber({errorHandler: (e) => {
-            notify.onError("Error: <%= error.message %>")(e)
-          }
-        }))
-
-        .pipe(sass())
-        .pipe(gulp.dest(`sites/${site}`))
-        .pipe(browserSync.stream());
- //   } catch (error){
-  //    notify(error)
-  //  }
+    return gulp.src(`sites/${site}/style/*.scss`)
+      .pipe(plumber({
+        errorHandler: (e) => {
+          notify.onError("Error: <%= error.message %>")(e)
+        }
+      }))
+      .pipe(sass())
+      .pipe(gulp.dest(`sites/${site}`))
+      .pipe(browserSync.stream());
   });
 
 }

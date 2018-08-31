@@ -49,9 +49,7 @@ function ScramplesViewModel() {
 
 
   Scramples.repeat = ko.observable(false);
-  Scramples.playingSample = ko.pureComputed(()=>{
-    // ... return Scramples.tracks().filter()
-  });
+  Scramples.playingSamples = ko.observableArray([]);
 
   let tracks = ko.observableArray([]).extend({rateLimit: bindingRateLimit});
 
@@ -61,65 +59,66 @@ function ScramplesViewModel() {
     });
 
     var sample = {
-      playing: ko.pureComputed(() => {
-        return sample.source() != null
-      }),
+      //playing: ko.observable(false),
+      restarting: false,
       track: options.track,
       source: ko.observable(null),
+      bookmark: () => {
+
+      },
+      stop: () => {
+        if (sample.playing()) {
+          sample.source().stop()
+        }
+      },
+      playing: ko.observable(null),
       play: () => {
-        console.log("play ", sample);
-        let track = sample.track;
 
-        /*
-        if (lastGainNode) {
-          lastGainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        }
-    */
-        if (false && lastSample && lastSample.source()) {
-
-          if (lastSample == sample) {
-            console.log('same sample found');
-            doPlay(lastSample);
-            return;
-            // seek to 0 insead of call stop()
+        _.each(Scramples.playingSamples(), s => {
+          if (s !== sample){
+            s.stop();
           }
-          lastSample.source().stop()
-//      lastSample.gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        });
+
+        var makePlayPromise = () => {
+          return new Promise((resolve) => {
+
+            let track = sample.track;
+            sample.source(audioContext.createBufferSource());
+            sample.gainNode = audioContext.createGain();
+            sample.source().buffer = track.buffer();
+
+            sample.source().connect(sample.gainNode);
+            sample.gainNode.connect(audioContext.destination);
+
+            let offsetSeconds = sample.trackOffset() / audioContext.sampleRate;
+            let source = sample.source();
+            if (Scramples.repeat()) {
+              source.loop = true;
+              source.loopStart = offsetSeconds;
+              source.loopEnd = offsetSeconds + Scramples.sampleLengthSeconds();
+              source.start(0, offsetSeconds);
+            } else {
+              source.start(0, offsetSeconds, Scramples.sampleLengthSeconds());
+            }
+
+            source.onended = resolve
+          });
+        };
+
+        if (sample.playing()) {
+          sample.playing()
+            .then(sample.play);
+          sample.stop();
+        } else {
+          Scramples.playingSamples.push(sample);
+          sample.playing(makePlayPromise());
+          sample.playing()
+            .then(() => {
+              sample.playing(null);
+              Scramples.playingSamples.remove(sample);
+            })
         }
-
-
-        sample.source(audioContext.createBufferSource());
-        sample.gainNode = audioContext.createGain();
-        sample.source().buffer = track.buffer();
-
-        sample.source().connect(sample.gainNode);
-        sample.gainNode.connect(audioContext.destination);
-        // lastGainNode = gainNode;
-
-        lastSample = sample;
-
-        doPlay(sample);
-
-        function doPlay(sample) {
-
-          let offsetSeconds = sample.trackOffset() / audioContext.sampleRate;
-          let source = sample.source();
-          if (Scramples.repeat()) {
-            source.loop = true;
-            source.loopStart = offsetSeconds;
-            source.loopEnd = offsetSeconds + Scramples.sampleLengthSeconds();
-            source.start(0, offsetSeconds);
-          } else {
-            source.start(0, offsetSeconds, Scramples.sampleLengthSeconds());
-          }
-        }
-
-        sample.source().onended = event => {
-
-          console.log('ended!', event);
-          sample.source(null);
-        }
-
       },
       trackOffset: ko.observable(options.trackOffset),
       formattedTime: ko.pureComputed(() => {
@@ -310,21 +309,21 @@ function ScramplesViewModel() {
   Scramples.saving = ko.observable(false);
   Scramples.save = function () {
     Scramples.saving(true);
-    enablePersistance().then(()=>{
-    chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
-      .then(() => {
-        Scramples.saving(false);
-      })
-      .catch((error) => {
-        console.warn("tracks save error:", error);
-        if (_.includes(error.message, "QuotaExceededError")) {
-          alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
+    enablePersistance().then(() => {
+      chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
+        .then(() => {
+          Scramples.saving(false);
+        })
+        .catch((error) => {
+          console.warn("tracks save error:", error);
+          if (_.includes(error.message, "QuotaExceededError")) {
+            alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
 
-        } else {
-          alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
-        }
-        Scramples.saving(false);
-      })
+          } else {
+            alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
+          }
+          Scramples.saving(false);
+        })
     });
 
 
@@ -332,7 +331,7 @@ function ScramplesViewModel() {
 
   load();
 
-  enablePersistance = ()=> {
+  enablePersistance = () => {
 //    promptToInstall();
     if (_.isFunction(_.get(navigator, 'storage.persist'))) {
       return navigator.storage.persist()
@@ -360,7 +359,7 @@ function ScramplesViewModel() {
         })
 
     } else {
-      console.log("no persist available...")
+      console.log("no persist available...");
       return Promise.resolve();
     }
   };
@@ -368,8 +367,10 @@ function ScramplesViewModel() {
   async function showEstimatedQuota() {
     if (navigator.storage && navigator.storage.estimate) {
       const estimation = await navigator.storage.estimate();
-      console.log(`Quota: ${estimation.quota}`);
-      console.log(`Usage: ${estimation.usage}`);
+      let percent = _.round(100 * estimation.usage / estimation.quota, 2);
+
+      console.log(`Quota: ${estimation.quota}. Usage: ${estimation.usage}. (%${percent})`);
+
     } else {
       console.error("StorageManager not found");
     }
