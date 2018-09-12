@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Scramples</title>
+    <meta charset="UTF-8">
+    <title>Scramples</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#999999"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#999999"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
+
+
 <div class="top-bar">
-  <marquee>SCRAMPLES</marquee>
+    <marquee>SCRAMPLES</marquee>
 </div>
 
 <ul class="preferences">
 
-  <li>
-    <label id="file-picker-label" for="file_picker"> add audio </label>
+    <li>
+        <label id="file-picker-label" for="file_picker"> add audio </label>
 
-    <input id="file_picker" type="file" accept="audio/*" multiple/>
-  </li>
-  <li>
+        <input id="file_picker" type="file" accept="audio/*" multiple/>
+    </li>
+    <li>
 
-    <label for="repeat-toggle" class="settings-toggle">
-      looping: <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
-        data-bind="css: {selectedSetting: !repeat(), unSelectedSetting: repeat()} ">off</span>
-    </label>
-    <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat" style="display:none">
-  </li>
-  <li>
+        <label for="repeat-toggle" class="settings-toggle">
+            looping: <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
+                data-bind="css: {selectedSetting: !repeat(), unSelectedSetting: repeat()} ">off</span>
+        </label>
+        <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat" style="display:none">
+    </li>
+    <li>
 
-  </li>
-  <li>
+    </li>
+    <li>
 
-    <label for="sample-length-slider">
-      duration: <span data-bind="text: roundedSampleLength"></span>s
-    </label>
+        <label for="sample-length-slider">
+            duration: <span data-bind="text: roundedSampleLength"></span>s
+        </label>
 
-    <span id="sample-length-slider"
-          data-bind='jqueryui: {
+        <span id="sample-length-slider"
+              data-bind='jqueryui: {
              widget: "slider",
              options: {
              min:0,
@@ -59,66 +61,99 @@
     </span>
 
 
-  </li>
+    </li>
 
-  <li>
-    <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
-  </li>
+    <li>
+        <button data-bind="click: stopAll">stop</button>
+    </li>
+    <li>
+        <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
+    </li>
 
-  <li>
-    <button data-bind="click: scramble">scramble!</button>
-  </li>
+    <li>
+        <button data-bind="click: scramble">scramble!</button>
+    </li>
 
 
 </ul>
 
-<section>
-  <div data-bind="template:{name:'sample-template', foreach:bookmarkedSamples}" ></div>
-  <div data-bind="visible: showScrambled" class="track">
-
-    <div class="track-header">
-
-      <h3>scrambled samples!</h3>
-      <div class="delete-icon" data-bind="click: clearScrambled"></div>
+<div id="tabs">
+    <div class="tab" data-bind="click: () => {chooseView('Tracks')}, css:{active: chosenView() == 'Tracks'}">Tracks
     </div>
-    <div class="samples"
-         data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
+    <div class="tab"
+         data-bind="click: () => {chooseView('Bookmarked Samples')}, css:{active: chosenView() == 'Bookmarked Samples'}">
+        Bookmarked Samples
     </div>
+</div>
 
-  </div>
+<section id="tracks-view"
+         data-bind="visible: chosenView() == 'Tracks'">
 
-  <div data-bind="foreach: tracks ">
-    <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
-    <div class="track">
-      <div class="track-header">
-        <h3 data-bind="text: name"></h3>
-        <div class="delete-icon" data-bind="click: deleteTrack"></div>
-      </div>
+    <div data-bind="visible: showScrambled" class="track">
 
-      <p data-bind="ifnot: buffer">processing audio...</p>
-      <p data-bind="if: error"><span data-bind="text: error"></span></p>
-      <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
-      </div>
+        <div class="track-header">
+
+            <h3>scrambled samples!</h3>
+            <div class="delete-icon" data-bind="click: clearScrambled"></div>
+        </div>
+        <div class="samples"
+             data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
+        </div>
+
     </div>
 
-  </div>
+    <div data-bind="foreach: tracks " >
+        <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+        <div class="track">
+            <div class="track-header">
+                <h3 data-bind="text: name"></h3>
+                <div class="delete-icon" data-bind="click: deleteTrack"></div>
+            </div>
+
+            <p data-bind="ifnot: buffer">processing audio...</p>
+            <p data-bind="if: error"><span data-bind="text: error"></span></p>
+            <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
+            </div>
+        </div>
+
+    </div>
+
 </section>
+
+<section data-bind="visible: chosenView() == 'Bookmarked Samples'">
+
+    <h2>bookmarked samples</h2>
+    <div data-bind="template:{name:'sample-template', foreach:bookmarkedSamples}" class="samples"></div>
+    <div data-bind="foreach:bookmarkedSamples">
+        <ul>
+            <li data-bind="text: track.name"></li>
+            <li data-bind="text: trackOffset"></li>
+            <li data-bind="text: bookmarked"></li>
+        </ul>
+    </div>
+</section>
+
+
+
+
+
+
+
 
 <!-- templates -->
 
 
 <script type="text/html" id="sample-template">
 
-  <div class="sample">
+    <div class="sample">
 
-    <div class="speaker-icon" data-bind="
+        <div class="speaker-icon" data-bind="
       click:play,
         css: {playing: playing}">
 
+        </div>
+        <button data-bind="click: bookmark, text: bookmarked()? '🔖':'bookmark'">bookmark</button>
     </div>
-    <button data-bind="click: stop">stop</button>
-    <button data-bind="click: bookmark">bookmark</button>
-  </div>
 
 </script>
 
@@ -129,16 +164,20 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js"></script>
 
+
+
 <script type="text/javascript" src="scripts/jqueryui-binding.js"></script>
 
 <script type="text/javascript" src="scripts/utilities.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
 
+
+
+
 </body>
 
 
 <script type="text/javascript">
-
 
   window.addEventListener('load', registerSW);
 

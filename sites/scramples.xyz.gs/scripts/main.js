@@ -3,6 +3,10 @@ const bindingRateLimit = 50;
 function ScramplesViewModel() {
 
   let Scramples = this;
+  Scramples.chosenView = ko.observable('Tracks');
+  Scramples.chooseView = (view) => {
+    Scramples.chosenView(view)
+  };
   Scramples.sampleLengthString = ko.observable("3");
   Scramples.sampleLengthSeconds = ko.computed(() => {
     return Scramples.sampleLengthString() * 1
@@ -17,6 +21,14 @@ function ScramplesViewModel() {
   Scramples.playingSamples = ko.observableArray([]);
   Scramples.tracks = ko.observableArray([]).extend({rateLimit: bindingRateLimit});
 
+  Scramples.stopAll = (otherThanSample) => {
+
+    _.each(Scramples.playingSamples(), s => {
+      if (s !== otherThanSample) {
+        s.stop();
+      }
+    });
+  };
 
   function Sample(options) {
     _.defaults(options, {
@@ -28,12 +40,15 @@ function ScramplesViewModel() {
       track: options.track,
       source: ko.observable(null),
       bookmark: () => {
-        if (_.find(Scramples.bookmarkedSamples,sample)) {
-        
+        if (sample.bookmarked()) {
+
         } else {
-           Scramples.bookmarkedSamples.push(sample)
-        } 
+          Scramples.bookmarkedSamples.push(sample)
+        }
       },
+      bookmarked: ko.pureComputed(() => {
+        return _.isObject(_.find(Scramples.bookmarkedSamples(), sample));
+      }),
       stop: () => {
         if (sample.playing()) {
           sample.source().stop()
@@ -42,11 +57,7 @@ function ScramplesViewModel() {
       playing: ko.observable(null),
       play: () => {
 
-        _.each(Scramples.playingSamples(), s => {
-          if (s !== sample) {
-            s.stop();
-          }
-        });
+        Scramples.stopAll(sample)
 
         var makePlayPromise = () => {
           return new Promise((resolve) => {
@@ -158,7 +169,6 @@ function ScramplesViewModel() {
       }
     };
 
-
     console.log("new track", options);
 
     _.extend(this, Track);
@@ -195,80 +205,6 @@ function ScramplesViewModel() {
   };
 
 
-  var convertToAudioBuffer = file => {
-    let url = URL.createObjectURL(file);
-    return fetch(url)
-      .then(res => {
-        return res.arrayBuffer()
-      })
-      .then(a => {
-        return audioContext.decodeAudioDataPromise(a);
-      })
-
-  };
-
-  var convertPCMToAudioBuffer = (leftPCM, rightPCM) => {
-    let buffer = audioContext.createBuffer(
-      _.size(leftPCM) && _.size(rightPCM) ? 2 : 1, //number of channels
-      _.size(leftPCM), // length
-      audioContext.sampleRate // sample rate
-    );
-
-    let leftBuffer = buffer.getChannelData(0);
-
-    _.each(leftBuffer, (sample, i) => {
-      leftBuffer[i] = leftPCM[i];
-    });
-
-    if (buffer.numberOfChannels === 2) {
-      let rightBuffer = buffer.getChannelData(1);
-
-      _.each(rightBuffer, (sample, i) => {
-        rightBuffer[i] = rightPCM[i];
-      });
-    }
-
-    return buffer;
-  };
-
-  let db = new Dexie("tracks");
-  db.version(1).stores({
-    tracks: '',
-    preferences: 'preferencesJson'
-  });
-
-  let convertToSaveable = (track) => {
-    let buffer = track.buffer();
-    return {
-      id: track.id,
-      name: track.name(),
-      pcmL: buffer.getChannelData(0),
-      pcmR: buffer.numberOfChannels > 1 ? track.buffer().getChannelData(1) : null,
-      error: track.error()
-    }
-  };
-
-  var lastTrackSaved;
-
-  let makeTrackSaveFn = track => {
-    return () => {
-
-      lastTrackSaved = track;
-      let toSave = convertToSaveable(track);
-//      console.log("about to save: ", toSave);
-      return db.tracks.put(toSave, track.id)
-        .then((r) => {
-//          console.log("should be saved now");
-          return r;
-        })
-        .catch(error => {
-          return Promise.reject(error);
-        })
-
-
-    }
-  };
-
   Scramples.clearScrambled = () => {
     Scramples.scrambledSamples.removeAll();
   };
@@ -286,31 +222,61 @@ function ScramplesViewModel() {
   Scramples.bookmarkedSamples = ko.observableArray([]);
 
   Scramples.saving = ko.observable(false);
+
+  var lastTrackSaved;
+
+
+  let convertToSaveable = (track) => {
+    let buffer = track.buffer();
+    return {
+      id: track.id,
+      name: track.name(),
+      pcmL: buffer.getChannelData(0),
+      pcmR: buffer.numberOfChannels > 1 ? track.buffer().getChannelData(1) : null,
+      error: track.error()
+    }
+  };
+
+  let makeTrackSaveFn = track => {
+    return () => {
+
+      lastTrackSaved = track;
+      let toSave = convertToSaveable(track);
+//      console.log("about to save: ", toSave);
+      return db.tracks.put(toSave, track.id)
+        .catch(error => {
+          return Promise.reject(error);
+        })
+
+    }
+  };
   Scramples.save = function () {
     Scramples.saving(true);
-    enablePersistance().then(() => {
-      chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
-        .then(() => {
-          Scramples.saving(false);
-        })
-        .catch((error) => {
-          console.warn("tracks save error:", error);
-          if (_.includes(error.message, "QuotaExceededError")) {
-            alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
+    setupDB();
+    enablePersistance()
+      .then(() => {
 
-          } else {
-            alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
-          }
-          Scramples.saving(false);
-        })
-    });
+        //TODO: check to see if each track exists before trying to save (to prevent quotaExceeded)
+        chainPromises(_.map(Scramples.tracks(), makeTrackSaveFn))
+          .then(() => {
+            Scramples.saving(false);
+          })
+          .catch((error) => {
+            console.warn("tracks save error:", error);
+            if (_.includes(error.message, "QuotaExceededError")) {
+              alert(`storage usage quota exceeded while saving "${lastTrackSaved.name()}".  Won't try to save any more tracks`);
 
+            } else {
+              alert(`error [${error.name}] \n Trying to save ${lastTrackSaved.name()}\n more details:\n${error.message}`);
+            }
+            Scramples.saving(false);
+          })
+      });
 
   };
 
-  load();
-
   function load() {
+    setupDB();
     db.tracks.each(t => {
 //      console.log("loaded.. about to construct track from ", t);
       Scramples.tracks.push(new Track(t));

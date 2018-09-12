@@ -27,6 +27,45 @@ audioContext.decodeAudioDataPromise = (audioData) => {
   })
 };
 
+
+var convertToAudioBuffer = file => {
+  let url = URL.createObjectURL(file);
+  return fetch(url)
+    .then(res => {
+      return res.arrayBuffer()
+    })
+    .then(a => {
+      return audioContext.decodeAudioDataPromise(a);
+    })
+
+};
+
+var convertPCMToAudioBuffer = (leftPCM, rightPCM) => {
+  let buffer = audioContext.createBuffer(
+    _.size(leftPCM) && _.size(rightPCM) ? 2 : 1, //number of channels
+    _.size(leftPCM), // length
+    audioContext.sampleRate // sample rate
+  );
+
+  let leftBuffer = buffer.getChannelData(0);
+
+  _.each(leftBuffer, (sample, i) => {
+    leftBuffer[i] = leftPCM[i];
+  });
+
+  if (buffer.numberOfChannels === 2) {
+    let rightBuffer = buffer.getChannelData(1);
+
+    _.each(rightBuffer, (sample, i) => {
+      rightBuffer[i] = rightPCM[i];
+    });
+  }
+
+  return buffer;
+};
+
+var crop
+
 // misc utilities
 
 function chainPromises(promises, rejectionOkay) {
@@ -90,3 +129,16 @@ async function showEstimatedQuota() {
     console.error("StorageManager not found");
   }
 }
+
+let db;
+
+function setupDB() {
+
+  db = new Dexie("tracks");
+  db.version(1).stores({
+    tracks: '',
+    preferences: 'preferencesJson'
+  });
+}
+
+
