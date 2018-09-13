@@ -134,6 +134,8 @@ section {
   padding: 1.5em;
   top: calc(#{$top-bar-height} + #{$tabs-height});
   left: $sidebar-width;
+  right:0;
+  bottom:0;
 }
 
 .track {

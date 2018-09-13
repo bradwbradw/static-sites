@@ -13,9 +13,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link type="text/css" href="scripts/manual-lib-includes/baron-skins.css" rel="stylesheet">
 </head>
 <body>
-
 
 
 <div class="top-bar">
@@ -87,37 +87,46 @@
 </div>
 
 <section id="tracks-view"
-         data-bind="visible: chosenView() == 'Tracks'">
+         data-bind="visible: chosenView() == 'Tracks'"
+         class="baron _winxp">
 
-    <div data-bind="visible: showScrambled" class="track">
+    <div class="baron__scroller">
+        <div data-bind="visible: showScrambled" class="track">
 
-        <div class="track-header">
-
-            <h3>scrambled samples!</h3>
-            <div class="delete-icon" data-bind="click: clearScrambled"></div>
-        </div>
-        <div class="samples"
-             data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
-        </div>
-
-    </div>
-
-    <div data-bind="foreach: tracks " >
-        <!--    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
-        <div class="track">
             <div class="track-header">
-                <h3 data-bind="text: name"></h3>
-                <div class="delete-icon" data-bind="click: deleteTrack"></div>
+
+                <h3>scrambled samples!</h3>
+                <div class="delete-icon" data-bind="click: clearScrambled"></div>
+            </div>
+            <div class="samples"
+                 data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
             </div>
 
-            <p data-bind="ifnot: buffer">processing audio...</p>
-            <p data-bind="if: error"><span data-bind="text: error"></span></p>
-            <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
-            </div>
         </div>
 
+        <div data-bind="foreach: tracks ">
+            <div class="track">
+                <div class="track-header">
+                    <h3 data-bind="text: name"></h3>
+                    <div class="delete-icon" data-bind="click: deleteTrack"></div>
+                </div>
+
+                <p data-bind="ifnot: buffer">processing audio...</p>
+                <p data-bind="if: error"><span data-bind="text: error"></span></p>
+                <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
+                </div>
+            </div>
+
+        </div>
     </div>
 
+    <div class="baron__track">
+        <div class="baron__control baron__up">▲</div>
+        <div class="baron__free">
+            <div class="baron__bar"></div>
+        </div>
+        <div class="baron__control baron__down">▼</div>
+    </div>
 </section>
 
 <section data-bind="visible: chosenView() == 'Bookmarked Samples'">
@@ -165,21 +174,19 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js"></script>
 
 
-
 <script type="text/javascript" src="scripts/jqueryui-binding.js"></script>
 
 <script type="text/javascript" src="scripts/utilities.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
 
-
-
+<script src="scripts/manual-lib-includes/baron.js"></script>
 
 </body>
 
 
 <script type="text/javascript">
 
-  window.addEventListener('load', registerSW);
+  //  window.addEventListener('load', registerSW);
 
   async function registerSW() { // (1)
     if ('serviceWorker' in navigator) {
@@ -189,6 +196,18 @@
         });
     }
   }
+
+
+  baron({
+    root: '.baron',
+    scroller: '.baron__scroller',
+    bar: '.baron__bar'
+  }).controls({
+    // Element to be used as interactive track. Note: it could be different from 'track' param of baron.
+    track: '.baron__track',
+    forward: '.baron__down',
+    backward: '.baron__up'
+  });
 
 
   //  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt

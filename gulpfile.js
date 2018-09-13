@@ -23,9 +23,9 @@ function serve(site) {
         scroll: false,
         clicks: false,
         forms: false
-      }
+      },
       //proxy:'localhost',
-      //port: 3000
+      port: process.env.PORT || 3000
     });
 
     gulp.watch(`sites/${site}/**/*.scss`, [`sass:${site}`]);

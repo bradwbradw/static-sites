@@ -283,10 +283,10 @@ function ScramplesViewModel() {
     });
   }
 
+  load();
   _.extend(this, Scramples);
 
 }
 
 ko.applyBindings(new ScramplesViewModel());
-
 
