@@ -7,6 +7,7 @@ $sidebar-width: 250px;
 
 @import "reset.scss";
 @import "jquery-overrides.scss";
+@import "scroll-skin.scss";
 
 body {
   background: $page-background;
@@ -73,7 +74,6 @@ button::selection,
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    border-width: 1px 1px 1px 1px;
 
     &.active {
       border-width: 1px 1px 0 1px;

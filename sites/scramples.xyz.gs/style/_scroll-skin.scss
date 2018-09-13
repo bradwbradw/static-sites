@@ -1,0 +1,111 @@
+/* BASE */
+.baron__clipper {
+  position: relative;
+  overflow: hidden;
+}
+.baron__scroller {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  /* remove line to customize scrollbar in iOs */
+}
+.baron__scroller::-webkit-scrollbar {
+  width: 0;
+}
+.baron__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.baron__free {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.baron__bar {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  width: 10px;
+  background: #999;
+}
+.baron__control {
+  display: none;
+}
+
+
+/* CUSTOM scramples-theme brutal scrollbar by megan */
+.baron._scramples .baron__scroller {
+  padding-right: 17px;
+}
+.baron._scramples .baron__track {
+  opacity: 0;
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  overflow: hidden;
+  background-color:lightgrey;
+}
+.baron._scramples._scrollbar .baron__track {
+  opacity: 1;
+}
+.baron._scramples .baron__control {
+  display: block;
+}
+.baron._scramples .baron__control,
+.baron._scramples .baron__bar {
+
+  background-color: black;
+  text-align: center;
+  font-size: 8px;
+  line-height: 14px;
+  color: white;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.baron._scramples .baron__control:hover,
+.baron._scramples .baron__bar:hover {
+  background-color: grey;
+}
+.baron._scramples .baron__up,
+.baron._scramples .baron__down {
+  position: absolute;
+  z-index: 1;
+  width: 15px;
+  height: 16px;
+  box-sizing: border-box;
+}
+.baron._scramples .baron__up {
+  top: 0;
+}
+.baron._scramples .baron__down {
+  bottom: 0;
+}
+.baron._scramples .baron__free {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  right: 0;
+  width: 0;
+}
+.baron._scramples .baron__bar {
+  position: absolute;
+  z-index: 1;
+  width: 15px;
+}

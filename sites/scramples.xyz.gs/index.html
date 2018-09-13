@@ -13,7 +13,6 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <link type="text/css" href="scripts/manual-lib-includes/baron-skins.css" rel="stylesheet">
 </head>
 <body>
 
@@ -88,7 +87,7 @@
 
 <section id="tracks-view"
          data-bind="visible: chosenView() == 'Tracks'"
-         class="baron _winxp">
+         class="baron _scramples">
 
     <div class="baron__scroller">
         <div data-bind="visible: showScrambled" class="track">
@@ -143,12 +142,6 @@
 </section>
 
 
-
-
-
-
-
-
 <!-- templates -->
 
 
@@ -186,7 +179,11 @@
 
 <script type="text/javascript">
 
+  // TODO was having resource caching issues
+  // while developing
+  // re-enable when dev flags can prevent caching
   //  window.addEventListener('load', registerSW);
+
 
   async function registerSW() { // (1)
     if ('serviceWorker' in navigator) {
@@ -209,37 +206,5 @@
     backward: '.baron__up'
   });
 
-
-  //  https://developers.google.com/web/fundamentals/app-install-banners/#listen_for_beforeinstallprompt
-  //var deferredPrompt;
-
-  /*
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later.
-    console.log("before install prompt triggered!");
-    deferredPrompt = e;
-  });
-  */
-
-  /*
-  function promptToInstall() {
-
-    if (!deferredPrompt) return;
-    // Show the prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice
-      .then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-        } else {
-          console.log('User dismissed the A2HS prompt');
-        }
-        deferredPrompt = null;
-      });
-  }
-  */
 </script>
 </html>
