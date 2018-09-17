@@ -11,9 +11,6 @@ function ScramplesViewModel() {
   Scramples.sampleLengthSeconds = ko.computed(() => {
     return Scramples.sampleLengthString() * 1
   });
-  Scramples.roundedSampleLength = ko.computed(() => {
-    return _.round(Scramples.sampleLengthSeconds(), 3);
-  });
   Scramples.pcmSamplesPerSample = ko.computed(() => {
     return Scramples.sampleLengthSeconds() * audioContext.sampleRate;
   });
@@ -107,12 +104,9 @@ function ScramplesViewModel() {
           let seconds = _.floor(offset / audioContext.sampleRate);
           let minutes = _.floor(seconds / 60);
           let remainder = seconds % 60;
-          let secondsFormatted = _.padStart(remainder + '', 2, '0') + "🔊";
-          if (minutes > 0) {
-            return `${minutes}:${secondsFormatted}`;
-          } else {
-            return secondsFormatted;
-          }
+          let secondsFormatted = _.padStart(remainder + '', 2, '0');
+          return `${minutes}:${secondsFormatted}`;
+
         } else {
           return "...";
         }

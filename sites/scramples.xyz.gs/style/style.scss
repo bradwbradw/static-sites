@@ -127,6 +127,17 @@ button, #file-picker-label {
     margin: 1em;
 
   }
+
+  input {
+    border:none;
+    font-size: inherit;
+    display:inline;
+
+    &#duration-control{
+      border: 1px solid black;
+      width:4em;
+    }
+  }
 }
 
 section {
@@ -182,7 +193,13 @@ section {
     }
 
     .bookmarked {
-      background-color: palegoldenrod;
+      background:black;
+      color:$page-background;
+    }
+
+    .time-label {
+      font-size:small;
+      text-align:center;
     }
 
   }
@@ -198,8 +215,9 @@ section {
 
 .track-header {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between;
+
 }
 
 .delete-icon {
@@ -215,3 +233,6 @@ section {
   background-repeat: no-repeat;
 }
 
+.track {
+  margin-right:1em;
+}

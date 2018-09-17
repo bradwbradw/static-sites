@@ -42,7 +42,7 @@
     <li>
 
         <label for="sample-length-slider">
-            duration: <span data-bind="text: roundedSampleLength"></span>s
+            duration: <input id="duration-control" data-bind="value: sampleLengthString"></input>s
         </label>
 
         <span id="sample-length-slider"
@@ -50,7 +50,7 @@
              widget: "slider",
              options: {
              min:0,
-              max:30,
+              max:10,
               step:0.01,
               value: sampleLengthString(),
               slide: function(evt,ui) { sampleLengthString(ui.value); }
@@ -77,11 +77,11 @@
 </ul>
 
 <div id="tabs">
-    <div class="tab" data-bind="click: () => {chooseView('Tracks')}, css:{active: chosenView() == 'Tracks'}">Tracks
+    <div class="tab" data-bind="click: () => {chooseView('Tracks')}, css:{active: chosenView() == 'Tracks'}">tracks
     </div>
     <div class="tab"
          data-bind="click: () => {chooseView('Bookmarked Samples')}, css:{active: chosenView() == 'Bookmarked Samples'}">
-        Bookmarked Samples
+        bookmarked samples
     </div>
 </div>
 
@@ -130,15 +130,9 @@
 
 <section data-bind="visible: chosenView() == 'Bookmarked Samples'">
 
-    <h2>bookmarked samples</h2>
     <div data-bind="template:{name:'sample-template', foreach:bookmarkedSamples}" class="samples"></div>
-    <div data-bind="foreach:bookmarkedSamples">
-        <ul>
-            <li data-bind="text: track.name"></li>
-            <li data-bind="text: trackOffset"></li>
-            <li data-bind="text: bookmarked"></li>
-        </ul>
-    </div>
+
+    <p data-bind="ifnot: bookmarkedSamples().length">click on the time of a sample to bookmark it.</p>
 </section>
 
 
@@ -154,7 +148,10 @@
         css: {playing: playing}">
 
         </div>
-        <button data-bind="click: bookmark, text: bookmarked()? '🔖':'bookmark'">bookmark</button>
+        <span class="time-label" data-bind="
+        click: bookmark,
+        css: {bookmarked: bookmarked()},
+        text:formattedTime">bookmark</span>
     </div>
 
 </script>

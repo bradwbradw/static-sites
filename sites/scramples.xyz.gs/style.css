@@ -117,23 +117,24 @@ input[type=file] {
   top: 0;
   bottom: 0;
   right: 0;
-  width: 15px;
+  width: 20px;
   overflow: hidden;
-  background-color: lightgrey; }
+  background-color: #f7f7f7; }
 
 .baron._scramples._scrollbar .baron__track {
   opacity: 1; }
 
 .baron._scramples .baron__control {
+  border: 1px solid black;
   display: block; }
 
 .baron._scramples .baron__control,
 .baron._scramples .baron__bar {
-  background-color: black;
+  background-color: #f7f7f7;
   text-align: center;
   font-size: 8px;
   line-height: 14px;
-  color: white;
+  color: black;
   cursor: default;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -141,23 +142,21 @@ input[type=file] {
   -ms-user-select: none;
   user-select: none; }
 
-.baron._scramples .baron__control:hover,
-.baron._scramples .baron__bar:hover {
-  background-color: grey; }
-
 .baron._scramples .baron__up,
 .baron._scramples .baron__down {
   position: absolute;
   z-index: 1;
-  width: 15px;
-  height: 16px;
-  box-sizing: border-box; }
+  width: 100%;
+  height: 20px;
+  box-sizing: border-box;
+  padding-top: 1px; }
 
 .baron._scramples .baron__up {
   top: 0; }
 
 .baron._scramples .baron__down {
-  bottom: 0; }
+  bottom: 0;
+  padding-top: 4px; }
 
 .baron._scramples .baron__free {
   position: absolute;
@@ -169,7 +168,8 @@ input[type=file] {
 .baron._scramples .baron__bar {
   position: absolute;
   z-index: 1;
-  width: 15px; }
+  width: 18px;
+  border: 1px solid black; }
 
 body {
   background: #f7f7f7; }
@@ -224,8 +224,7 @@ button::selection,
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
-  }
+    border: 1px solid black; }
     #tabs .tab.active {
       border-width: 1px 1px 0 1px; }
 
@@ -266,6 +265,13 @@ button, #file-picker-label {
   .preferences li {
     width: 80%;
     margin: 1em; }
+  .preferences input {
+    border: none;
+    font-size: inherit;
+    display: inline; }
+    .preferences input#duration-control {
+      border: 1px solid black;
+      width: 4em; }
 
 section {
   position: absolute;
@@ -304,7 +310,11 @@ section {
     .samples .sample .playing {
       background-image: url("images/speaker-black.png"); }
     .samples .sample .bookmarked {
-      background-color: palegoldenrod; }
+      background: black;
+      color: #f7f7f7; }
+    .samples .sample .time-label {
+      font-size: small;
+      text-align: center; }
 
 #sample-length-slider {
   margin-top: 0.5em;
@@ -313,7 +323,7 @@ section {
 
 .track-header {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between; }
 
 .delete-icon {
@@ -327,3 +337,6 @@ section {
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat; }
+
+.track {
+  margin-right: 1em; }
