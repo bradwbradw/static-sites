@@ -1,5 +1,6 @@
 const bindingRateLimit = 50;
 
+
 function ScramplesViewModel() {
 
   let Scramples = this;
@@ -17,15 +18,28 @@ function ScramplesViewModel() {
   Scramples.repeat = ko.observable(false);
   Scramples.playingSamples = ko.observableArray([]);
   Scramples.tracks = ko.observableArray([]).extend({rateLimit: bindingRateLimit});
+  Scramples.keyboardShortcuts = ko.observable({});
+  Scramples.focussed = ko.observable(false);
 
-  Scramples.stopAll = (otherThanSample) => {
-
-    _.each(Scramples.playingSamples(), s => {
-      if (s !== otherThanSample) {
-        s.stop();
+  _.extend(Scramples, {
+    onKeyPress: key => {
+      let sampleToPlay = _.get(Scramples.keyboardShortcuts(), key);
+      if (_.isFunction(_.get(sampleToPlay, 'play'))) {
+        sampleToPlay.play()
+      } else if (Scramples.focussed() && !Scramples.focussed().keyboardShortcut()) {
+        let newKeyboardShortcuts = _.set(Scramples.keyboardShortcuts(), key, Scramples.focussed());
+        Scramples.keyboardShortcuts(newKeyboardShortcuts);
       }
-    });
-  };
+    },
+    stopAll: otherThanSample => {
+
+      _.each(Scramples.playingSamples(), s => {
+        if (s !== otherThanSample) {
+          s.stop();
+        }
+      });
+    }
+  });
 
   function Sample(options) {
     _.defaults(options, {
@@ -54,7 +68,8 @@ function ScramplesViewModel() {
       playing: ko.observable(null),
       play: () => {
 
-        Scramples.stopAll(sample)
+        Scramples.focussed(sample);
+        Scramples.stopAll(sample);
 
         var makePlayPromise = () => {
           return new Promise((resolve) => {
@@ -78,7 +93,7 @@ function ScramplesViewModel() {
               source.start(0, offsetSeconds, Scramples.sampleLengthSeconds());
             }
 
-            source.onended = resolve
+            source.onended = resolve;
           });
         };
 
@@ -110,8 +125,18 @@ function ScramplesViewModel() {
         } else {
           return "...";
         }
-      })
-    };
+      }),
+      keyboardShortcut: ko.pureComputed(() => {
+        var foundKey;
+         _.each(Scramples.keyboardShortcuts(), (sampleToPlay, key) => {
+           if (sampleToPlay == sample) {
+              foundKey = key;
+            }
+        });
+        return foundKey;
+      }).extend({ notify: 'always' })
+
+  };
 
     _.extend(this, sample);
   }
@@ -278,7 +303,12 @@ function ScramplesViewModel() {
   }
 
   load();
-  _.extend(this, Scramples);
+
+  _.each('abcdefghijklmnopqrstuvwxyz', (key) => {
+    hotkeys(key, (event, handler) => {
+      Scramples.onKeyPress(handler.key)
+    })
+  });
 
 }
 

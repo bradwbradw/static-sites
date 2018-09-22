@@ -151,7 +151,8 @@
         <span class="time-label" data-bind="
         click: bookmark,
         css: {bookmarked: bookmarked()},
-        text:formattedTime">bookmark</span>
+        text:formattedTime() + (keyboardShortcut() ? ' '+keyboardShortcut() : '')"></span>
+
     </div>
 
 </script>
@@ -162,7 +163,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js"></script>
-
+<script type="text/javascript" src="https://unpkg.com/hotkeys-js@3.3.8/dist/hotkeys.min.js"></script>
 
 <script type="text/javascript" src="scripts/jqueryui-binding.js"></script>
 
