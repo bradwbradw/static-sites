@@ -5,8 +5,7 @@ const connect = require('connect'),
   vhost = require('vhost'),
   _ = require('lodash'),
   historyApiFallback = require('connect-history-api-fallback'),
-  fs = require('fs'),
-  redirectToHTTPS = require('redirect-ssl');
+  fs = require('fs');
 
 const domains = require('./domains');
 
@@ -18,27 +17,13 @@ const sites = {};
 
 const app = connect();
 
-//app.use(redirectIfNotLocalhost);
-
 // noinspection JSUnusedLocalSymbols
 function track(req, res, next) {
   console.log(_.get(req, 'headers.host', '') + req.url);
   next();
 }
 
-function redirectIfNotLocalhost(req, res, next){
-
-  let host = _.get(req, 'headers.host', '');
-
-  if (_.includes(host, 'localhost:')){
-    next();
-  } else {
-    redirectToHTTPS(req, res, next)
-  }
-}
-
 app.use(track);
-
 
 const middleware = {
   'wurst.world': [historyApiFallback()],
