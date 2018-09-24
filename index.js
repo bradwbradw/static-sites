@@ -18,7 +18,7 @@ const sites = {};
 
 const app = connect();
 
-app.use(redirectIfNotLocalhost);
+//app.use(redirectIfNotLocalhost);
 
 // noinspection JSUnusedLocalSymbols
 function track(req, res, next) {
