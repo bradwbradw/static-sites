@@ -21,25 +21,6 @@ function ScramplesViewModel() {
   Scramples.keyboardShortcuts = ko.observable({});
   Scramples.focussed = ko.observable(false);
 
-  _.extend(Scramples, {
-    onKeyPress: key => {
-      let sampleToPlay = _.get(Scramples.keyboardShortcuts(), key);
-      if (_.isFunction(_.get(sampleToPlay, 'play'))) {
-        sampleToPlay.play()
-      } else if (Scramples.focussed() && !Scramples.focussed().keyboardShortcut()) {
-        let newKeyboardShortcuts = _.set(Scramples.keyboardShortcuts(), key, Scramples.focussed());
-        Scramples.keyboardShortcuts(newKeyboardShortcuts);
-      }
-    },
-    stopAll: otherThanSample => {
-
-      _.each(Scramples.playingSamples(), s => {
-        if (s !== otherThanSample) {
-          s.stop();
-        }
-      });
-    }
-  });
 
   function Sample(options) {
     _.defaults(options, {
@@ -128,15 +109,15 @@ function ScramplesViewModel() {
       }),
       keyboardShortcut: ko.pureComputed(() => {
         var foundKey;
-         _.each(Scramples.keyboardShortcuts(), (sampleToPlay, key) => {
-           if (sampleToPlay == sample) {
-              foundKey = key;
-            }
+        _.each(Scramples.keyboardShortcuts(), (sampleToPlay, key) => {
+          if (sampleToPlay == sample) {
+            foundKey = key;
+          }
         });
         return foundKey;
-      }).extend({ notify: 'always' })
+      }).extend({notify: 'always'})
 
-  };
+    };
 
     _.extend(this, sample);
   }
@@ -223,20 +204,45 @@ function ScramplesViewModel() {
 
   };
 
+  _.extend(Scramples, {
+    onKeyPress: key => {
+      let sampleToPlay = _.get(Scramples.keyboardShortcuts(), key);
+      if (_.isFunction(_.get(sampleToPlay, 'play'))) {
+        sampleToPlay.play();
+      } else if (Scramples.focussed() && !Scramples.focussed().keyboardShortcut()) {
+        let newKeyboardShortcuts = _.set(Scramples.keyboardShortcuts(), key, Scramples.focussed());
+        Scramples.keyboardShortcuts(newKeyboardShortcuts);
+      }
+    },
+    onShiftKeyPress: key => {
+      if (Scramples.focussed()) {
+        let newKeyboardShortcuts = _.set(Scramples.keyboardShortcuts(), key, Scramples.focussed());
+        Scramples.keyboardShortcuts(newKeyboardShortcuts);
+      }
+    },
+    stopAll: otherThanSample => {
 
-  Scramples.clearScrambled = () => {
-    Scramples.scrambledSamples.removeAll();
-  };
-  Scramples.showScrambled = ko.pureComputed(() => {
-    return _.size(Scramples.scrambledSamples()) > 0;
+      _.each(Scramples.playingSamples(), s => {
+        if (s !== otherThanSample) {
+          s.stop();
+        }
+      });
+    },
+    clearScrambled: () => {
+      Scramples.scrambledSamples.removeAll();
+    },
+    showScrambled: ko.pureComputed(() => {
+      return _.size(Scramples.scrambledSamples()) > 0;
+    }),
+    scramble: () => {
+      Scramples.scrambledSamples.removeAll();
+      _.each(Scramples.tracks(), track => {
+        Scramples.scrambledSamples(_.concat(Scramples.scrambledSamples(), track.samples()));
+      });
+      Scramples.scrambledSamples(_.shuffle(Scramples.scrambledSamples()));
+    }
   });
-  Scramples.scramble = () => {
-    Scramples.scrambledSamples.removeAll();
-    _.each(Scramples.tracks(), track => {
-      Scramples.scrambledSamples(_.concat(Scramples.scrambledSamples(), track.samples()));
-    });
-    Scramples.scrambledSamples(_.shuffle(Scramples.scrambledSamples()));
-  };
+
   Scramples.scrambledSamples = ko.observableArray([]);
   Scramples.bookmarkedSamples = ko.observableArray([]);
 
@@ -256,20 +262,23 @@ function ScramplesViewModel() {
     }
   };
 
-  let makeTrackSaveFn = track => {
-    return () => {
 
-      lastTrackSaved = track;
-      let toSave = convertToSaveable(track);
-//      console.log("about to save: ", toSave);
-      return db.tracks.put(toSave, track.id)
-        .catch(error => {
-          return Promise.reject(error);
-        })
-
-    }
-  };
   Scramples.save = function () {
+
+    let makeTrackSaveFn = track => {
+      return () => {
+
+        lastTrackSaved = track;
+        let toSave = convertToSaveable(track);
+//      console.log("about to save: ", toSave);
+        return db.tracks.put(toSave, track.id)
+          .catch(error => {
+            return Promise.reject(error);
+          })
+
+      }
+    };
+
     Scramples.saving(true);
     setupDB();
     enablePersistance()
@@ -306,8 +315,11 @@ function ScramplesViewModel() {
 
   _.each('abcdefghijklmnopqrstuvwxyz', (key) => {
     hotkeys(key, (event, handler) => {
-      Scramples.onKeyPress(handler.key)
-    })
+      Scramples.onKeyPress(handler.key);
+    });
+    hotkeys('shift+' + key, (event, handler) => {
+      Scramples.onShiftKeyPress(_.last(_.split(handler.key, '+')));
+    });
   });
 
 }
