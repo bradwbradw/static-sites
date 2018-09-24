@@ -5,9 +5,11 @@ const connect = require('connect'),
   vhost = require('vhost'),
   _ = require('lodash'),
   historyApiFallback = require('connect-history-api-fallback'),
-  fs = require('fs');
+  fs = require('fs'),
+  redirectToHTTPS = require('redirect-ssl');
 
 const domains = require('./domains');
+
 
 console.log(domains);
 const rootDomainRobotsTxt = fs.readFileSync(__dirname + '/root-domain-robots.txt').toString();
@@ -16,10 +18,23 @@ const sites = {};
 
 const app = connect();
 
+app.use(redirectIfNotLocalhost);
+
 // noinspection JSUnusedLocalSymbols
 function track(req, res, next) {
   console.log(_.get(req, 'headers.host', '') + req.url);
   next();
+}
+
+function redirectIfNotLocalhost(req, res, next){
+
+  let host = _.get(req, 'headers.host', '');
+
+  if (_.includes(host, 'localhost:')){
+    next();
+  } else {
+    redirectToHTTPS(req, res, next)
+  }
 }
 
 app.use(track);
@@ -58,6 +73,7 @@ app.use('/robots.txt', function (req, res) {
   res.end(rootDomainRobotsTxt)
 });
 
+//app.use(redirectToHTTPS([/localhost:(\d{4})/], 301));
 
 app.listen(port);
 console.log('listening on ' + port);
