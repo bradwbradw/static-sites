@@ -108,9 +108,9 @@ function ScramplesViewModel() {
         }
       }),
       keyboardShortcut: ko.pureComputed(() => {
-        var foundKey;
+        var foundKey = false;
         _.each(Scramples.keyboardShortcuts(), (sampleToPlay, key) => {
-          if (sampleToPlay == sample) {
+          if (sampleToPlay === sample) {
             foundKey = key;
           }
         });
@@ -313,7 +313,7 @@ function ScramplesViewModel() {
 
   load();
 
-  _.each('abcdefghijklmnopqrstuvwxyz', (key) => {
+  _.each('abcdefghijklmnopqrstuvwxyz;[]\\,./`1234567890-=', (key) => {
     hotkeys(key, (event, handler) => {
       Scramples.onKeyPress(handler.key);
     });

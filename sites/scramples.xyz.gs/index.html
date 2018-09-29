@@ -1,138 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Scramples</title>
+  <meta charset="UTF-8">
+  <title>Scramples</title>
 
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#999999"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#999999"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
 
 <div class="top-bar">
-    <marquee>SCRAMPLES</marquee>
+  <marquee>SCRAMPLES</marquee>
 </div>
 
 <ul class="preferences">
 
-    <li>
-        <label id="file-picker-label" for="file_picker"> add audio </label>
+  <li>
+    <label id="file-picker-label" for="file_picker"> add audio </label>
 
-        <input id="file_picker" type="file" accept="audio/*" multiple/>
-    </li>
-    <li>
+    <input id="file_picker" type="file" accept="audio/*" multiple/>
+  </li>
+  <li>
 
-        <label for="repeat-toggle" class="settings-toggle">
-            looping: <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
-                data-bind="css: {selectedSetting: !repeat(), unSelectedSetting: repeat()} ">off</span>
-        </label>
-        <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat" style="display:none">
-    </li>
-    <li>
+    <label for="repeat-toggle" class="settings-toggle">
+      looping: <span data-bind="css: {selectedSetting: repeat(), unSelectedSetting: !repeat()} ">on</span> / <span
+        data-bind="css: {selectedSetting: !repeat(), unSelectedSetting: repeat()} ">off</span>
+    </label>
+    <input id="repeat-toggle" type="checkbox" data-bind="checked: repeat" style="display:none">
+  </li>
+  <li>
 
-    </li>
-    <li>
+  </li>
+  <li>
 
-        <label for="sample-length-slider">
-            duration: <input id="duration-control" data-bind="value: sampleLengthString"></input>s
-        </label>
+    <label for="sample-length-slider">
+      duration: <input id="duration-control" data-bind="value: sampleLengthString"/>s
+    </label>
 
-        <span id="sample-length-slider"
-              data-bind='jqueryui: {
-             widget: "slider",
-             options: {
-             min:0,
-              max:10,
-              step:0.01,
-              value: sampleLengthString(),
-              slide: function(evt,ui) { sampleLengthString(ui.value); }
+    <span id="sample-length-slider"
+          data-bind='jqueryui: {
+              widget: "slider",
+              options: {
+                min:0,
+                max:10,
+                step:0.01,
+                value: sampleLengthString(),
+                slide: function(evt,ui) { sampleLengthString(ui.value); }
              }
            }'>
 
     </span>
 
 
-    </li>
+  </li>
 
-    <li>
-        <button data-bind="click: stopAll">stop</button>
-    </li>
-    <li>
-        <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
-    </li>
+  <li>
+    <button data-bind="click: stopAll">stop</button>
+  </li>
+  <li>
+    <button data-bind="click: save, disable: saving, text: (saving()? 'saving...' : 'save')">save</button>
+  </li>
 
-    <li>
-        <button data-bind="click: scramble">scramble!</button>
-    </li>
+  <li>
+    <button data-bind="click: scramble">scramble!</button>
+  </li>
 
 
 </ul>
 
 <div id="tabs">
-    <div class="tab" data-bind="click: () => {chooseView('Tracks')}, css:{active: chosenView() == 'Tracks'}">tracks
-    </div>
-    <div class="tab"
-         data-bind="click: () => {chooseView('Bookmarked Samples')}, css:{active: chosenView() == 'Bookmarked Samples'}">
-        bookmarked samples
-    </div>
+  <div class="tab" data-bind="click: () => {chooseView('Tracks')}, css:{active: chosenView() == 'Tracks'}">tracks
+  </div>
+  <div class="tab"
+       data-bind="click: () => {chooseView('Bookmarked Samples')}, css:{active: chosenView() == 'Bookmarked Samples'}">
+    bookmarked samples
+  </div>
 </div>
 
 <section id="tracks-view"
          data-bind="visible: chosenView() == 'Tracks'"
          class="baron _scramples">
 
-    <div class="baron__scroller">
-        <div data-bind="visible: showScrambled" class="track">
+  <div class="baron__scroller">
+    <div data-bind="visible: showScrambled" class="track">
 
-            <div class="track-header">
+      <div class="track-header">
 
-                <h3>scrambled samples!</h3>
-                <div class="delete-icon" data-bind="click: clearScrambled"></div>
-            </div>
-            <div class="samples"
-                 data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
-            </div>
+        <h3>scrambled samples!</h3>
+        <div class="delete-icon" data-bind="click: clearScrambled"></div>
+      </div>
+      <div class="samples"
+           data-bind="template:{name:'sample-template', foreach: scrambledSamples}">
+      </div>
 
-        </div>
-
-        <div data-bind="foreach: tracks ">
-            <div class="track">
-                <div class="track-header">
-                    <h3 data-bind="text: name"></h3>
-                    <div class="delete-icon" data-bind="click: deleteTrack"></div>
-                </div>
-
-                <p data-bind="ifnot: buffer">processing audio...</p>
-                <p data-bind="if: error"><span data-bind="text: error"></span></p>
-                <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
-                </div>
-            </div>
-
-        </div>
     </div>
 
-    <div class="baron__track">
-        <div class="baron__control baron__up">▲</div>
-        <div class="baron__free">
-            <div class="baron__bar"></div>
+    <div data-bind="foreach: tracks ">
+      <div class="track">
+        <div class="track-header">
+          <h3 data-bind="text: name"></h3>
+          <div class="delete-icon" data-bind="click: deleteTrack"></div>
         </div>
-        <div class="baron__control baron__down">▼</div>
+
+        <p data-bind="ifnot: buffer">processing audio...</p>
+        <p data-bind="if: error"><span data-bind="text: error"></span></p>
+        <div data-bind="template:{name:'sample-template', foreach: samples}" class="samples">
+        </div>
+      </div>
+
     </div>
+  </div>
+
+  <div class="baron__track">
+    <div class="baron__control baron__up">▲</div>
+    <div class="baron__free">
+      <div class="baron__bar"></div>
+    </div>
+    <div class="baron__control baron__down">▼</div>
+  </div>
 </section>
 
 <section data-bind="visible: chosenView() == 'Bookmarked Samples'">
 
-    <div data-bind="template:{name:'sample-template', foreach:bookmarkedSamples}" class="samples"></div>
+  <div data-bind="template:{name:'sample-template', foreach:bookmarkedSamples}" class="samples"></div>
 
-    <p data-bind="ifnot: bookmarkedSamples().length">click on the time of a sample to bookmark it.</p>
+  <p data-bind="ifnot: bookmarkedSamples().length">click on the time of a sample to bookmark it.</p>
 </section>
 
 
@@ -141,19 +141,19 @@
 
 <script type="text/html" id="sample-template">
 
-    <div class="sample">
+  <div class="sample">
 
-        <div class="speaker-icon" data-bind="
+    <div class="speaker-icon" data-bind="
       click:play,
         css: {playing: playing}">
 
-        </div>
-        <span class="time-label" data-bind="
+    </div>
+    <span class="time-label" data-bind="
         click: bookmark,
         css: {bookmarked: bookmarked()},
-        text:formattedTime() + (keyboardShortcut() ? ' '+keyboardShortcut() : '')"></span>
+        text: (keyboardShortcut() ? keyboardShortcut() : formattedTime())"></span>
 
-    </div>
+  </div>
 
 </script>
 
