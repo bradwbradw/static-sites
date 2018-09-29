@@ -23,3 +23,7 @@ victorysquareblockparty.com
 ## bradwinter.ca
 
 - add scramples + description, link
+
+## static-sites
+
+- change sites directory into list of github repos, to enable independent projects
