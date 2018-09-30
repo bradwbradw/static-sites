@@ -64,8 +64,6 @@ var convertPCMToAudioBuffer = (leftPCM, rightPCM) => {
   return buffer;
 };
 
-var crop
-
 // misc utilities
 
 function chainPromises(promises, rejectionOkay) {
@@ -142,3 +140,25 @@ function setupDB() {
 }
 
 
+function initSound() {
+
+  return new Promise(resolve => {
+
+    if (!USE_AUDIO_WORKLETS) {
+
+      console.log('skipping audioWorklets (was disabled)');
+      resolve();
+    } else if (_.isFunction(_.get(audioContext, 'audioWorklet.addModule'))) {
+
+      audioContext.audioWorklet.addModule('scripts/processors.js')
+        .then(() => {
+          resolve();
+        })
+    } else {
+
+      USE_AUDIO_WORKLETS = false;
+      console.log('skipping audioWorklets (unsupported)');
+      resolve();
+    }
+  });
+}

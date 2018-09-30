@@ -14,6 +14,7 @@ victorysquareblockparty.com
 
 ## scramples
 
+- set USE_AUDIO_WORKLETS=true, and restore dummy audioWorkletNode (was creating click sounds in middle of sample playback)
 - find closest zero-crossing for each sample
 - add preference settings, keboard shortcuts to locally saved
 - show status (loading, importing track)

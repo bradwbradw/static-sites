@@ -1,5 +1,5 @@
 const bindingRateLimit = 50;
-
+let USE_AUDIO_WORKLETS = false;
 
 function ScramplesViewModel() {
 
@@ -52,15 +52,23 @@ function ScramplesViewModel() {
         Scramples.focussed(sample);
         Scramples.stopAll(sample);
 
-        var makePlayPromise = () => {
+        var makePlayPromise = (audioWorkletNodes) => {
+
           return new Promise((resolve) => {
 
             let track = sample.track;
             sample.source(audioContext.createBufferSource());
             sample.gainNode = audioContext.createGain();
+
+
             sample.source().buffer = track.buffer();
 
-            sample.source().connect(sample.gainNode);
+            if (_.isArray(audioWorkletNodes)) {
+              sample.source().connect(audioWorkletNodes[0]);
+              audioWorkletNodes[0].connect(sample.gainNode);
+            } else {
+              sample.source().connect(sample.gainNode);
+            }
             sample.gainNode.connect(audioContext.destination);
 
             let offsetSeconds = sample.trackOffset() / audioContext.sampleRate;
@@ -83,13 +91,28 @@ function ScramplesViewModel() {
             .then(sample.play);
           sample.stop();
         } else {
+
           Scramples.playingSamples.push(sample);
-          sample.playing(makePlayPromise());
+
+          // set playing to a promise
+
+          let addWorkletNodesAndMakePlayPromise = () => {
+            if (USE_AUDIO_WORKLETS) {
+              return makePlayPromise([new MyWorkletNode(audioContext)]);
+            } else {
+              return makePlayPromise();
+            }
+          };
+
+
+          sample.playing(addWorkletNodesAndMakePlayPromise());
           sample.playing()
             .then(() => {
+
               sample.playing(null);
               Scramples.playingSamples.remove(sample);
             })
+
         }
       },
       trackOffset: ko.observable(options.trackOffset),
@@ -270,7 +293,7 @@ function ScramplesViewModel() {
 
         lastTrackSaved = track;
         let toSave = convertToSaveable(track);
-//      console.log("about to save: ", toSave);
+        console.log("about to save: ", toSave);
         return db.tracks.put(toSave, track.id)
           .catch(error => {
             return Promise.reject(error);
@@ -324,5 +347,7 @@ function ScramplesViewModel() {
 
 }
 
-ko.applyBindings(new ScramplesViewModel());
+initSound().then(() => {
+  ko.applyBindings(new ScramplesViewModel());
+});
 
