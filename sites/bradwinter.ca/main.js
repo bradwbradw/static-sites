@@ -25,7 +25,11 @@ var projects = [
     links: [{
       external: 'https://xyz.gs',
       label: 'xyz.gs'
-    }],
+    },
+{
+      external: 'https://scramples.xyz.gs',
+      label: 'scramples'
+    } ],
     x: 7,
     y: 40
   },
