@@ -33,7 +33,7 @@ var projects = [
     slug: 'music-projects',
     description: [
       'As Dj Bee, I have some experimental house / club music on my soundcloud page.',
-      'I also make music as Hexen, a (loosely) witch-house collaboration with <a href="https://marchienveen.com" target="_blank">my partner</a>.'],
+      'I also make music as Hexen, a (loosely) witch-house collaboration with <a href="https://marchienveen.com" target="_blank">Megan Miller</a>.'],
     name: 'music projects',
     links: [
       {
