@@ -43,3 +43,4 @@ jspm_packages
 
 # contents of dat synced (dat does the work)
 sites/bradwinter.ca/files/*
+!sites/bradwinter.ca/files/.gitkeep
