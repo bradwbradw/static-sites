@@ -40,3 +40,6 @@ jspm_packages
 .idea/*
 
 .DS_Store
+
+# contents of dat synced (dat does the work)
+sites/bradwinter.ca/files/*
