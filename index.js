@@ -62,3 +62,5 @@ app.use('/robots.txt', function (req, res) {
 
 app.listen(port);
 console.log('listening on ' + port);
+
+require('./sync-files.js');

@@ -19,6 +19,8 @@
   "dependencies": {
     "connect": "^3.6.0",
     "connect-history-api-fallback": "^1.5.0",
+    "dat": "^13.13.1",
+    "dat-node": "^3.5.15",
     "diet": "^0.15.0",
     "express": "^4.16.3",
     "handlebars": "^4.0.10",
