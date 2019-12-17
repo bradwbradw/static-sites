@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: bradwinter.ca
+Token: 6f208a8db26b981b7868bc27412af1e8fc071d3a41fc4a984d093ced8f2a554b
