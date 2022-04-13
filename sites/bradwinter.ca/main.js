@@ -5,48 +5,47 @@ var projects = [
   {
     slug: 'about',
     description: [
-      'I\'m a professional web developer who excels in all aspects of creating high-performance and user-friendly applications.',
-      'I also work on experimental projects that investigate various concerns about our contemporary media landscape.',
+      'I\'m a full-stack web developer who excels in all aspects of creating high-performance and user-friendly applications.',
       'Feel free to explore my site to learn more. Thanks for stopping by!'
     ],
-    name: 'about me',
+    name: 'About Me',
     color: '#26C5DB',
+    links:[{
+      state:'contact',
+      label:'Contact Info'
+    }],
     x: 67,
     y: 30
   },
   {
     slug: 'xyz',
-    description: ['My largest passion project is an app that features user-contributed playlists that combine music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
-      'I plan to integrate the providers at a deeper level, so users can connect their accounts and interact with the site using readily available playlists, likes, followings, and other similar objects.',
-      'The motivation is to re-think the idea of a cloud-hosted so-called "music collection" by consolidating media that is locked to specific providers.'],
+    description: ['App that features user-contributed playlists that combine music from multiple providers (currently Youtube and Soundcloud), with the ability to arrange items spatially in two-dimensions.',
+     'The motivation is to re-think the idea of a cloud-hosted so-called "music collection" by consolidating media that is locked to specific providers.'],
 
-    name: 'xyz.gs',
+    name: 'XYZ Spaces',
     color: '#083EC6',
     links: [{
-      external: 'https://xyz.gs',
-      label: 'xyz.gs'
-    },
-{
-      external: 'https://scramples.xyz.gs',
-      label: 'scramples'
-    } ],
+        external: 'https://xyz.gs',
+        label: 'xyz.gs'
+      } 
+    ],
     x: 7,
     y: 40
   },
   {
-    slug: 'music-projects',
+    slug: 'music-project',
     description: [
-      'As Dj Bee, I have some experimental house / club music on my soundcloud page.',
-      'I also make music as Hexen, a (loosely) witch-house collaboration with <a href="https://marchienveen.com" target="_blank">Megan Miller</a>.'],
-    name: 'music projects',
+      'As Dj Bee, I have some experimental house / club music on my soundcloud page. I also have some content on the Datafruits radio station'
+    ],
+    name: 'DJ B Music',
     links: [
       {
         external: 'https://soundcloud.com/braddjwinter',
         label: 'DJB music'
       },
       {
-        external: 'https://soundcloud.com/hexenhexen',
-        label: 'Hexen music'
+        external: 'https://datafruits.fm/djs/djb',
+        label: 'Datafruits DJ sets'
       }
     ],
     color: '#1BA253',
@@ -54,61 +53,50 @@ var projects = [
     y: 56
   },
   {
-    slug: 'seapunkdotnet',
-    description: ['seapunk.net is an ongoing project that aims to promote music by artists of the movement who deserve more exposure.',
-      'I also believe that the aquatic themes highlight the fragility of our planet\'s ecosystems, and more popular exposure might have a positive impact on climate change by recognizing our oceans as perhaps the most important thing we have.  It might follow that seapunk is the most important genre of music that we have.'
+    slug: 'pizza-stop',
+    description: ['Cryptocurrency is an obvious mega-trend that is sometimes tiring to keep up with, but the space merits creative development to improve user safety and relevence.',
+      'Pizza Stop is a dev playground / demo / experiment to host some of what I\'m working on in this space'
     ],
-    name: 'seapunk.net',
+    name: 'Pizza Stop (Crypto)',
     links: [{
-      external: 'https://seapunk.net',
-      label: 'seapunk.net'
+      external: 'https://pizza-stop.glitch.me/',
+      label: 'pizza-stop'
     }],
-    color: '#029d7c'
+    color: '#ee0000',
+    x:20,
+    y:80
+  },
+  {
+    slug:'scramples',
+    description:['Audio file slicer / dicer / scrambler for creative music production.'],
+    name: 'Scramples',
+    links:[
+      {
+        external:'https://scramples.xyz.gs',
+        label:'scramples.xyz.gs'
+      }
+    ],
+    color:'#777777',
+    x:80,
+    y:85
   },
   {
     slug: 'contact',
     description: [''],
-    name: 'contact',
+    name: 'Contact',
     links: [
       {
-        external: 'mailto:hello@bradwinter.ca',
-        label: 'email me'
+        external:'https://github.com/bradwbradw',
+        label:'GitHub Page'
       },
       {
-        external: 'https://drive.google.com/file/d/0B9u2nAPISw7qTjRLMlNlcThPd0E/view?usp=sharing',
-        label: 'download resume'
+        external: 'mailto:hello@bradwinter.ca',
+        label: 'Email'
       }
     ],
     color: '#F08BD3',
     x: 66,
     y: 74
-  },
-  {
-    slug: 'profiles',
-    description: ['profiles'],
-    name: 'profiles',
-    links: [
-      {
-        external: 'https://www.linkedin.com/in/brad-winter-05534123',
-        label: 'Linked in'
-      },
-      {
-        external: 'https://soundcloud.com/braddjwinter',
-        label: 'Soundcloud'
-      }],
-    color: '#F08BD3'
-  },
-  {
-    slug: 'music',
-    description: [
-      'brads music collection on the web'
-    ],
-    name: 'brads music',
-    links: [
-      {
-        external: 'https://music.bradwinter.ca',
-        label: 'music.bradwinter.ca'
-      }]
   }
 ];
 Brad.constant('projects', _.filter(projects, 'x'));

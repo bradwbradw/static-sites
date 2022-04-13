@@ -17,22 +17,20 @@
   },
   "homepage": "https://github.com/bradwbradw/static-sites#readme",
   "dependencies": {
-    "connect": "^3.6.0",
-    "connect-history-api-fallback": "^1.5.0",
-    "dat": "^13.13.1",
-    "dat-node": "^3.5.15",
-    "diet": "^0.15.0",
-    "express": "^4.16.3",
+    "connect": "^3.7.0",
+    "connect-history-api-fallback": "^1.6.0",
+    "express": "^4.17.3",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
-    "serve-static": "^1.12.1",
+    "serve-static": "^1.15.0",
     "vhost": "^3.0.2"
   },
   "devDependencies": {
-    "browser-sync": "^2.24.6",
-    "gulp": "3.9.1",
+    "browser-sync": "^2.27.9",
+    "gulp": "^4.0.2",
     "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
-    "gulp-sass": "3.1.0"
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.50.0"
   }
 }

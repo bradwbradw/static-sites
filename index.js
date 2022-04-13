@@ -4,7 +4,7 @@ const connect = require('connect'),
   serveStatic = require('serve-static'),
   vhost = require('vhost'),
   _ = require('lodash'),
-  historyApiFallback = require('connect-history-api-fallback'),
+//  historyApiFallback = require('connect-history-api-fallback'),
   fs = require('fs');
 
 const domains = require('./domains');
@@ -25,21 +25,9 @@ function track(req, res, next) {
 
 app.use(track);
 
-const middleware = {
-  'wurst.world': [historyApiFallback()],
-};
-
 _.each(domains, function (domain) {
   console.log('serving ', domain);
   sites[domain] = connect();
-
-  let middlewareFunctions = _.get(middleware, domain);
-  _.each(_.filter(middlewareFunctions, _.isFunction), middlewareFunction => {
-    sites[domain].use(middlewareFunction);
-    console.log('using middleware for ' + domain);
-  });
-
-
   sites[domain].use(serveStatic('./sites/' + domain));
 
 
@@ -63,4 +51,4 @@ app.use('/robots.txt', function (req, res) {
 app.listen(port);
 console.log('listening on ' + port);
 
-require('./sync-files.js');
+//require('./sync-files.js');

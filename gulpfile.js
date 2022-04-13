@@ -1,6 +1,6 @@
 const gulp = require('gulp');
-const browserSync = require('browser-sync').create();
-const sass = require('gulp-sass');
+const browserSync = require('browser-sync');//.create();
+const sass = require('gulp-sass')(require('sass'));
 const notify = require("gulp-notify");
 const plumber = require('gulp-plumber');
 const _ = require('lodash');
@@ -11,34 +11,7 @@ const _ = require('lodash');
 // Static Server + watching scss/html files
 
 function serve(site) {
-
-  gulp.task('serve:' + site, ['sass:' + site], function () {
-
-    browserSync.init({
-      server: "./sites/" + site,
-      middleware: [
-        require('connect-history-api-fallback')()
-      ],
-      ghostMode: {
-        scroll: false,
-        clicks: false,
-        forms: false
-      },
-      //proxy:'localhost',
-      port: process.env.PORT || 3000
-    });
-
-    gulp.watch(`sites/${site}/**/*.scss`, [`sass:${site}`]);
-    gulp.watch(`sites/${site}/**/*.html`).on('change', bla => {
-      console.log("html changed", bla);
-      browserSync.reload()
-    });
-    gulp.watch(`sites/${site}/**/*.js`).on('change', bla => {
-      console.log("js changed", bla);
-      browserSync.reload()
-    });
-  });
-
+  console.log("gulping "+site);
 // Compile sass into CSS & auto-inject into browsers
   gulp.task(`sass:${site}`, function () {
 
@@ -52,10 +25,41 @@ function serve(site) {
       .pipe(gulp.dest(`sites/${site}`))
       .pipe(browserSync.stream());
   });
+  gulp.task('serve:' + site, gulp.series('sass:' + site), function () {
+
+    console.log(browserSync);
+    
+    gulp.watch(`sites/${site}/**/*.scss`, gulp.series(`sass:${site}`));
+    gulp.watch(`sites/${site}/**/*.html`).on('change', bla => {
+      console.log("html changed", bla);
+      browserSync.reload()
+    });
+    gulp.watch(`sites/${site}/**/*.js`).on('change', bla => {
+      console.log("js changed", bla);
+      browserSync.reload()
+    });
+
+    return browserSync.init({
+      server: "./sites/" + site,
+      middleware: [
+        require('connect-history-api-fallback')()
+      ],
+      ghostMode: {
+        scroll: false,
+        clicks: false,
+        forms: false
+      },
+      //proxy:'localhost',
+      port: process.env.PORT || 3000
+    });
+
+  });
+
+
 
 }
 
 _.each(require('./domains'), serve);
 
 //gulp.task('default', ['serve:studioclementine.com']);
-gulp.task('default', ['serve:scramples.xyz.gs']);
+gulp.task('default', gulp.series('serve:scramples.xyz.gs'));
