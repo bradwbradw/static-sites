@@ -1,3 +1,6 @@
+/*
+removed browsersync because of vulnerabilities, unsure what to do about gulp rn
+
 const gulp = require('gulp');
 const browserSync = require('browser-sync');//.create();
 const sass = require('gulp-sass')(require('sass'));
@@ -61,5 +64,6 @@ function serve(site) {
 
 _.each(require('./domains'), serve);
 
-//gulp.task('default', ['serve:studioclementine.com']);
 gulp.task('default', gulp.series('serve:scramples.xyz.gs'));
+
+*/
